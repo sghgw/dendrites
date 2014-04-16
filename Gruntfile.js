@@ -33,6 +33,33 @@ module.exports = function (grunt) {
       },
       files: '<%= config.app %>/js/*.js'
     },
+    coffee: {
+      compile: {
+        expand: true,
+        cwd: 'src/coffee',
+        src: ['**/*.coffee'],
+        dest: 'app/js/',
+        ext: '.js'
+      }
+    },
+    less: {
+      dev: {
+        options: {
+          compress: true
+        },
+        files: [{expand: true, cwd: 'src/less', src: ['**/*.less'], dest: 'app/css', ext: '.css'}]
+      }
+    },
+    watch: {
+      less: {
+        files: ['src/less/**/*.less'],
+        tasks: ['newer:less:dev']
+      },
+      coffee: {
+        files: ['src/coffee/**/*.coffee'],
+        tasks: ['newer:coffee']
+      }
+    },
     copy: {
       appLinux: {
         files: [{
