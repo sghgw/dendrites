@@ -1,5 +1,8 @@
 ctrls = angular.module 'Controllers', []
 
 ctrls.controller 'baseCtrl', ['$scope', ($scope) ->
-  $scope.test = 'Das ist ein Test'
+  fs = require 'fs'
+  $scope.files = []
+  $scope.loadFiles = () ->
+    $scope.files = fs.readdirSync $scope.dir
 ]

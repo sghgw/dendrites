@@ -5,12 +5,15 @@
 </head>
 <body ng-controller="baseCtrl">
   <input type="file" nwdirectory dir="dir" value="Ordner auswählen">
-  <input type="text" ng-model="test">
   <div>
     Ordner: {{dir}}
   </div>
   <div>
-    Test: {{test}}
+    <button type="button" ng-click="loadFiles()">Dateien laden</button>
+    Anzahl: {{files.length}}
+    <ul>
+      <li ng-repeat="file in files">{{file}}</li>
+    </ul>
   </div>
 
   <script src="../js/libs/angular.js"></script>
