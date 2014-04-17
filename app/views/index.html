@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html ng-app="dendrites">
 <head>
-    <title>Dendrites</title>
+  <title>Dendrites</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/app.css">
 </head>
 <body ng-controller="baseCtrl">
-  <input type="file" nwdirectory dir="dir" value="Ordner auswählen">
+  
+  <span class="btn btn-success btn-file">
+    Ordner ausw&auml;hlen <input type="file" nwdirectory dir="dir">
+  </span>
   <div>
     Ordner: {{dir}}
   </div>
@@ -15,7 +20,9 @@
       <li ng-repeat="file in files">{{file}}</li>
     </ul>
   </div>
-
+  
+  <script src="../js/libs/jquery.min.js"></script>
+  <script src="../js/libs/bootstrap.min.js"></script>
   <script src="../js/libs/angular.js"></script>
   <script src="../js/app.js"></script>
   <script src="../js/controllers.js"></script>
