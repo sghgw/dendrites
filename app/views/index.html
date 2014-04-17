@@ -4,7 +4,7 @@
     <title>Dendrites</title>
 </head>
 <body ng-controller="baseCtrl">
-  <input type="file" ng-model="dir" value="Ordner auswählen">
+  <input type="file" nwdirectory dir="dir" value="Ordner auswählen">
   <input type="text" ng-model="test">
   <div>
     Ordner: {{dir}}
@@ -13,8 +13,9 @@
     Test: {{test}}
   </div>
 
-  <script src="../js/libs/angular.min.js"></script>
+  <script src="../js/libs/angular.js"></script>
   <script src="../js/app.js"></script>
   <script src="../js/controllers.js"></script>
+  <script src="../js/directives.js"></script>
 </body>
 </html>

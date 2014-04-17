@@ -1,4 +1,4 @@
 (function() {
-  this.App = angular.module('dendrites', ['Controllers']);
+  this.App = angular.module('dendrites', ['Controllers', 'dendritesDirectives']);
 
 }).call(this);
