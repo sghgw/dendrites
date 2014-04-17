@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="dendrites">
 <head>
     <title>Dendrites</title>
 </head>
-<body>
-
+<body ng-controller="baseCtrl">
+  <input type="file" ng-model="dir" value="Ordner auswählen">
+  <input type="text" ng-model="test">
+  <div>
+    Ordner: {{dir}}
+  </div>
+  <div>
+    Test: {{test}}
+  </div>
 
   <script src="../js/libs/angular.min.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/controllers.js"></script>
 </body>
 </html>
