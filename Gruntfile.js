@@ -43,17 +43,17 @@ module.exports = function (grunt) {
       }
     },
     less: {
-      dev: {
-        options: {
-          compress: true
-        },
+      options: {
+        compress: true
+      },
+      target: {
         files: [{expand: true, cwd: 'src/less', src: ['**/*.less'], dest: 'app/css', ext: '.css'}]
       }
     },
     watch: {
       less: {
         files: ['src/less/**/*.less'],
-        tasks: ['newer:less:dev']
+        tasks: ['newer:less']
       },
       coffee: {
         files: ['src/coffee/**/*.coffee'],
