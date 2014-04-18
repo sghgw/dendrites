@@ -3,19 +3,17 @@
   "version": "0.0.1",
   "description": "",
   "keywords": [],
-  
-    "homepage": "https://github.com/sghgw/dendrites",
-    "bugs": "https://github.com/sghgw/dendrites/issues",
-    "author": {
-      "name": "",
-      "email": "",
-      "url": "https://github.com/sghgw"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git://github.com/sghgw/dendrites.git"
-    },
-  
+  "homepage": "https://github.com/sghgw/dendrites",
+  "bugs": "https://github.com/sghgw/dendrites/issues",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": "https://github.com/sghgw"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sghgw/dendrites.git"
+  },
   "dependencies": {},
   "devDependencies": {
     "matchdep": "~0.1.2",
@@ -29,7 +27,9 @@
     "grunt-contrib-less": "~0.7.0",
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-newer": "~0.7.0"
+    "grunt-newer": "~0.7.0",
+    "xlsjs": "^0.6.17",
+    "xlsx": "^0.6.0"
   },
   "engines": {
     "node": ">=0.8.0"
