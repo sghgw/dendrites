@@ -6,19 +6,20 @@
   <link rel="stylesheet" href="../css/app.css">
 </head>
 <body ng-controller="baseCtrl">
-  
-  <span class="btn btn-success btn-file">
-    Ordner ausw&auml;hlen <input type="file" nwdirectory dir="dir">
-  </span>
-  <div>
-    Ordner: {{dir}}
-  </div>
-  <div>
-    <button type="button" ng-click="loadFiles()">Dateien laden</button>
-    Anzahl: {{files.length}}
-    <ul>
-      <li ng-repeat="file in files">{{file}}</li>
-    </ul>
+
+  <div class="container content">
+    <span class="btn btn-success btn-file">
+      Ordner ausw&auml;hlen <input type="file" nwdirectory dir="dir">
+    </span>
+    <div>
+      Ordner: {{dir}}
+    </div>
+    <div>
+      Anzahl: {{files.length}}
+      <ul>
+        <li ng-repeat="file in files">{{file}}</li>
+      </ul>
+    </div>
   </div>
   
   <script src="../js/libs/jquery.min.js"></script>

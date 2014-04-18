@@ -8,9 +8,10 @@
       var fs;
       fs = require('fs');
       $scope.files = [];
-      return $scope.loadFiles = function() {
-        return $scope.files = fs.readdirSync($scope.dir);
-      };
+      return $scope.$watch('dir', function(newValue, oldValue) {
+        $scope.files = newValue ? fs.readdirSync(newValue) : [];
+        return console.log(newValue);
+      });
     }
   ]);
 
