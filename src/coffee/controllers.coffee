@@ -2,8 +2,12 @@ ctrls = angular.module 'Controllers', []
 
 ctrls.controller 'baseCtrl', ['$scope', ($scope) ->
   fs = require 'fs'
+  path = require 'path'
   $scope.files = []
+  # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
-    $scope.files = if newValue then fs.readdirSync(newValue) else []
-    console.log newValue
+    if newValue
+      # filter filelist for file with extensions .xls or .xlsx
+      $scope.files = _.filter fs.readdirSync(newValue), (file) ->
+        _.contains ['.xls', '.xlsx'], path.extname(file)
 ]

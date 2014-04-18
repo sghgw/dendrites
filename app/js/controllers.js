@@ -5,12 +5,16 @@
 
   ctrls.controller('baseCtrl', [
     '$scope', function($scope) {
-      var fs;
+      var fs, path;
       fs = require('fs');
+      path = require('path');
       $scope.files = [];
       return $scope.$watch('dir', function(newValue, oldValue) {
-        $scope.files = newValue ? fs.readdirSync(newValue) : [];
-        return console.log(newValue);
+        if (newValue) {
+          return $scope.files = _.filter(fs.readdirSync(newValue), function(file) {
+            return _.contains(['.xls', '.xlsx'], path.extname(file));
+          });
+        }
       });
     }
   ]);
