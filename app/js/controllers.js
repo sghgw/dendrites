@@ -17,7 +17,9 @@
         }
       });
       return $scope.loadData = function() {
-        return readXls.start($scope.dir, $scope.files[0]);
+        var dendrite;
+        dendrite = readXls.start($scope.dir, $scope.files[0]);
+        return console.log(dendrite);
       };
     }
   ]);
