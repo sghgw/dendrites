@@ -2,5 +2,6 @@
 
 @App = angular.module 'dendrites', [
   'Controllers',
-  'dendritesDirectives'
+  'dendritesDirectives',
+  'readXlsFactory'
 ]
