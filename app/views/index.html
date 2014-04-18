@@ -6,7 +6,13 @@
   <link rel="stylesheet" href="../css/app.css">
 </head>
 <body ng-controller="baseCtrl">
-
+  <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Dendrites</a>
+      </div>
+    </div>
+  </nav>
   <div class="container content">
     <span class="btn btn-success btn-file">
       Ordner ausw&auml;hlen <input type="file" nwdirectory dir="dir">
@@ -15,7 +21,8 @@
       Ordner: {{dir}}
     </div>
     <div>
-      Anzahl: {{files.length}}
+      Anzahl: {{files.length}} <br>
+      Dateien:
       <ul>
         <li ng-repeat="file in files">{{file}}</li>
       </ul>
