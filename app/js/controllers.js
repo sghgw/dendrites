@@ -9,6 +9,7 @@
       fs = require('fs');
       path = require('path');
       $scope.files = [];
+      $scope.dendrites = [];
       $scope.$watch('dir', function(newValue, oldValue) {
         if (newValue) {
           return $scope.files = _.filter(fs.readdirSync(newValue), function(file) {
@@ -17,9 +18,10 @@
         }
       });
       return $scope.loadData = function() {
-        var dendrite;
-        dendrite = readXls.start($scope.dir, $scope.files[0]);
-        return console.log(dendrite);
+        angular.forEach($scope.files, function(file, index) {
+          return $scope.dendrites.push(readXls.start($scope.dir, file));
+        });
+        return console.log($scope.dendrites);
       };
     }
   ]);

@@ -4,6 +4,7 @@ ctrls.controller 'baseCtrl', ['$scope', 'readXls', ($scope, readXls) ->
   fs = require 'fs'
   path = require 'path'
   $scope.files = []
+  $scope.dendrites = []
   # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
     if newValue
@@ -11,6 +12,8 @@ ctrls.controller 'baseCtrl', ['$scope', 'readXls', ($scope, readXls) ->
       $scope.files = _.filter fs.readdirSync(newValue), (file) ->
         _.contains ['.xls', '.xlsx'], path.extname(file)
   $scope.loadData = () ->
-    dendrite = readXls.start $scope.dir, $scope.files[0]
-    console.log dendrite
+
+    angular.forEach $scope.files, (file, index) ->
+      $scope.dendrites.push readXls.start $scope.dir, file
+    console.log $scope.dendrites
 ]
