@@ -17,7 +17,7 @@
         }
       });
       return $scope.loadData = function() {
-        return readXls.open($scope.dir, $scope.files[0]);
+        return readXls.start($scope.dir, $scope.files[0]);
       };
     }
   ]);

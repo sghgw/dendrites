@@ -11,5 +11,5 @@ ctrls.controller 'baseCtrl', ['$scope', 'readXls', ($scope, readXls) ->
       $scope.files = _.filter fs.readdirSync(newValue), (file) ->
         _.contains ['.xls', '.xlsx'], path.extname(file)
   $scope.loadData = () ->
-    readXls.open $scope.dir, $scope.files[0]
+    readXls.start $scope.dir, $scope.files[0]
 ]
