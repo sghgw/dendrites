@@ -3,5 +3,6 @@
 @App = angular.module 'dendrites', [
   'Controllers',
   'dendritesDirectives',
-  'readXlsFactory'
+  'readXlsFactory',
+  'XlsxFactory'
 ]
