@@ -1,6 +1,6 @@
 ctrls = angular.module 'Controllers', []
 
-ctrls.controller 'baseCtrl', ['$scope', 'readXls', ($scope, readXls) ->
+ctrls.controller 'baseCtrl', ['$scope', 'readXls', 'Xlsx', ($scope, readXls, Xlsx) ->
   fs = require 'fs'
   path = require 'path'
   $scope.files = []
@@ -16,4 +16,7 @@ ctrls.controller 'baseCtrl', ['$scope', 'readXls', ($scope, readXls) ->
     angular.forEach $scope.files, (file, index) ->
       $scope.dendrites.push readXls.start $scope.dir, file
     console.log $scope.dendrites
+
+  $scope.exportData = () ->
+    Xlsx.log()
 ]

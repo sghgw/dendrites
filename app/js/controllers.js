@@ -4,7 +4,7 @@
   ctrls = angular.module('Controllers', []);
 
   ctrls.controller('baseCtrl', [
-    '$scope', 'readXls', function($scope, readXls) {
+    '$scope', 'readXls', 'Xlsx', function($scope, readXls, Xlsx) {
       var fs, path;
       fs = require('fs');
       path = require('path');
@@ -17,11 +17,14 @@
           });
         }
       });
-      return $scope.loadData = function() {
+      $scope.loadData = function() {
         angular.forEach($scope.files, function(file, index) {
           return $scope.dendrites.push(readXls.start($scope.dir, file));
         });
         return console.log($scope.dendrites);
+      };
+      return $scope.exportData = function() {
+        return Xlsx.log();
       };
     }
   ]);
