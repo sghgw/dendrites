@@ -22,17 +22,16 @@
           <p>
             W&auml;hle einen Ordner aus, der Dateien zum Auswerten enth&auml;lt. Es werden nur Excel-Dateien mit den Endungen *.xls und *.xlsx ausgwertet.
           </p>
-          <div class="row">
-            <div class="col-sm-5 col-xs-5 col-md-5">
-              <span class="btn btn-success btn-file">
-                Ordner ausw&auml;hlen <input type="file" nwdirectory dir="dir">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="data.source">
+            <span class="input-group-btn">
+              <span class="btn btn-default btn-file">
+                <i class="glyphicon glyphicon-folder-open"></i><input type="file" nwdirectory dir="dir" placeholder="Keine Quelle ausgew&auml;hlt">
               </span>
-            </div>
-            <div class="col-sm-7 col-xs-7 col-md-7">
-              Ausgew&auml;hlter Ordner: {{dir}} <br>
-              Enthaltene Dateien: {{data.files.length}} 
-            </div>
+            </span>
           </div>
+          <br>
+          <p ng-show="data.files.length">Der ausgew&auml;hlte Ordner enth&auml;lt {{data.files.length}} Dateien.</p>
         </div>
       </tab-pane>
       <tab-pane title="2. Daten ausw&auml;hlen" icon="glyphicon-list">
