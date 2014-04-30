@@ -33,6 +33,10 @@ ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
 ]
 
+ctrls.controller 'previewCtrl', ['$scope', 'Data', ($scope, Data) ->
+  $scope.data = Data
+]
+
 ctrls.controller 'destinationCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
   $scope.$watch 'dir', (newValue, oldValue) ->

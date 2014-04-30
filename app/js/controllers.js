@@ -24,6 +24,12 @@
     }
   ]);
 
+  ctrls.controller('previewCtrl', [
+    '$scope', 'Data', function($scope, Data) {
+      return $scope.data = Data;
+    }
+  ]);
+
   ctrls.controller('destinationCtrl', [
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
