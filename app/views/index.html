@@ -38,15 +38,27 @@
       <tab-pane title="2. Daten ausw&auml;hlen" icon="glyphicon-list">
         <div ng-controller="dataCtrl">
           <h2>2. Daten f&uuml;r die Auswertung ausw&auml;hlen</h2>
-          <p>{{data.files.length}}</p>
-          <button ng-click="getFiles()" class="btn btn-primary">Lade...</button>
+          <p></p>
         </div>
       </tab-pane>
-      <tab-pane title="3. Speicherort" icon="glyphicon-save">
+      <tab-pane title="3. Vorschau" icon="glyphicon-search">
+        <div ng-controller="previewCtrl">
+          <h2>3. Datenvorschau</h2>
+          <p></p>
+        </div>
+      </tab-pane>
+      <tab-pane title="4. Auswertung speichern" icon="glyphicon-save">
         <div ng-controller="destinationCtrl">
-          <h2>Speicherort</h2>
-          <p>{{data.files.length}}</p>
-          <button ng-click="getFiles()" class="btn btn-primary">Lade...</button>
+          <h2>4. Auswertung speichern</h2>
+          <p>W&auml;hle aus, wo die Auswertung gespeichert werden soll.</p>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="data.destination">
+            <span class="input-group-btn">
+              <span class="btn btn-default btn-file">
+                <i class="glyphicon glyphicon-folder-open"></i><input type="file" nwsaveas="Auswertung.xlsx" dir="dir" placeholder="Kein Speicherort ausgew&auml;hlt">
+              </span>
+            </span>
+          </div>
         </div>
       </tab-pane>
     </tab-list>
