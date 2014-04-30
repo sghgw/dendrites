@@ -7,10 +7,14 @@ module.factory 'Xlsx', () ->
     fs: require 'fs'
     parser: new xml2js.Parser()
     builder: new xml2js.Builder()
+    destination: ''
     xlsx: {}
     loadTemplate: () ->
       file = window.location.pathname.split("views")[0] + 'templates/template.xlsx'
       @xlsx = new @zip(@fs.readFileSync(file))
+    generateXlsxFile: () ->
+      buffer = @xlsx.generate {type: 'nodebuffer'}
+      # send file to user...
     log: () ->
       @loadTemplate()
       console.log @xlsx.file('xl/worksheets/sheet1.xml').asText()

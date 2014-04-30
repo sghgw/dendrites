@@ -11,11 +11,18 @@
       fs: require('fs'),
       parser: new xml2js.Parser(),
       builder: new xml2js.Builder(),
+      destination: '',
       xlsx: {},
       loadTemplate: function() {
         var file;
         file = window.location.pathname.split("views")[0] + 'templates/template.xlsx';
         return this.xlsx = new this.zip(this.fs.readFileSync(file));
+      },
+      generateXlsxFile: function() {
+        var buffer;
+        return buffer = this.xlsx.generate({
+          type: 'nodebuffer'
+        });
       },
       log: function() {
         var _this = this;
