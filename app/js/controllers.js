@@ -1,16 +1,16 @@
 (function() {
-  var ctrls;
+  var ctrls, fs, path;
+
+  fs = require('fs');
+
+  path = require('path');
 
   ctrls = angular.module('Controllers', []);
 
   ctrls.controller('baseCtrl', [
     '$scope', 'readXls', 'Xlsx', function($scope, readXls, Xlsx) {
-      var fs, path;
-      fs = require('fs');
-      path = require('path');
       $scope.files = [];
       $scope.dendrites = [];
-      $scope.menu_items = [];
       $scope.$watch('dir', function(newValue, oldValue) {
         if (newValue) {
           return $scope.files = _.filter(fs.readdirSync(newValue), function(file) {
@@ -27,6 +27,19 @@
       return $scope.exportData = function() {
         return Xlsx.log();
       };
+    }
+  ]);
+
+  ctrls.controller('sourceCtrl', [
+    '$scope', function($scope) {
+      $scope.files = [];
+      return $scope.$watch('dir', function(newValue, oldValue) {
+        if (newValue) {
+          return $scope.files = _.filter(fs.readdirSync(newValue), function(file) {
+            return _.contains(['.xls', '.xlsx'], path.extname(file));
+          });
+        }
+      });
     }
   ]);
 

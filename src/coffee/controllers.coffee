@@ -1,11 +1,11 @@
+fs = require 'fs'
+path = require 'path'
+
 ctrls = angular.module 'Controllers', []
 
 ctrls.controller 'baseCtrl', ['$scope', 'readXls', 'Xlsx', ($scope, readXls, Xlsx) ->
-  fs = require 'fs'
-  path = require 'path'
   $scope.files = []
   $scope.dendrites = []
-  $scope.menu_items = []
   # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
     if newValue
@@ -20,4 +20,14 @@ ctrls.controller 'baseCtrl', ['$scope', 'readXls', 'Xlsx', ($scope, readXls, Xls
 
   $scope.exportData = () ->
     Xlsx.log()
+]
+
+ctrls.controller 'sourceCtrl', ['$scope', ($scope) ->
+  $scope.files = []
+  # update filelist if dir has changed
+  $scope.$watch 'dir', (newValue, oldValue) ->
+    if newValue
+      # filter filelist for file with extensions .xls or .xlsx
+      $scope.files = _.filter fs.readdirSync(newValue), (file) ->
+        _.contains ['.xls', '.xlsx'], path.extname(file)
 ]
