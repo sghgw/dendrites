@@ -3,6 +3,7 @@
 <head>
   <title>Dendrites</title>
   <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/switchery.min.css">
   <link rel="stylesheet" href="../css/app.css">
   <link rel="stylesheet" href="../css/main.css">
 </head>
@@ -37,7 +38,8 @@
       <tab-pane title="2. Daten ausw&auml;hlen" icon="glyphicon-list">
         <div ng-controller="dataCtrl">
           <h2>2. Daten f&uuml;r die Auswertung ausw&auml;hlen</h2>
-          <p></p>
+          <p>{{check}}</p>
+          <input type="checkbox" class="js-switch" switch="check">
         </div>
       </tab-pane>
       <tab-pane title="3. Vorschau" icon="glyphicon-search">
@@ -68,6 +70,7 @@
   <script src="../js/libs/bootstrap.min.js"></script>
   <script src="../js/libs/angular.js"></script>
   <script src="../js/libs/underscore.js"></script>
+  <script src="../js/libs/switchery.min.js"></script>
   <script src="../js/app.js"></script>
   <script src="../js/controllers.js"></script>
   <script src="../js/directives.js"></script>

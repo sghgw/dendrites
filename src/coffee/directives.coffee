@@ -44,3 +44,16 @@ module.directive 'tabPane', () ->
     link: (scope, element, attrs, tabsCtrl) ->
       tabsCtrl.addItem scope
   }
+
+module.directive 'switch', ['$window', ($window) ->
+  {  
+    restrict: 'A'
+    scope:
+      switch: '='
+    link: ($scope, element, attrs) ->
+      init = new $window.Switchery(element[0])
+      element.bind 'change', (event) ->
+        console.log element[0].checked
+        $scope.switch = element[0].checked
+        $scope.$apply()
+  }]

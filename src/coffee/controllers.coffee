@@ -31,6 +31,7 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
 
 ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
+  $scope.check = false
 ]
 
 ctrls.controller 'previewCtrl', ['$scope', 'Data', ($scope, Data) ->

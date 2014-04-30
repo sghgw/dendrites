@@ -63,4 +63,24 @@
     };
   });
 
+  module.directive('switch', [
+    '$window', function($window) {
+      return {
+        restrict: 'A',
+        scope: {
+          "switch": '='
+        },
+        link: function($scope, element, attrs) {
+          var init;
+          init = new $window.Switchery(element[0]);
+          return element.bind('change', function(event) {
+            console.log(element[0].checked);
+            $scope["switch"] = element[0].checked;
+            return $scope.$apply();
+          });
+        }
+      };
+    }
+  ]);
+
 }).call(this);
