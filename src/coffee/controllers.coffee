@@ -32,10 +32,10 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
         _.contains ['.xls', '.xlsx'], path.extname(file)
 ]
 
+ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->
+  $scope.data = Data
+]
+
 ctrls.controller 'destinationCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
-  $scope.getFiles = ->
-    console.log $scope.$parent
-    console.log $scope.data.files
-  #   $scope.files = Data.getFiles()
 ]

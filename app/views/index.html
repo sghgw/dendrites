@@ -35,7 +35,14 @@
           </div>
         </div>
       </tab-pane>
-      <tab-pane title="Nummer 2" icon="glyphicon-barcode">
+      <tab-pane title="2. Daten ausw&auml;hlen" icon="glyphicon-list">
+        <div ng-controller="dataCtrl">
+          <h2>2. Daten f&uuml;r die Auswertung ausw&auml;hlen</h2>
+          <p>{{data.files.length}}</p>
+          <button ng-click="getFiles()" class="btn btn-primary">Lade...</button>
+        </div>
+      </tab-pane>
+      <tab-pane title="3. Speicherort" icon="glyphicon-save">
         <div ng-controller="destinationCtrl">
           <h2>Speicherort</h2>
           <p>{{data.files.length}}</p>

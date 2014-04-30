@@ -43,13 +43,15 @@
     }
   ]);
 
+  ctrls.controller('dataCtrl', [
+    '$scope', 'Data', function($scope, Data) {
+      return $scope.data = Data;
+    }
+  ]);
+
   ctrls.controller('destinationCtrl', [
     '$scope', 'Data', function($scope, Data) {
-      $scope.data = Data;
-      return $scope.getFiles = function() {
-        console.log($scope.$parent);
-        return console.log($scope.data.files);
-      };
+      return $scope.data = Data;
     }
   ]);
 
