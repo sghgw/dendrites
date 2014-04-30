@@ -1,9 +1,10 @@
-<div>
-  <ul>
-    <li ng-repeat="item in items" ng-class="{active:item.selected}">
-      <a href="#" ng-click="select(item)">{{item.title}}</a>
-    </li>
-  </ul>
-
-  <div class="tabs" ng-transclude></div>
+<div class="row bhoechie-tab-container">
+  <div class="col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+    <div class="list-group">
+      <a href="#" class="list-group-item text-center" ng-repeat="item in items" ng-click="select(item)" ng-class="{active:item.selected}">
+        <h4 class="glyphicon glyphicon-plane"></h4><br/>{{item.title}}
+      </a>
+    </div>
+  </div>
+  <div class="col-md-8 col-sm-8 col-xs-8 bhoechie-tab" ng-transclude></div>
 </div>
