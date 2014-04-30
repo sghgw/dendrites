@@ -10,6 +10,7 @@
       path = require('path');
       $scope.files = [];
       $scope.dendrites = [];
+      $scope.menu_items = [];
       $scope.$watch('dir', function(newValue, oldValue) {
         if (newValue) {
           return $scope.files = _.filter(fs.readdirSync(newValue), function(file) {

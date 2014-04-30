@@ -5,6 +5,7 @@ ctrls.controller 'baseCtrl', ['$scope', 'readXls', 'Xlsx', ($scope, readXls, Xls
   path = require 'path'
   $scope.files = []
   $scope.dendrites = []
+  $scope.menu_items = []
   # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
     if newValue

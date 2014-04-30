@@ -21,4 +21,17 @@
     };
   });
 
+  module.directive('tabMenu', function() {
+    return {
+      restrict: 'A',
+      templateUrl: '../views/tab-menu.html',
+      scope: {
+        items: '='
+      },
+      link: function($scope, element, attrs) {
+        return console.log('Here I am.');
+      }
+    };
+  });
+
 }).call(this);
