@@ -4,5 +4,6 @@
   'Controllers',
   'dendritesDirectives',
   'readXlsFactory',
-  'XlsxFactory'
+  'XlsxFactory',
+  'dataFactory'
 ]

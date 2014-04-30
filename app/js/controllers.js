@@ -31,15 +31,25 @@
   ]);
 
   ctrls.controller('sourceCtrl', [
-    '$scope', function($scope) {
-      $scope.files = [];
+    '$scope', 'Data', function($scope, Data) {
+      $scope.data = Data;
       return $scope.$watch('dir', function(newValue, oldValue) {
         if (newValue) {
-          return $scope.files = _.filter(fs.readdirSync(newValue), function(file) {
+          return $scope.data.files = _.filter(fs.readdirSync(newValue), function(file) {
             return _.contains(['.xls', '.xlsx'], path.extname(file));
           });
         }
       });
+    }
+  ]);
+
+  ctrls.controller('destinationCtrl', [
+    '$scope', 'Data', function($scope, Data) {
+      $scope.data = Data;
+      return $scope.getFiles = function() {
+        console.log($scope.$parent);
+        return console.log($scope.data.files);
+      };
     }
   ]);
 

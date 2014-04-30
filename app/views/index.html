@@ -30,14 +30,17 @@
             </div>
             <div class="col-sm-7 col-xs-7 col-md-7">
               Ausgew&auml;hlter Ordner: {{dir}} <br>
-              Enthaltene Dateien: {{files.length}} 
+              Enthaltene Dateien: {{data.files.length}} 
             </div>
           </div>
         </div>
       </tab-pane>
       <tab-pane title="Nummer 2" icon="glyphicon-barcode">
-        <h4>Noch ein Tab</h4>
-        <p>Ich bin Nummer 2</p>
+        <div ng-controller="destinationCtrl">
+          <h2>Speicherort</h2>
+          <p>{{data.files.length}}</p>
+          <button ng-click="getFiles()" class="btn btn-primary">Lade...</button>
+        </div>
       </tab-pane>
     </tab-list>
 
@@ -52,5 +55,6 @@
   <script src="../js/directives.js"></script>
   <script src="../js/factories/read_xls.js"></script>
   <script src="../js/factories/xlsx.js"></script>
+  <script src="../js/factories/data.js"></script>
 </body>
 </html>

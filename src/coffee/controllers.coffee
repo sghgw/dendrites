@@ -22,12 +22,20 @@ ctrls.controller 'baseCtrl', ['$scope', 'readXls', 'Xlsx', ($scope, readXls, Xls
     Xlsx.log()
 ]
 
-ctrls.controller 'sourceCtrl', ['$scope', ($scope) ->
-  $scope.files = []
+ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
+  $scope.data = Data
   # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
     if newValue
       # filter filelist for file with extensions .xls or .xlsx
-      $scope.files = _.filter fs.readdirSync(newValue), (file) ->
+      $scope.data.files = _.filter fs.readdirSync(newValue), (file) ->
         _.contains ['.xls', '.xlsx'], path.extname(file)
+]
+
+ctrls.controller 'destinationCtrl', ['$scope', 'Data', ($scope, Data) ->
+  $scope.data = Data
+  $scope.getFiles = ->
+    console.log $scope.$parent
+    console.log $scope.data.files
+  #   $scope.files = Data.getFiles()
 ]
