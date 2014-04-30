@@ -2,7 +2,7 @@
   <div class="col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
     <div class="list-group">
       <a href="#" class="list-group-item text-center" ng-repeat="item in items" ng-click="select(item)" ng-class="{active:item.selected}">
-        <h4 class="glyphicon glyphicon-plane"></h4><br/>{{item.title}}
+        <h3 class="glyphicon" ng-class="item.icon"></h3><br/>{{item.title}}
       </a>
     </div>
   </div>
