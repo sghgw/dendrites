@@ -13,13 +13,34 @@ module.directive 'dir', () ->
         $scope.$apply()
   }
 
-module.directive 'tabMenu', () ->
+module.directive 'tabList', () ->
   {
-    restrict: 'A'
-    templateUrl: '../views/tab-menu.html'
-    scope:
-      items: '='
-    link: ($scope, element, attrs) ->
-      console.log 'Here I am.'
+    restrict: 'E'
+    transclude: true
+    templateUrl: '../views/tabs.html'
+    scope: {}
+    controller: ($scope) ->
+      $scope.items = []
+      $scope.select = (item) ->
+        angular.forEach $scope.items, (item) ->
+          item.selected = false
+        item.selected = true
+      {
+        addItem: (item) ->
+          $scope.select(item) if $scope.items.length is 0
+          $scope.items.push item
+      }
+  }
 
+module.directive 'tabPane', () ->
+  {
+    require: '^tabList'
+    restrict: 'E'
+    transclude: true
+    templateUrl: '../views/tab-pane.html'
+    scope: 
+      title: '@'
+      icon: '@'
+    link: (scope, element, attrs, tabsCtrl) ->
+      tabsCtrl.addItem scope
   }

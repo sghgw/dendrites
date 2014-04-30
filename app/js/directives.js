@@ -21,15 +21,44 @@
     };
   });
 
-  module.directive('tabMenu', function() {
+  module.directive('tabList', function() {
     return {
-      restrict: 'A',
-      templateUrl: '../views/tab-menu.html',
+      restrict: 'E',
+      transclude: true,
+      templateUrl: '../views/tabs.html',
+      scope: {},
+      controller: function($scope) {
+        $scope.items = [];
+        $scope.select = function(item) {
+          angular.forEach($scope.items, function(item) {
+            return item.selected = false;
+          });
+          return item.selected = true;
+        };
+        return {
+          addItem: function(item) {
+            if ($scope.items.length === 0) {
+              $scope.select(item);
+            }
+            return $scope.items.push(item);
+          }
+        };
+      }
+    };
+  });
+
+  module.directive('tabPane', function() {
+    return {
+      require: '^tabList',
+      restrict: 'E',
+      transclude: true,
+      templateUrl: '../views/tab-pane.html',
       scope: {
-        items: '='
+        title: '@',
+        icon: '@'
       },
-      link: function($scope, element, attrs) {
-        return console.log('Here I am.');
+      link: function(scope, element, attrs, tabsCtrl) {
+        return tabsCtrl.addItem(scope);
       }
     };
   });
