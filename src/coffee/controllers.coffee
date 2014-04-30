@@ -26,12 +26,7 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
   # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
-    if newValue
-      # filter filelist for file with extensions .xls or .xlsx
-      if fs.existsSync newValue
-        $scope.data.files = _.filter fs.readdirSync(newValue), (file) ->
-          _.contains ['.xls', '.xlsx'], path.extname(file)
-        $scope.data.destination = newValue + '/Auswertung.xlsx'
+    Data.loadFileList(newValue) if newValue
 ]
 
 ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->

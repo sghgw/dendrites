@@ -12,12 +12,7 @@
       $scope.data = Data;
       return $scope.$watch('dir', function(newValue, oldValue) {
         if (newValue) {
-          if (fs.existsSync(newValue)) {
-            $scope.data.files = _.filter(fs.readdirSync(newValue), function(file) {
-              return _.contains(['.xls', '.xlsx'], path.extname(file));
-            });
-            return $scope.data.destination = newValue + '/Auswertung.xlsx';
-          }
+          return Data.loadFileList(newValue);
         }
       });
     }
