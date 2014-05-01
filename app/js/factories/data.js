@@ -19,7 +19,7 @@
             length: true,
             surface: false,
             volume: false,
-            spine_number: true,
+            total_spines: true,
             spine_density: true,
             mean_spine_length: true
           },
@@ -43,7 +43,8 @@
                 title: ''
               };
             });
-            return this.destination = source + '/Auswertung.xlsx';
+            this.destination = source + '/Auswertung.xlsx';
+            return this.loadDendriteData();
           }
         },
         loadDendriteData: function() {
@@ -52,7 +53,8 @@
           _results = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             file = _ref[_i];
-            _results.push(file.dendrite = readXls.start(this.source, file.name));
+            file.dendrite = readXls.start(this.source, file.name, this.data_options);
+            _results.push(console.log(file.dendrite));
           }
           return _results;
         },

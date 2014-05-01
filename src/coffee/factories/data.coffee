@@ -13,7 +13,7 @@ module.factory 'Data', ['readXls', (readXls) ->
         length: true
         surface: false
         volume: false
-        spine_number: true
+        total_spines: true
         spine_density: true
         mean_spine_length: true
       spines:
@@ -32,11 +32,13 @@ module.factory 'Data', ['readXls', (readXls) ->
         @files = _.map files, (filename) ->
           {name: filename, title: ''} 
         @destination = source + '/Auswertung.xlsx'
+        @loadDendriteData()
     
     # method to load dendrite data from excel file
     loadDendriteData: ->
       for file in @files
-        file.dendrite = readXls.start @source, file.name
+        file.dendrite = readXls.start @source, file.name, @data_options
+        console.log file.dendrite
 
     groupFiles: ->
       p = @checkPattern()
