@@ -32,8 +32,7 @@ module.factory 'Data', ['readXls', (readXls) ->
         @files = _.map files, (filename) ->
           {name: filename, title: ''} 
         @destination = source + '/Auswertung.xlsx'
-        @loadDendriteData()
-    
+          
     # method to load dendrite data from excel file
     loadDendriteData: ->
       for file in @files

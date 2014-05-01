@@ -68,6 +68,8 @@ ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->
 
 ctrls.controller 'previewCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
+  $scope.loadDendriteData = ->
+    $scope.data.loadDendriteData()
 ]
 
 ctrls.controller 'destinationCtrl', ['$scope', 'Data', ($scope, Data) ->

@@ -43,8 +43,7 @@
                 title: ''
               };
             });
-            this.destination = source + '/Auswertung.xlsx';
-            return this.loadDendriteData();
+            return this.destination = source + '/Auswertung.xlsx';
           }
         },
         loadDendriteData: function() {

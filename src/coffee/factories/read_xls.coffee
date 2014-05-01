@@ -6,19 +6,24 @@ module.factory 'readXls', () ->
     xlsx: require 'xlsx'
     stats: require 'simple-statistics'
     path: require 'path'
-    start: (dir, file) ->
+    start: (dir, file, options) ->
       file = @open dir, file
-      @load(file)
+      @load(file, options)
     open: (dir, file) ->
       if @path.extname(file) is '.xls' then @xls.readFile(dir + '/' + file) else @xlsx.readFile(dir + '/' + file)
-    load: (file) ->
-      dendrite = {
-        length: file.Sheets['Each Tree-Dendrite']['D2'].v
-        spines: 
-          total: file.Sheets['Each Tree-Dendrite']['R2'].v
-      }
-      dendrite.spines.data = (file.Sheets['Spine Details']['E' + i].v for i in [2..(dendrite.spines.total + 1)])
-      dendrite.spines.mean_length = @stats.mean(dendrite.spines.data)
-      dendrite.spines.density = dendrite.spines.total / dendrite.length
+    load: (file, options) ->
+      dendrite = {}
+      dendrite.length = file.Sheets['Each Tree-Dendrite']['D2'].v if options.dendrite.length
+      dendrite.surface = file.Sheets['Each Tree-Dendrite']['G2'].v if options.dendrite.surface
+      dendrite.volume = file.Sheets['Each Tree-Dendrite']['J2'].v if options.dendrite.volume
+      dendrite.total_spines = file.Sheets['Each Tree-Dendrite']['R2'].v if options.dendrite.total_spines
+      dendrite.spines = {}
+      dendrite.spines.length = (file.Sheets['Spine Details']['E' + i].v for i in [2..(dendrite.total_spines + 1)]) if options.spines.length
+      dendrite.spines.diameter = (file.Sheets['Spine Details']['F' + i].v for i in [2..(dendrite.total_spines + 1)]) if options.spines.diameter
+      dendrite.spines.distance = (file.Sheets['Spine Details']['G' + i].v for i in [2..(dendrite.total_spines + 1)]) if options.spines.distance
+      dendrite.spines.length_to_center = (file.Sheets['Spine Details']['D' + i].v for i in [2..(dendrite.total_spines + 1)]) if options.spines.length_to_center
+      # console.log test
+      # dendrite.mean_spine_length = @stats.mean(dendrite.spines.data)
+      # dendrite.spine_density = dendrite.total_spines / dendrite.length
       dendrite
   }
