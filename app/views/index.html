@@ -15,24 +15,26 @@
       </div>
     </div>
   </nav>
-  <div class="content">
-    <tab-list>
-      <tab-pane title="1. Quelle ausw&auml;hlen" icon="glyphicon-hdd">
-        <div ng-include src="'source.html'"></div>
-      </tab-pane>
-      <tab-pane title="2. Daten gruppieren" icon="glyphicon-th-large">
-        <div ng-include src="'groups.html'"></div>
-      </tab-pane>
-      <tab-pane title="3. Daten ausw&auml;hlen" icon="glyphicon-list">
-        <div ng-include src="'data.html'"></div>
-      </tab-pane>
-      <tab-pane title="4. Vorschau" icon="glyphicon-search">
-        <div ng-include src="'preview.html'"></div>
-      </tab-pane>
-      <tab-pane title="5. Auswertung speichern" icon="glyphicon-save">
-        <div ng-include src="'export.html'"></div>
-      </tab-pane>
-    </tab-list>
+  <div class="content container">
+    <div class="row">
+      <tab-list>
+        <tab-pane title="1. Quelle ausw&auml;hlen" icon="glyphicon-hdd">
+          <div ng-include src="'source.html'"></div>
+        </tab-pane>
+        <tab-pane title="2. Daten gruppieren" icon="glyphicon-th-large">
+          <div ng-include src="'groups.html'"></div>
+        </tab-pane>
+        <tab-pane title="3. Daten ausw&auml;hlen" icon="glyphicon-list">
+          <div ng-include src="'data.html'"></div>
+        </tab-pane>
+        <tab-pane title="4. Vorschau" icon="glyphicon-search">
+          <div ng-include src="'preview.html'"></div>
+        </tab-pane>
+        <tab-pane title="5. Auswertung speichern" icon="glyphicon-save">
+          <div ng-include src="'export.html'"></div>
+        </tab-pane>
+      </tab-list>
+    </div>
   </div>
   
   <script src="../js/libs/jquery.min.js"></script>
