@@ -39,7 +39,30 @@
         }
       },
       groupFiles: function() {
-        return console.log(this.filename_pattern);
+        var first, pattern;
+        console.log(this.filename_pattern);
+        pattern = this.filename_pattern.split('<Gruppe>')[1];
+        if (pattern) {
+          if (pattern === pattern.split('<Titel>')[0] || pattern.split('<Titel>')[0] === '') {
+            return false;
+          } else {
+            first = 'group';
+            pattern = pattern.split('<Titel>')[0];
+            console.log(first, pattern);
+          }
+        } else if (this.filename_pattern.split('<Titel>')[1]) {
+          pattern = this.filename_pattern.split('<Titel>')[1];
+          if (pattern === pattern.split('<Gruppe>')[0] || pattern.split('<Gruppe>')[0] === '') {
+            return false;
+          } else {
+            first = 'title';
+            pattern = this.filename_pattern.split('<Titel>')[1].split('<Gruppe>')[0];
+            console.log(first, pattern);
+          }
+        } else {
+          return false;
+        }
+        return true;
       }
     };
   });

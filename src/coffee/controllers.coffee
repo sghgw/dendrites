@@ -34,9 +34,18 @@ ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
 
   $scope.$watch 'data.filename_pattern', (pattern, old) ->
-    $scope.data.groupFiles() if $scope.data.grouping
+    checkGroups $scope.data.grouping, true
   $scope.$watch 'data.grouping', (grouping, old) ->
-    $scope.data.groupFiles() if grouping
+    checkGroups grouping, false
+
+  checkGroups = (val, show_success) ->
+    angular.element('#pattern_div').removeClass('has-error')
+    if val
+      val = $scope.data.groupFiles() 
+      if !val
+        angular.element('#pattern_div').addClass('has-error')
+      else
+        angular.element('#pattern_div').addClass('has-success') if show_success
 ]
 
 ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->

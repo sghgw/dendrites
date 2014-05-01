@@ -22,17 +22,27 @@
 
   ctrls.controller('groupsCtrl', [
     '$scope', 'Data', function($scope, Data) {
+      var checkGroups;
       $scope.data = Data;
       $scope.$watch('data.filename_pattern', function(pattern, old) {
-        if ($scope.data.grouping) {
-          return $scope.data.groupFiles();
-        }
+        return checkGroups($scope.data.grouping, true);
       });
-      return $scope.$watch('data.grouping', function(grouping, old) {
-        if (grouping) {
-          return $scope.data.groupFiles();
-        }
+      $scope.$watch('data.grouping', function(grouping, old) {
+        return checkGroups(grouping, false);
       });
+      return checkGroups = function(val, show_success) {
+        angular.element('#pattern_div').removeClass('has-error');
+        if (val) {
+          val = $scope.data.groupFiles();
+          if (!val) {
+            return angular.element('#pattern_div').addClass('has-error');
+          } else {
+            if (show_success) {
+              return angular.element('#pattern_div').addClass('has-success');
+            }
+          }
+        }
+      };
     }
   ]);
 

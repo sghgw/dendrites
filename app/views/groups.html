@@ -11,10 +11,10 @@
   <div ng-show="data.grouping">
     <p>Der Dateiname sollte eine Bezeichnung für die Gruppe und einen Titel enthalten. Bitte gib an, wie der Dateiname aufgebaut ist:</p>
     <form class="form-horizontal">
-      <div class="form-group">
+      <div class="form-group" id="pattern_div">
         <label for="filename_pattern" class="control-label col-xs-3">Dateiname</label>
         <div class="input-group col-xs-9">
-          <input type="text" class="form-control" ng-model="data.filename_pattern" id="data.filename_pattern">
+          <input type="text" class="form-control" ng-model="data.filename_pattern" id="filename_pattern">
           <span class="input-group-addon">.xls</span>
         </div>
       </div>

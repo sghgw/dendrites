@@ -33,4 +33,26 @@ module.factory 'Data', () ->
 
     groupFiles: ->
       console.log @filename_pattern
+      pattern = @filename_pattern.split('<Gruppe>')[1]
+      if pattern
+        if pattern is pattern.split('<Titel>')[0] or pattern.split('<Titel>')[0] is ''
+          return false
+        else
+          first = 'group'
+          pattern = pattern.split('<Titel>')[0]
+          console.log first, pattern
+      else if @filename_pattern.split('<Titel>')[1]
+        pattern = @filename_pattern.split('<Titel>')[1]
+        if pattern is pattern.split('<Gruppe>')[0] or pattern.split('<Gruppe>')[0] is ''
+          return false
+        else
+          first = 'title'
+          pattern = @filename_pattern.split('<Titel>')[1].split('<Gruppe>')[0]
+          console.log first, pattern
+      else
+        return false
+
+      return true
+
+
   }
