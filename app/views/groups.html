@@ -21,16 +21,16 @@
     </form>
     <br><br>
     <div ng-show="data.files.length">
-      <table class="table table-condensed table-hover">
+      <table class="table table-condensed table-hover" id="group_table">
         <thead>
           <tr>
-            <th class="col-xs-3">#</th>
-            <th class="col-xs-7">Bezeichnung</th>
-            <th class="col-xs-2">Dateien</th>
+            <th class="col-xs-3"><a href="#" ng-click="changeSort('id', $event)">#<i class="glyphicon glyphicon-chevron-down"></a></i></th>
+            <th class="col-xs-6"><a href="#" ng-click="changeSort('title', $event)">Bezeichnung<i class="glyphicon"></a></th>
+            <th class="col-xs-3 text-center"><a href="#" ng-click="changeSort('files', $event)">Dateien<i class="glyphicon"></a></th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="group in data.groups">
+          <tr ng-repeat="group in data.groups | orderBy:sort:reverse">
             <td>{{group.id}}</td>
             <td><input class="form-control" type="text" placeholder="{{group.id}}" ng-model="group.title"></td>
             <td class="text-center">{{group.files}}</td>
