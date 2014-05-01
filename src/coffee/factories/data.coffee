@@ -27,14 +27,30 @@ module.factory 'Data', () ->
       # filter filelist for file with extensions .xls or .xlsx
       if fs.existsSync source
         @source = source
-        @files = _.filter fs.readdirSync(source), (file) ->
+        files = _.filter fs.readdirSync(source), (file) ->
           _.contains ['.xls', '.xlsx'], path.extname(file)
+        @files = _.map files, (filename) ->
+          {name: filename, title: ''} 
         @destination = source + '/Auswertung.xlsx'
 
     groupFiles: ->
-      console.log @filename_pattern
-      pattern = @checkPattern()
-      return false if !pattern
+      p = @checkPattern()
+      groups = {}
+      return false if !p
+
+      for file in @files
+        # file = file.split(path.extname(file))[0]
+        groupname = if p.first is 'group' then file.name.split(p.pattern)[0] else file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0]
+        title = if p.first is 'title' then file.name.split(p.pattern)[0] else file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0]
+        file.title = title
+
+        if groups[groupname]
+          groups[groupname] += 1
+        else
+          groups[groupname] = 1
+
+      @groups = _.map groups, (number, id) ->
+        {id: id, files: number}
       return true
 
     checkPattern: ->
@@ -45,7 +61,6 @@ module.factory 'Data', () ->
         else
           first = 'group'
           pattern = pattern.split('<Titel>')[0]
-          console.log first, pattern
       else if @filename_pattern.split('<Titel>')[1]
         pattern = @filename_pattern.split('<Titel>')[1]
         if pattern is pattern.split('<Gruppe>')[0] or pattern.split('<Gruppe>')[0] is ''
@@ -53,10 +68,12 @@ module.factory 'Data', () ->
         else
           first = 'title'
           pattern = @filename_pattern.split('<Titel>')[1].split('<Gruppe>')[0]
-          console.log first, pattern
       else
         return false
 
-      pattern
+      {
+        pattern: pattern
+        first: first
+      }
 
   }

@@ -30,21 +30,46 @@
         }
       },
       loadFileList: function(source) {
+        var files;
         if (fs.existsSync(source)) {
           this.source = source;
-          this.files = _.filter(fs.readdirSync(source), function(file) {
+          files = _.filter(fs.readdirSync(source), function(file) {
             return _.contains(['.xls', '.xlsx'], path.extname(file));
+          });
+          this.files = _.map(files, function(filename) {
+            return {
+              name: filename,
+              title: ''
+            };
           });
           return this.destination = source + '/Auswertung.xlsx';
         }
       },
       groupFiles: function() {
-        var pattern;
-        console.log(this.filename_pattern);
-        pattern = this.checkPattern();
-        if (!pattern) {
+        var file, groupname, groups, p, title, _i, _len, _ref;
+        p = this.checkPattern();
+        groups = {};
+        if (!p) {
           return false;
         }
+        _ref = this.files;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          file = _ref[_i];
+          groupname = p.first === 'group' ? file.name.split(p.pattern)[0] : file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0];
+          title = p.first === 'title' ? file.name.split(p.pattern)[0] : file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0];
+          file.title = title;
+          if (groups[groupname]) {
+            groups[groupname] += 1;
+          } else {
+            groups[groupname] = 1;
+          }
+        }
+        this.groups = _.map(groups, function(number, id) {
+          return {
+            id: id,
+            files: number
+          };
+        });
         return true;
       },
       checkPattern: function() {
@@ -56,7 +81,6 @@
           } else {
             first = 'group';
             pattern = pattern.split('<Titel>')[0];
-            console.log(first, pattern);
           }
         } else if (this.filename_pattern.split('<Titel>')[1]) {
           pattern = this.filename_pattern.split('<Titel>')[1];
@@ -65,12 +89,14 @@
           } else {
             first = 'title';
             pattern = this.filename_pattern.split('<Titel>')[1].split('<Gruppe>')[0];
-            console.log(first, pattern);
           }
         } else {
           return false;
         }
-        return pattern;
+        return {
+          pattern: pattern,
+          first: first
+        };
       }
     };
   });
