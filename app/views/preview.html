@@ -1,25 +1,42 @@
 <div ng-controller="previewCtrl">
   <h2>4. Datenvorschau</h2>
-  <div class="panel panel-default">
-    <div class="panel-heading">Dendriten</div>
-    <div class="panel-body">
-      <button class="btn btn-primary" ng-click="loadDendriteData()">Daten laden</button>
-      <table class="table table-condensed table-hover" id="group_table">
-        <thead>
-          <tr>
-            <th class="col-xs-3"><a href="#" ng-click="changeSort('id', $event)">#<i class="glyphicon glyphicon-chevron-down"></a></i></th>
-            <th class="col-xs-6"><a href="#" ng-click="changeSort('title', $event)">Bezeichnung<i class="glyphicon"></a></th>
-            <th class="col-xs-3 text-center"><a href="#" ng-click="changeSort('files', $event)">Dateien<i class="glyphicon"></a></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="group in data.groups | orderBy:sort:reverse">
-            <td>{{group.id}}</td>
-            <td><input class="form-control" type="text" placeholder="{{group.id}}" ng-model="group.title"></td>
-            <td class="text-center">{{group.files}}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div ng-show="!data.loaded_data">
+    <p>Hier kann eine kurze Vorschau in die Daten angezeigt werden, bevor sie im nächsten Schritt exportiert werden.</p>
+  <button class="btn btn-success" ng-click="loadDendriteData()">Vorschau laden</button>
+  </div>
+  <div ng-show="data.loaded_data">
+    <div class="panel panel-default">
+      <div class="panel-heading">Dendriten</div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-condensed table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Dendrit</th>
+                <th ng-show="data.data_options.dendrite.length">Länge</th>
+                <th ng-show="data.data_options.dendrite.surface">Oberfläche</th>
+                <th ng-show="data.data_options.dendrite.volume">Volumen</th>
+                <th ng-show="data.data_options.dendrite.total_spines">Spines</th>
+                <th ng-show="data.data_options.dendrite.spine_density">Spinedichte</th>
+                <th ng-show="data.data_options.dendrite.mean_spine_length">Spinelänge</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="file in data.files">
+                <td>{{$index + 1}}</td>
+                <td>{{file.title ? file.title : file.name}}</td>
+                <td ng-show="data.data_options.dendrite.length">{{file.dendrite.length.toFixed(1)}}</td>
+                <td ng-show="data.data_options.dendrite.surface">{{file.dendrite.surface}}</td>
+                <td ng-show="data.data_options.dendrite.volume">{{file.dendrite.volume}}</td>
+                <td ng-show="data.data_options.dendrite.total_spines">{{file.dendrite.total_spines}}</td>
+                <td ng-show="data.data_options.dendrite.spine_density">{{file.dendrite.spine_density.toFixed(4)}}</td>
+                <td ng-show="data.data_options.dendrite.mean_spine_length">{{file.dendrite.mean_spine_length.toFixed(4)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
