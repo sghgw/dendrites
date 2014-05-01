@@ -22,7 +22,9 @@
       },
       load: function(file, options) {
         var dendrite, i;
-        dendrite = {};
+        dendrite = {
+          spines: {}
+        };
         if (options.dendrite.length) {
           dendrite.length = file.Sheets['Each Tree-Dendrite']['D2'].v;
         }
@@ -35,8 +37,7 @@
         if (options.dendrite.total_spines) {
           dendrite.total_spines = file.Sheets['Each Tree-Dendrite']['R2'].v;
         }
-        dendrite.spines = {};
-        if (options.spines.length || options.dendrite.mean_spine_length) {
+        if (options.spines.length || options.dendrite.mean_spine_length || options.spines.grouped_length) {
           dendrite.spines.length = (function() {
             var _i, _ref, _results;
             _results = [];
@@ -81,6 +82,25 @@
         }
         if (options.dendrite.spine_density) {
           dendrite.spine_density = dendrite.total_spines / dendrite.length;
+        }
+        if (options.spines.grouped_length) {
+          dendrite.spines.grouped_length = _.countBy(dendrite.spines.length, function(spine) {
+            if (spine < 0.5) {
+              return '< 0,5';
+            }
+            if ((0.5 <= spine && spine < 1)) {
+              return '0,5 - 1';
+            }
+            if ((1 <= spine && spine < 1.5)) {
+              return '1 - 1,5';
+            }
+            if ((1.5 <= spine && spine < 2)) {
+              return '1,5 - 2';
+            }
+            if (spine > 2) {
+              return '> 2';
+            }
+          });
         }
         return dendrite;
       }
