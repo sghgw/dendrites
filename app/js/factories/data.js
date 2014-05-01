@@ -39,8 +39,16 @@
         }
       },
       groupFiles: function() {
-        var first, pattern;
+        var pattern;
         console.log(this.filename_pattern);
+        pattern = this.checkPattern();
+        if (!pattern) {
+          return false;
+        }
+        return true;
+      },
+      checkPattern: function() {
+        var first, pattern;
         pattern = this.filename_pattern.split('<Gruppe>')[1];
         if (pattern) {
           if (pattern === pattern.split('<Titel>')[0] || pattern.split('<Titel>')[0] === '') {
@@ -62,7 +70,7 @@
         } else {
           return false;
         }
-        return true;
+        return pattern;
       }
     };
   });

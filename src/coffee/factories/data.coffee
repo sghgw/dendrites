@@ -33,6 +33,11 @@ module.factory 'Data', () ->
 
     groupFiles: ->
       console.log @filename_pattern
+      pattern = @checkPattern()
+      return false if !pattern
+      return true
+
+    checkPattern: ->
       pattern = @filename_pattern.split('<Gruppe>')[1]
       if pattern
         if pattern is pattern.split('<Titel>')[0] or pattern.split('<Titel>')[0] is ''
@@ -52,7 +57,6 @@ module.factory 'Data', () ->
       else
         return false
 
-      return true
-
+      pattern
 
   }
