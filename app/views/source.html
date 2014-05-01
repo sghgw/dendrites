@@ -1,0 +1,16 @@
+<div ng-controller="sourceCtrl">
+  <h2>1. Quelle ausw&auml;hlen</h2>
+  <p>
+    W&auml;hle einen Ordner aus, der Dateien zum Auswerten enth&auml;lt. Es werden nur Excel-Dateien mit den Endungen *.xls und *.xlsx ausgwertet.
+  </p>
+  <div class="input-group">
+    <input type="text" class="form-control" ng-model="data.source" placeholder="Keine Quelle ausgew&auml;hlt">
+    <span class="input-group-btn">
+      <span class="btn btn-default btn-file">
+        <i class="glyphicon glyphicon-folder-open"></i><input type="file" nwdirectory dir="dir">
+      </span>
+    </span>
+  </div>
+  <br>
+  <p ng-show="data.files.length">Der ausgew&auml;hlte Ordner enth&auml;lt {{data.files.length}} Dateien.</p>
+</div>

@@ -1,0 +1,65 @@
+<div ng-controller="dataCtrl">
+  <h2>2. Daten ausw&auml;hlen</h2>
+  <p>W&auml;hle aus, welche Informationen mit ausgewertet sollen:</p>
+  <div class="panel panel-default">
+    <div class="panel-heading">Dendrit</div>
+    <div class="panel-body">
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          L&auml;nge <input type="checkbox" class="js-switch" switch="data.data_options.dendrite.length"> 
+        </label>
+      </div>
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          Oberfl&auml;che <input type="checkbox" class="js-switch" switch="data.data_options.dendrite.surface"> 
+        </label>
+      </div>
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          Volumen <input type="checkbox" class="js-switch" switch="data.data_options.dendrite.volume"> 
+        </label>
+      </div>
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          Spineanzahl <input type="checkbox" class="js-switch" switch="data.data_options.dendrite.spine_number"> 
+        </label>
+      </div>
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          Spinedichte <input type="checkbox" class="js-switch" switch="data.data_options.dendrite.spine_density"> 
+        </label>
+      </div>
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          Mittlere Spinel&auml;nge <input type="checkbox" class="js-switch" switch="data.data_options.dendrite.mean_spine_length"> 
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Spines</div>
+    <div class="panel-body">
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          L&auml;nge <input type="checkbox" class="js-switch" switch="data.data_options.spines.length"> 
+        </label>
+      </div>
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          Durchmesser <input type="checkbox" class="js-switch" switch="data.data_options.spines.diameter"> 
+        </label>
+      </div>
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          Distanz <input type="checkbox" class="js-switch" switch="data.data_options.spines.distance"> 
+        </label>
+      </div>
+      <div class="col-sm-6 col-xs-6 col-md-6 option-list">
+        <label>
+          L&auml;nge zur Mitte <input type="checkbox" class="js-switch" switch="data.data_options.spines.length_to_center"> 
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
