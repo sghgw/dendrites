@@ -33,6 +33,7 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
 ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
   $scope.grouping = false
+  $scope.filename_pattern = '<Gruppe>_<Titel>.xls'
 ]
 
 ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->

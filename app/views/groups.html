@@ -4,11 +4,19 @@
 
   <div class="option-list">
     <label>
-      Sollen die Daten gruppiert werden? <input type="checkbox" class="js-switch" switch="grouping"> 
+      <strong>Sollen die Daten gruppiert werden?</strong><input type="checkbox" class="js-switch" switch="grouping"> 
     </label>
   </div>
 
   <div ng-show="grouping">
-    Hier wird gruppiert...
+    <p>Der Dateiname sollte eine Bezeichnung für die Gruppe und einen Titel enthalten. Bitte gib an, wie der Dateiname aufgebaut ist:</p>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="filename_pattern" class="control-label col-xs-3">Dateiname</label>
+        <div class="col-xs-9">
+          <input type="text" class="form-control" ng-model="filename_pattern" id="filename_pattern">
+        </div>
+      </div>
+    </form>
   </div>
 </div>

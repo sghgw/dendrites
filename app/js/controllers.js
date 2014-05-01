@@ -23,7 +23,8 @@
   ctrls.controller('groupsCtrl', [
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
-      return $scope.grouping = false;
+      $scope.grouping = false;
+      return $scope.filename_pattern = '<Gruppe>_<Titel>.xls';
     }
   ]);
 
