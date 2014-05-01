@@ -15,8 +15,9 @@
       $scope.dir = '/Users/sascha/Desktop/test';
       return $scope.$watch('dir', function(newValue, oldValue) {
         if (newValue) {
-          return Data.loadFileList(newValue);
+          Data.loadFileList(newValue);
         }
+        return $scope.data.groupFiles();
       });
     }
   ]);

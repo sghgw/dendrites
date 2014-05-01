@@ -35,8 +35,10 @@ module.factory 'Data', () ->
 
     groupFiles: ->
       p = @checkPattern()
-      groups = {}
-      return false if !p
+      groups = {} 
+      if !p
+        @groups = []
+        return false
 
       for file in @files
         # file = file.split(path.extname(file))[0]

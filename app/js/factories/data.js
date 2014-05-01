@@ -50,6 +50,7 @@
         p = this.checkPattern();
         groups = {};
         if (!p) {
+          this.groups = [];
           return false;
         }
         _ref = this.files;

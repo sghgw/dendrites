@@ -30,6 +30,8 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
   # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
     Data.loadFileList(newValue) if newValue
+    # also update groups
+    $scope.data.groupFiles()
 ]
 
 ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->
