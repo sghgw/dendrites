@@ -27,7 +27,8 @@
             length: false,
             diameter: false,
             distance: false,
-            length_to_center: false
+            length_to_center: false,
+            grouped_length: false
           }
         },
         loadFileList: function(source) {

@@ -21,6 +21,7 @@ module.factory 'Data', ['readXls', (readXls) ->
         diameter: false
         distance: false
         length_to_center: false
+        grouped_length: false
 
     # method to load a list of files of given dir
     loadFileList: (source) ->
