@@ -25,6 +25,8 @@ ctrls = angular.module 'Controllers', []
 
 ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
+  # set dir to /Users/sascha/Desktop/test for testing while dev
+  $scope.dir = '/Users/sascha/Desktop/test'
   # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
     Data.loadFileList(newValue) if newValue

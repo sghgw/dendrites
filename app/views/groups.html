@@ -24,16 +24,16 @@
       <table class="table table-condensed table-hover">
         <thead>
           <tr>
-            <th class="col-xs-4">#</th>
-            <th class="col-xs-6">Bezeichnung</th>
+            <th class="col-xs-3">#</th>
+            <th class="col-xs-7">Bezeichnung</th>
             <th class="col-xs-2">Dateien</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="group in data.groups">
             <td>{{group.id}}</td>
-            <td>{{group.title}}</td>
-            <td>{{group.files}}</td>
+            <td><input class="form-control" type="text" placeholder="{{group.id}}" ng-model="group.title"></td>
+            <td class="text-center">{{group.files}}</td>
           </tr>
         </tbody>
       </table>

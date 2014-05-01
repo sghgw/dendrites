@@ -12,6 +12,7 @@
   ctrls.controller('sourceCtrl', [
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
+      $scope.dir = '/Users/sascha/Desktop/test';
       return $scope.$watch('dir', function(newValue, oldValue) {
         if (newValue) {
           return Data.loadFileList(newValue);
