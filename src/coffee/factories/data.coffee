@@ -1,8 +1,8 @@
 fs = require 'fs'
 path = require 'path'
-module = angular.module 'dataFactory', []
+module = angular.module 'dataFactory', ['readXlsFactory']
 
-module.factory 'Data', () ->
+module.factory 'Data', ['readXls', (readXls) ->
   {
     files: []
     groups: []
@@ -32,6 +32,11 @@ module.factory 'Data', () ->
         @files = _.map files, (filename) ->
           {name: filename, title: ''} 
         @destination = source + '/Auswertung.xlsx'
+    
+    # method to load dendrite data from excel file
+    loadDendriteData: ->
+      for file in @files
+        file.dendrite = readXls.start @source, file.name
 
     groupFiles: ->
       p = @checkPattern()
@@ -45,6 +50,7 @@ module.factory 'Data', () ->
         groupname = if p.first is 'group' then file.name.split(p.pattern)[0] else file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0]
         title = if p.first is 'title' then file.name.split(p.pattern)[0] else file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0]
         file.title = title
+        file.group = groupname
 
         if groups[groupname]
           groups[groupname] += 1
@@ -78,4 +84,4 @@ module.factory 'Data', () ->
         first: first
       }
 
-  }
+  }]
