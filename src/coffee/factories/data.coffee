@@ -8,6 +8,7 @@ module.factory 'Data', ['readXls', (readXls) ->
     groups: []
     filename_pattern: '<Gruppe>_<Titel>'
     grouping: false
+    loaded_data: false
     data_options:
       dendrite:
         length: true
@@ -38,7 +39,7 @@ module.factory 'Data', ['readXls', (readXls) ->
     loadDendriteData: ->
       for file in @files
         file.dendrite = readXls.start @source, file.name, @data_options
-        console.log file.dendrite
+      @loaded_data = true
 
     groupFiles: ->
       p = @checkPattern()

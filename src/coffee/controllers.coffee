@@ -32,6 +32,8 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
     Data.loadFileList(newValue) if newValue
     # also update groups
     $scope.data.groupFiles()
+    # set loaded_data to false
+    $scope.data.loaded_data = false
 ]
 
 ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->
@@ -64,6 +66,9 @@ ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->
 
 ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
+  $scope.$watch 'data.data_options', ((val, old) ->
+    $scope.data.loaded_data = false
+  ), true
 ]
 
 ctrls.controller 'previewCtrl', ['$scope', 'Data', ($scope, Data) ->

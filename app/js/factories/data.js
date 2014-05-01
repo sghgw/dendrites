@@ -14,6 +14,7 @@
         groups: [],
         filename_pattern: '<Gruppe>_<Titel>',
         grouping: false,
+        loaded_data: false,
         data_options: {
           dendrite: {
             length: true,
@@ -48,15 +49,13 @@
           }
         },
         loadDendriteData: function() {
-          var file, _i, _len, _ref, _results;
+          var file, _i, _len, _ref;
           _ref = this.files;
-          _results = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             file = _ref[_i];
             file.dendrite = readXls.start(this.source, file.name, this.data_options);
-            _results.push(console.log(file.dendrite));
           }
-          return _results;
+          return this.loaded_data = true;
         },
         groupFiles: function() {
           var file, groupname, groups, p, title, _i, _len, _ref;

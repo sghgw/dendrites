@@ -17,7 +17,8 @@
         if (newValue) {
           Data.loadFileList(newValue);
         }
-        return $scope.data.groupFiles();
+        $scope.data.groupFiles();
+        return $scope.data.loaded_data = false;
       });
     }
   ]);
@@ -64,7 +65,10 @@
 
   ctrls.controller('dataCtrl', [
     '$scope', 'Data', function($scope, Data) {
-      return $scope.data = Data;
+      $scope.data = Data;
+      return $scope.$watch('data.data_options', (function(val, old) {
+        return $scope.data.loaded_data = false;
+      }), true);
     }
   ]);
 
