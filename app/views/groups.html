@@ -19,5 +19,27 @@
         </div>
       </div>
     </form>
+    <br><br>
+    <div ng-show="data.files.length">
+      <table class="table table-condensed table-hover">
+        <thead>
+          <tr>
+            <th class="col-xs-4">#</th>
+            <th class="col-xs-6">Bezeichnung</th>
+            <th class="col-xs-2">Dateien</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="group in data.groups">
+            <td>{{group.id}}</td>
+            <td>{{group.title}}</td>
+            <td>{{group.files}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div ng-show="!data.files.length">
+      Es wurde noch kein Quellverzeinis ausgewählt!
+    </div>
   </div>
 </div>
