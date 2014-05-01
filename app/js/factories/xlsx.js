@@ -28,8 +28,13 @@
       },
       generateXlsxFile: function() {
         var buffer;
-        return buffer = this.xlsx.generate({
+        buffer = this.xlsx.generate({
           type: 'nodebuffer'
+        });
+        return fs.writeFile(this.destination, buffer, function(err) {
+          if (err) {
+            return false;
+          }
         });
       },
       log: function() {

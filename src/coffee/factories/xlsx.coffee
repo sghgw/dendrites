@@ -17,7 +17,8 @@ module.factory 'Xlsx', () ->
       @xlsx = new zip(fs.readFileSync(file))
     generateXlsxFile: () ->
       buffer = @xlsx.generate {type: 'nodebuffer'}
-      # send file to user...
+      fs.writeFile @destination, buffer, (err) ->
+        return false if err
     log: () ->
       @loadTemplate()
       console.log @xlsx.file('xl/worksheets/sheet1.xml').asText()
