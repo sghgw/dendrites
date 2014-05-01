@@ -1,4 +1,14 @@
 <div ng-controller="groupsCtrl">
   <h2>2. Daten gruppieren</h2>
-  <p></p>
+  <p>Anhand der Dateinamen können die einzelnen Dateien verschiedenen Gruppen zugeordnet werden. Hier kann festgelegt werden, ob und wie die einzelnen Gruppen erstellt werden sollen.</p>
+
+  <div class="option-list">
+    <label>
+      Sollen die Daten gruppiert werden? <input type="checkbox" class="js-switch" switch="grouping"> 
+    </label>
+  </div>
+
+  <div ng-show="grouping">
+    Hier wird gruppiert...
+  </div>
 </div>

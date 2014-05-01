@@ -32,6 +32,7 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
 
 ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
+  $scope.grouping = false
 ]
 
 ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->
