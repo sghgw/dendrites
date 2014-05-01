@@ -73,6 +73,9 @@
         link: function($scope, element, attrs) {
           var init;
           init = new $window.Switchery(element[0]);
+          if ($scope["switch"]) {
+            init.setPosition(true);
+          }
           return element.bind('change', function(event) {
             console.log(element[0].checked);
             $scope["switch"] = element[0].checked;

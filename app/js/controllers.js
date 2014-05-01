@@ -21,7 +21,7 @@
   ctrls.controller('dataCtrl', [
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
-      return $scope.check = false;
+      return $scope.check = true;
     }
   ]);
 
