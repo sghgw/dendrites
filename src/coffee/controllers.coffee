@@ -30,9 +30,12 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
     Data.loadFileList(newValue) if newValue
 ]
 
+ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->
+  $scope.data = Data
+]
+
 ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
-  $scope.check = true
   $scope.app = gui.App
   console.log $scope.app.dataPath
 ]

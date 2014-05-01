@@ -20,10 +20,15 @@
     }
   ]);
 
+  ctrls.controller('groupsCtrl', [
+    '$scope', 'Data', function($scope, Data) {
+      return $scope.data = Data;
+    }
+  ]);
+
   ctrls.controller('dataCtrl', [
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
-      $scope.check = true;
       $scope.app = gui.App;
       return console.log($scope.app.dataPath);
     }
