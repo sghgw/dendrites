@@ -1,9 +1,11 @@
 (function() {
-  var ctrls, fs, path;
+  var ctrls, fs, gui, path;
 
   fs = require('fs');
 
   path = require('path');
+
+  gui = require('nw.gui');
 
   ctrls = angular.module('Controllers', []);
 
@@ -21,7 +23,9 @@
   ctrls.controller('dataCtrl', [
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
-      return $scope.check = true;
+      $scope.check = true;
+      $scope.app = gui.App;
+      return console.log($scope.app.dataPath);
     }
   ]);
 

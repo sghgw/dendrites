@@ -1,5 +1,6 @@
 fs = require 'fs'
 path = require 'path'
+gui = require 'nw.gui'
 
 ctrls = angular.module 'Controllers', []
 
@@ -32,6 +33,8 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
 ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
   $scope.check = true
+  $scope.app = gui.App
+  console.log $scope.app.dataPath
 ]
 
 ctrls.controller 'previewCtrl', ['$scope', 'Data', ($scope, Data) ->
