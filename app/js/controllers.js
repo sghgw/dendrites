@@ -23,16 +23,22 @@
   ctrls.controller('groupsCtrl', [
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
-      $scope.grouping = false;
-      return $scope.filename_pattern = '<Gruppe>_<Titel>.xls';
+      $scope.$watch('data.filename_pattern', function(pattern, old) {
+        if ($scope.data.grouping) {
+          return $scope.data.groupFiles();
+        }
+      });
+      return $scope.$watch('data.grouping', function(grouping, old) {
+        if (grouping) {
+          return $scope.data.groupFiles();
+        }
+      });
     }
   ]);
 
   ctrls.controller('dataCtrl', [
     '$scope', 'Data', function($scope, Data) {
-      $scope.data = Data;
-      $scope.app = gui.App;
-      return console.log($scope.app.dataPath);
+      return $scope.data = Data;
     }
   ]);
 

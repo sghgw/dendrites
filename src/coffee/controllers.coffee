@@ -32,14 +32,15 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
 
 ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
-  $scope.grouping = false
-  $scope.filename_pattern = '<Gruppe>_<Titel>.xls'
+
+  $scope.$watch 'data.filename_pattern', (pattern, old) ->
+    $scope.data.groupFiles() if $scope.data.grouping
+  $scope.$watch 'data.grouping', (grouping, old) ->
+    $scope.data.groupFiles() if grouping
 ]
 
 ctrls.controller 'dataCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
-  $scope.app = gui.App
-  console.log $scope.app.dataPath
 ]
 
 ctrls.controller 'previewCtrl', ['$scope', 'Data', ($scope, Data) ->

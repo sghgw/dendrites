@@ -10,6 +10,9 @@
   module.factory('Data', function() {
     return {
       files: [],
+      groups: [],
+      filename_pattern: '<Gruppe>_<Titel>',
+      grouping: false,
       data_options: {
         dendrite: {
           length: true,
@@ -34,6 +37,9 @@
           });
           return this.destination = source + '/Auswertung.xlsx';
         }
+      },
+      groupFiles: function() {
+        return console.log(this.filename_pattern);
       }
     };
   });
