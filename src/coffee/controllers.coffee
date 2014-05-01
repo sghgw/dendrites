@@ -27,7 +27,6 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
   # set dir to /Users/sascha/Desktop/test for testing while dev
   $scope.dir = '/Users/sascha/Desktop/test'
-  # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
     Data.loadFileList(newValue) if newValue
     # also update groups
@@ -77,8 +76,14 @@ ctrls.controller 'previewCtrl', ['$scope', 'Data', ($scope, Data) ->
     $scope.data.loadDendriteData()
 ]
 
-ctrls.controller 'destinationCtrl', ['$scope', 'Data', ($scope, Data) ->
+ctrls.controller 'exportCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
+  $scope.dir = '/Users/sascha/Desktop/test/Auswertung.xlsx'
+  # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
     $scope.data.destination = newValue
+
+  $scope.exportData = ->
+    $scope.data.loadDendriteData() if !$scope.data.loaded_data
+    $scope.data.exportData()
 ]

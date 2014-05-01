@@ -81,12 +81,19 @@
     }
   ]);
 
-  ctrls.controller('destinationCtrl', [
+  ctrls.controller('exportCtrl', [
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
-      return $scope.$watch('dir', function(newValue, oldValue) {
+      $scope.dir = '/Users/sascha/Desktop/test/Auswertung.xlsx';
+      $scope.$watch('dir', function(newValue, oldValue) {
         return $scope.data.destination = newValue;
       });
+      return $scope.exportData = function() {
+        if (!$scope.data.loaded_data) {
+          $scope.data.loadDendriteData();
+        }
+        return $scope.data.exportData();
+      };
     }
   ]);
 

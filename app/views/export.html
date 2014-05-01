@@ -1,4 +1,4 @@
-<div ng-controller="destinationCtrl">
+<div ng-controller="exportCtrl">
   <h2>5. Auswertung speichern</h2>
   <p>W&auml;hle aus, wo die Auswertung gespeichert werden soll.</p>
   <div class="input-group">
@@ -11,6 +11,6 @@
   </div>
   <br>
   <div>
-    <button class="btn btn-success pull-right" ng-disabled="!data.destination">Auswertung speichern</button>
+    <button class="btn btn-success pull-right" ng-disabled="!data.destination" ng-click="exportData()">Auswertung speichern</button>
   </div>
 </div>

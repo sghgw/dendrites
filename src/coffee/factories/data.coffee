@@ -1,8 +1,8 @@
 fs = require 'fs'
 path = require 'path'
-module = angular.module 'dataFactory', ['readXlsFactory']
+module = angular.module 'dataFactory', ['readXlsFactory', 'XlsxFactory']
 
-module.factory 'Data', ['readXls', (readXls) ->
+module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
   {
     files: []
     groups: []
@@ -86,5 +86,8 @@ module.factory 'Data', ['readXls', (readXls) ->
         pattern: pattern
         first: first
       }
+
+    exportData: ->
+      Xlsx.setDestination @destination
 
   }]

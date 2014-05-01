@@ -5,10 +5,10 @@
 
   path = require('path');
 
-  module = angular.module('dataFactory', ['readXlsFactory']);
+  module = angular.module('dataFactory', ['readXlsFactory', 'XlsxFactory']);
 
   module.factory('Data', [
-    'readXls', function(readXls) {
+    'readXls', 'Xlsx', function(readXls, Xlsx) {
       return {
         files: [],
         groups: [],
@@ -111,6 +111,9 @@
             pattern: pattern,
             first: first
           };
+        },
+        exportData: function() {
+          return Xlsx.setDestination(this.destination);
         }
       };
     }
