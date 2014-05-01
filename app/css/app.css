@@ -1,3 +1,4 @@
 body{padding-top:50px}
 .btn-file{position:relative;overflow:hidden}.btn-file input[type=file]{position:absolute;top:0;right:0;min-width:100%;min-height:100%;font-size:999px;text-align:right;filter:alpha(opacity=0);opacity:0;outline:none;background:white;cursor:inherit;display:block}
 .navbar-brand{background-image:url(../img/brain_blue.png);background-repeat:no-repeat;background-size:25% auto;background-position:8px 7px;height:100%;padding-left:50px;font-size:20px}
+.option-list{margin-left:0px;padding-left:0px;padding-right:10px}.option-list label{font-weight:normal;width:100%}.option-list label input,.option-list label span.switchery{float:right}
