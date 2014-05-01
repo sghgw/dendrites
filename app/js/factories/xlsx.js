@@ -24,7 +24,7 @@
       loadTemplate: function() {
         var file;
         file = window.location.pathname.split("views")[0] + 'templates/template.xlsx';
-        return this.xlsx = new this.zip(this.fs.readFileSync(file));
+        return this.xlsx = new zip(fs.readFileSync(file));
       },
       generateXlsxFile: function() {
         var buffer;

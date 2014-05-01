@@ -14,7 +14,7 @@ module.factory 'Xlsx', () ->
       console.log @destination
     loadTemplate: () ->
       file = window.location.pathname.split("views")[0] + 'templates/template.xlsx'
-      @xlsx = new @zip(@fs.readFileSync(file))
+      @xlsx = new zip(fs.readFileSync(file))
     generateXlsxFile: () ->
       buffer = @xlsx.generate {type: 'nodebuffer'}
       # send file to user...
