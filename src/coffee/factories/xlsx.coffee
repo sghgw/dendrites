@@ -1,14 +1,17 @@
 xml2js = require 'xml2js'
+xmlParser = new xml2js.Parser()
+xmlBuilder = new xml2js.Builder()
+zip = require 'jszip'
+fs = require 'fs'
 module = angular.module 'XlsxFactory', []
 
 module.factory 'Xlsx', () ->
   {
-    zip: require 'jszip'
-    fs: require 'fs'
-    parser: new xml2js.Parser()
-    builder: new xml2js.Builder()
     destination: ''
     xlsx: {}
+    setDestination: (destination) ->
+      @destination = destination
+      console.log @destination
     loadTemplate: () ->
       file = window.location.pathname.split("views")[0] + 'templates/template.xlsx'
       @xlsx = new @zip(@fs.readFileSync(file))
