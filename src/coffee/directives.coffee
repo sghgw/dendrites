@@ -54,7 +54,6 @@ module.directive 'switch', ['$window', ($window) ->
       init = new $window.Switchery(element[0])
       init.setPosition true if $scope.switch
       element.bind 'change', (event) ->
-        console.log element[0].checked
         $scope.switch = element[0].checked
         $scope.$apply()
   }]

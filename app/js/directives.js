@@ -77,7 +77,6 @@
             init.setPosition(true);
           }
           return element.bind('change', function(event) {
-            console.log(element[0].checked);
             $scope["switch"] = element[0].checked;
             return $scope.$apply();
           });
