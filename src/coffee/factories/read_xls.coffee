@@ -18,12 +18,11 @@ module.factory 'readXls', () ->
       dendrite.volume = file.Sheets['Each Tree-Dendrite']['J2'].v if options.dendrite.volume
       dendrite.total_spines = file.Sheets['Each Tree-Dendrite']['R2'].v if options.dendrite.total_spines
       dendrite.spines = {}
-      dendrite.spines.length = (file.Sheets['Spine Details']['E' + i].v for i in [2..(dendrite.total_spines + 1)]) if options.spines.length
+      dendrite.spines.length = (file.Sheets['Spine Details']['E' + i].v for i in [2..(dendrite.total_spines + 1)]) if options.spines.length or options.dendrite.mean_spine_length
       dendrite.spines.diameter = (file.Sheets['Spine Details']['F' + i].v for i in [2..(dendrite.total_spines + 1)]) if options.spines.diameter
       dendrite.spines.distance = (file.Sheets['Spine Details']['G' + i].v for i in [2..(dendrite.total_spines + 1)]) if options.spines.distance
       dendrite.spines.length_to_center = (file.Sheets['Spine Details']['D' + i].v for i in [2..(dendrite.total_spines + 1)]) if options.spines.length_to_center
-      # console.log test
-      # dendrite.mean_spine_length = @stats.mean(dendrite.spines.data)
-      # dendrite.spine_density = dendrite.total_spines / dendrite.length
+      dendrite.mean_spine_length = @stats.mean(dendrite.spines.length) if options.dendrite.mean_spine_length
+      dendrite.spine_density = dendrite.total_spines / dendrite.length if options.dendrite.spine_density
       dendrite
   }
