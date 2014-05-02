@@ -113,7 +113,41 @@
           };
         },
         exportData: function() {
-          return Xlsx.setDestination(this.destination);
+          var data, file, index, _i, _len, _ref, _results;
+          Xlsx.setDestination(this.destination);
+          _ref = this.files;
+          _results = [];
+          for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
+            file = _ref[index];
+            console.log(file);
+            data = this.prepareDendriteData(file);
+            _results.push(console.log(Xlsx.buildRow(index + 2, data)));
+          }
+          return _results;
+        },
+        prepareDendriteData: function(file) {
+          var data;
+          data = [];
+          data.push(file.title);
+          if (this.data_options.dendrite.length) {
+            data.push(file.dendrite.length);
+          }
+          if (this.data_options.dendrite.surface) {
+            data.push(file.dendrite.surface);
+          }
+          if (this.data_options.dendrite.volume) {
+            data.push(file.dendrite.volume);
+          }
+          if (this.data_options.dendrite.total_spines) {
+            data.push(file.dendrite.total_spines);
+          }
+          if (this.data_options.dendrite.spine_density) {
+            data.push(file.dendrite.spine_density);
+          }
+          if (this.data_options.dendrite.mean_spine_length) {
+            data.push(file.dendrite.mean_spine_length);
+          }
+          return data;
         }
       };
     }

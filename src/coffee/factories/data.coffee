@@ -89,5 +89,19 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
 
     exportData: ->
       Xlsx.setDestination @destination
+      for file, index in @files
+        console.log file
+        data = @prepareDendriteData(file)
+        console.log Xlsx.buildRow(index + 2, data)
 
+    prepareDendriteData: (file) ->
+      data = []
+      data.push file.title
+      data.push file.dendrite.length if @data_options.dendrite.length
+      data.push file.dendrite.surface if @data_options.dendrite.surface
+      data.push file.dendrite.volume if @data_options.dendrite.volume
+      data.push file.dendrite.total_spines if @data_options.dendrite.total_spines
+      data.push file.dendrite.spine_density if @data_options.dendrite.spine_density
+      data.push file.dendrite.mean_spine_length if @data_options.dendrite.mean_spine_length
+      data
   }]
