@@ -26,12 +26,12 @@
               <tr ng-repeat="file in data.files">
                 <td>{{$index + 1}}</td>
                 <td>{{file.title ? file.title : file.name}}</td>
-                <td ng-show="data.data_options.dendrite.length">{{file.dendrite.length.toFixed(1)}}</td>
+                <td ng-show="data.data_options.dendrite.length">{{file.dendrite.length}}</td>
                 <td ng-show="data.data_options.dendrite.surface">{{file.dendrite.surface}}</td>
                 <td ng-show="data.data_options.dendrite.volume">{{file.dendrite.volume}}</td>
                 <td ng-show="data.data_options.dendrite.total_spines">{{file.dendrite.total_spines}}</td>
-                <td ng-show="data.data_options.dendrite.spine_density">{{file.dendrite.spine_density.toFixed(4)}}</td>
-                <td ng-show="data.data_options.dendrite.mean_spine_length">{{file.dendrite.mean_spine_length.toFixed(4)}}</td>
+                <td ng-show="data.data_options.dendrite.spine_density">{{file.dendrite.spine_density}}</td>
+                <td ng-show="data.data_options.dendrite.mean_spine_length">{{file.dendrite.mean_spine_length}}</td>
               </tr>
             </tbody>
           </table>

@@ -26,7 +26,7 @@
           spines: {}
         };
         if (options.dendrite.length) {
-          dendrite.length = file.Sheets['Each Tree-Dendrite']['D2'].v;
+          dendrite.length = file.Sheets['Each Tree-Dendrite']['D2'].v.toFixed(1) / 1;
         }
         if (options.dendrite.surface) {
           dendrite.surface = file.Sheets['Each Tree-Dendrite']['G2'].v;
@@ -78,10 +78,10 @@
           })();
         }
         if (options.dendrite.mean_spine_length) {
-          dendrite.mean_spine_length = this.stats.mean(dendrite.spines.length);
+          dendrite.mean_spine_length = this.stats.mean(dendrite.spines.length).toFixed(4) / 1;
         }
         if (options.dendrite.spine_density) {
-          dendrite.spine_density = dendrite.total_spines / dendrite.length;
+          dendrite.spine_density = (dendrite.total_spines / dendrite.length).toFixed(4) / 1;
         }
         if (options.spines.grouped_length) {
           dendrite.spines.grouped_length = _.countBy(dendrite.spines.length, function(spine) {
