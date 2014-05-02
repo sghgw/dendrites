@@ -113,9 +113,16 @@
           };
         },
         exportData: function() {
+          var body,
+            _this = this;
           if (!this.loaded_data) {
             this.loadDendriteData();
           }
+          Xlsx.setDestination(this.destination);
+          body = _.map(this.files, function(file) {
+            return _this.prepareDendriteData(file);
+          });
+          console.log(Xlsx.buildGrid(this.prepareTableHeader(), body, 1));
           return console.log(Xlsx.getSheet("\u00dcbersicht"));
         },
         prepareDendriteData: function(file) {

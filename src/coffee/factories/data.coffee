@@ -89,10 +89,10 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
 
     exportData: ->
       @loadDendriteData() if !@loaded_data
-      # Xlsx.setDestination @destination
-      # body = _.map @files, (file) =>
-      #   @prepareDendriteData file
-      # console.log Xlsx.buildGrid @prepareTableHeader(), body, 1
+      Xlsx.setDestination @destination
+      body = _.map @files, (file) =>
+        @prepareDendriteData file
+      console.log Xlsx.buildGrid @prepareTableHeader(), body, 1
       console.log Xlsx.getSheet("\u00dcbersicht")
 
     prepareDendriteData: (file) ->

@@ -5,7 +5,7 @@
 
   xmlParser = new xml2js.Parser();
 
-  xmlBuilder = new require('xmlbuilder');
+  xmlBuilder = new xml2js.Builder();
 
   zip = require('jszip');
 
@@ -38,46 +38,54 @@
           }
         });
       },
-      buildRow: function(data, row, pretty) {
-        var c, el, index, item, opts, _i, _len;
+      buildRow: function(data, row, hideIndex) {
+        var c, el, index, item, _i, _len;
         if (!row) {
           row = 1;
         }
-        el = xmlBuilder.create('row', {
-          headless: true
-        });
-        el.att('r', row);
-        el.ele('c').att('r', 'A' + row).ele('v', row);
+        el = {
+          row: {
+            $: {
+              r: row
+            },
+            c: []
+          }
+        };
+        if (!hideIndex) {
+          el.c.push({
+            $: {
+              r: 'A' + row
+            },
+            v: row
+          });
+        }
         for (index = _i = 0, _len = data.length; _i < _len; index = ++_i) {
           item = data[index];
-          c = el.ele('c');
-          c.att('r', a[index + 1] + row);
-          if (typeof item === 'string') {
-            c.att('t', 'inlineStr');
-            c.ele('is').ele('t', item);
-          } else {
-            c.ele('v', item);
-          }
-        }
-        if (pretty) {
-          opts = {
-            pretty: true,
-            indent: '  ',
-            newline: '\n'
+          c = {
+            $: {
+              r: a[index + 1] + row
+            }
           };
-        } else {
-          opts = {};
+          if (typeof item === 'string') {
+            c.$.t = 'inlineStr';
+            c.is = {};
+            c.is.t = item;
+          } else {
+            c.v = item;
+          }
+          el.row.c.push(c);
         }
-        return el.end(opts);
+        return el;
       },
       buildGrid: function(headerData, bodyData, rowToStart) {
         var body, header,
           _this = this;
         header = this.buildRow(headerData, rowToStart, true);
         body = _.map(bodyData, function(data, index) {
-          return _this.buildRow(data, rowToStart + index + 1, true);
+          return _this.buildRow(data, rowToStart + index + 1);
         });
-        return header + body.join('');
+        body.unshift(header);
+        return body;
       },
       getSheet: function(sheetName) {
         var xml,
@@ -107,6 +115,11 @@
           return _results;
         });
         return xml;
+      },
+      addToSheet: function(sheetName, data) {
+        var sheet;
+        sheet = this.getSheet(sheetName);
+        return sheet.xml.worksheet.sheetData;
       },
       log: function() {
         var _this = this;

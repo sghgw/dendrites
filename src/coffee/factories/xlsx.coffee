@@ -1,6 +1,7 @@
 xml2js = require 'xml2js'
 xmlParser = new xml2js.Parser()
-xmlBuilder = new require('xmlbuilder')
+# xmlBuilder = new require('xmlbuilder')
+xmlBuilder = new xml2js.Builder()
 zip = require 'jszip'
 fs = require 'fs'
 a = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -23,27 +24,39 @@ module.factory 'Xlsx', () ->
       fs.writeFile @destination, buffer, (err) ->
         return false if err
 
-    buildRow: (data, row, pretty) ->
+    buildRow: (data, row, hideIndex) ->
       row = 1 if !row
-      el = xmlBuilder.create 'row', {headless: true}
-      el.att 'r', row
-      el.ele('c').att('r', 'A' + row).ele 'v', row
+      el = {
+        row:  
+          $:
+            r: row
+          c: []
+      }
+      el.c.push {
+        $:
+          r: 'A' + row
+        v: row
+      } if !hideIndex
       for item, index in data
-        c = el.ele('c')
-        c.att 'r', a[index + 1] + row
+        c = {
+          $:
+            r: a[index + 1] + row
+        }
         if typeof item is 'string'
-          c.att 't', 'inlineStr'
-          c.ele('is').ele 't', item
+          c.$.t = 'inlineStr'
+          c.is = {}
+          c.is.t = item
         else
-          c.ele 'v', item
-      if pretty then opts = { pretty: true, indent: '  ', newline: '\n' }else opts = {}
-      el.end(opts)
+          c.v = item
+        el.row.c.push c
+      return el
 
     buildGrid: (headerData, bodyData, rowToStart) ->
       header = @buildRow headerData, rowToStart, true
       body = _.map bodyData, (data, index) =>
-        @buildRow data, rowToStart + index + 1, true
-      header + body.join('')
+        @buildRow data, rowToStart + index + 1
+      body.unshift header
+      body
 
     getSheet: (sheetName) ->
       xml = {}
@@ -56,7 +69,10 @@ module.factory 'Xlsx', () ->
             xmlParser.parseString @xlsx.file(path).asText(), (err, result) ->
               xml = {path: path, xml: result}
       xml
-      
+
+    addToSheet: (sheetName, data) ->
+      sheet = @getSheet sheetName
+      sheet.xml.worksheet.sheetData
     log: () ->
       @loadTemplate()
       console.log @xlsx.file('xl/worksheets/sheet1.xml').asText()
