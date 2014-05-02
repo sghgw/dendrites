@@ -45,6 +45,18 @@ module.factory 'Xlsx', () ->
         @buildRow data, rowToStart + index + 1, true
       header + body.join('')
 
+    getSheet: (sheetName) ->
+      xml = {}
+      @loadTemplate() if _.isEmpty @xlsx
+      xmlParser.parseString @xlsx.file('xl/workbook.xml').asText(), (err, result) =>
+        sheets = result.workbook.sheets[0].sheet
+        for sheet in sheets
+          if sheet.$.name is sheetName
+            path = 'xl/worksheets/sheet' + sheet.$.sheetId + '.xml'
+            xmlParser.parseString @xlsx.file(path).asText(), (err, result) ->
+              xml = {path: path, xml: result}
+      xml
+      
     log: () ->
       @loadTemplate()
       console.log @xlsx.file('xl/worksheets/sheet1.xml').asText()

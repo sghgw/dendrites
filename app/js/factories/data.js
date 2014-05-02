@@ -113,16 +113,10 @@
           };
         },
         exportData: function() {
-          var body,
-            _this = this;
           if (!this.loaded_data) {
             this.loadDendriteData();
           }
-          Xlsx.setDestination(this.destination);
-          body = _.map(this.files, function(file) {
-            return _this.prepareDendriteData(file);
-          });
-          return console.log(Xlsx.buildGrid(this.prepareTableHeader(), body, 1));
+          return console.log(Xlsx.getSheet("\u00dcbersicht"));
         },
         prepareDendriteData: function(file) {
           var data;
@@ -153,10 +147,10 @@
           data = [];
           data.push('Dendrit');
           if (this.data_options.dendrite.length) {
-            data.push('Länge');
+            data.push('L\u00e4nge');
           }
           if (this.data_options.dendrite.surface) {
-            data.push('Oberfläche');
+            data.push('Oberfl\u00e4che');
           }
           if (this.data_options.dendrite.volume) {
             data.push('Volumen');
@@ -168,7 +162,7 @@
             data.push('Spinedichte');
           }
           if (this.data_options.dendrite.mean_spine_length) {
-            data.push('Mittlere Spinelänge');
+            data.push('Mittlere Spinel\u00e4nge');
           }
           return data;
         }

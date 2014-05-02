@@ -89,14 +89,11 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
 
     exportData: ->
       @loadDendriteData() if !@loaded_data
-      Xlsx.setDestination @destination
-      # console.log Xlsx.buildRow @prepareTableHeader(), 1, true
-      body = _.map @files, (file) =>
-        @prepareDendriteData file
-      console.log Xlsx.buildGrid @prepareTableHeader(), body, 1
-      # for file, index in @files
-      #   data = @prepareDendriteData(file)
-      #   console.log Xlsx.buildRow(data, index + 2)
+      # Xlsx.setDestination @destination
+      # body = _.map @files, (file) =>
+      #   @prepareDendriteData file
+      # console.log Xlsx.buildGrid @prepareTableHeader(), body, 1
+      console.log Xlsx.getSheet("\u00dcbersicht")
 
     prepareDendriteData: (file) ->
       data = []
@@ -112,11 +109,11 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
     prepareTableHeader: ->
       data = []
       data.push 'Dendrit'
-      data.push 'Länge' if @data_options.dendrite.length
-      data.push 'Oberfläche' if @data_options.dendrite.surface
+      data.push 'L\u00e4nge' if @data_options.dendrite.length
+      data.push 'Oberfl\u00e4che' if @data_options.dendrite.surface
       data.push 'Volumen' if @data_options.dendrite.volume
       data.push 'Spineanzahl' if @data_options.dendrite.total_spines
       data.push 'Spinedichte' if @data_options.dendrite.spine_density
-      data.push 'Mittlere Spinelänge' if @data_options.dendrite.mean_spine_length
+      data.push 'Mittlere Spinel\u00e4nge' if @data_options.dendrite.mean_spine_length
       data
   }]

@@ -79,6 +79,35 @@
         });
         return header + body.join('');
       },
+      getSheet: function(sheetName) {
+        var xml,
+          _this = this;
+        xml = {};
+        if (_.isEmpty(this.xlsx)) {
+          this.loadTemplate();
+        }
+        xmlParser.parseString(this.xlsx.file('xl/workbook.xml').asText(), function(err, result) {
+          var path, sheet, sheets, _i, _len, _results;
+          sheets = result.workbook.sheets[0].sheet;
+          _results = [];
+          for (_i = 0, _len = sheets.length; _i < _len; _i++) {
+            sheet = sheets[_i];
+            if (sheet.$.name === sheetName) {
+              path = 'xl/worksheets/sheet' + sheet.$.sheetId + '.xml';
+              _results.push(xmlParser.parseString(_this.xlsx.file(path).asText(), function(err, result) {
+                return xml = {
+                  path: path,
+                  xml: result
+                };
+              }));
+            } else {
+              _results.push(void 0);
+            }
+          }
+          return _results;
+        });
+        return xml;
+      },
       log: function() {
         var _this = this;
         this.loadTemplate();
