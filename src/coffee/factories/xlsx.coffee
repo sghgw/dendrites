@@ -59,6 +59,12 @@ module.factory 'Xlsx', () ->
       body.unshift header
       body
 
+    buildGridWithTitle: (title, header, body, rowToStart) ->
+      title = @buildRow [title], rowToStart, true
+      body = @buildGrid header, body, rowToStart + 2
+      body.unshift title
+      body
+
     getSheet: (sheetName) ->
       xml = {}
       @loadTemplate() if _.isEmpty @xlsx
@@ -73,7 +79,8 @@ module.factory 'Xlsx', () ->
 
     addToSheet: (sheetName, data) ->
       sheet = @getSheet sheetName
-      sheet.xml.worksheet.sheetData[0].row = data
+      console.log sheet.xml
+      sheet.xml.worksheet.sheetData[0] = {row: data}
       xml = xmlBuilder.buildObject sheet.xml
       @xlsx.file(sheet.path, xml)
       @generateXlsxFile()

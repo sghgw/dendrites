@@ -87,6 +87,12 @@
         body.unshift(header);
         return body;
       },
+      buildGridWithTitle: function(title, header, body, rowToStart) {
+        title = this.buildRow([title], rowToStart, true);
+        body = this.buildGrid(header, body, rowToStart + 2);
+        body.unshift(title);
+        return body;
+      },
       getSheet: function(sheetName) {
         var xml,
           _this = this;
@@ -119,7 +125,10 @@
       addToSheet: function(sheetName, data) {
         var sheet, xml;
         sheet = this.getSheet(sheetName);
-        sheet.xml.worksheet.sheetData[0].row = data;
+        console.log(sheet.xml);
+        sheet.xml.worksheet.sheetData[0] = {
+          row: data
+        };
         xml = xmlBuilder.buildObject(sheet.xml);
         this.xlsx.file(sheet.path, xml);
         return this.generateXlsxFile();
