@@ -23,24 +23,25 @@ module.factory 'Xlsx', () ->
       buffer = @xlsx.generate {type: 'nodebuffer'}
       fs.writeFile @destination, buffer, (err) ->
         return false if err
+      true
 
-    buildRow: (data, row, hideIndex) ->
+    buildRow: (data, row, isHeader) ->
       row = 1 if !row
-      el = {
-        row:  
-          $:
-            r: row
-          c: []
+      el = {  
+        $:
+          r: row
+        c: []
       }
       el.c.push {
         $:
           r: 'A' + row
-        v: row
-      } if !hideIndex
+        v: row - 1
+      } if !isHeader
+      col = if isHeader then 0 else 1
       for item, index in data
         c = {
           $:
-            r: a[index + 1] + row
+            r: a[index + col] + row
         }
         if typeof item is 'string'
           c.$.t = 'inlineStr'
@@ -48,7 +49,7 @@ module.factory 'Xlsx', () ->
           c.is.t = item
         else
           c.v = item
-        el.row.c.push c
+        el.c.push c
       return el
 
     buildGrid: (headerData, bodyData, rowToStart) ->
@@ -72,7 +73,11 @@ module.factory 'Xlsx', () ->
 
     addToSheet: (sheetName, data) ->
       sheet = @getSheet sheetName
-      sheet.xml.worksheet.sheetData
+      sheet.xml.worksheet.sheetData[0].row = data
+      xml = xmlBuilder.buildObject sheet.xml
+      @xlsx.file(sheet.path, xml)
+      @generateXlsxFile()
+
     log: () ->
       @loadTemplate()
       console.log @xlsx.file('xl/worksheets/sheet1.xml').asText()

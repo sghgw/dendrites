@@ -92,8 +92,9 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
       Xlsx.setDestination @destination
       body = _.map @files, (file) =>
         @prepareDendriteData file
-      console.log Xlsx.buildGrid @prepareTableHeader(), body, 1
-      console.log Xlsx.getSheet("\u00dcbersicht")
+      data = Xlsx.buildGrid @prepareTableHeader(), body, 1
+      # console.log Xlsx.getSheet("\u00dcbersicht")
+      console.log Xlsx.addToSheet "\u00dcbersicht", data
 
     prepareDendriteData: (file) ->
       data = []
@@ -108,6 +109,7 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
 
     prepareTableHeader: ->
       data = []
+      data.push '#'
       data.push 'Dendrit'
       data.push 'L\u00e4nge' if @data_options.dendrite.length
       data.push 'Oberfl\u00e4che' if @data_options.dendrite.surface

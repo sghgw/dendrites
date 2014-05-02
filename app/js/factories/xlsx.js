@@ -32,38 +32,38 @@
         buffer = this.xlsx.generate({
           type: 'nodebuffer'
         });
-        return fs.writeFile(this.destination, buffer, function(err) {
+        fs.writeFile(this.destination, buffer, function(err) {
           if (err) {
             return false;
           }
         });
+        return true;
       },
-      buildRow: function(data, row, hideIndex) {
-        var c, el, index, item, _i, _len;
+      buildRow: function(data, row, isHeader) {
+        var c, col, el, index, item, _i, _len;
         if (!row) {
           row = 1;
         }
         el = {
-          row: {
-            $: {
-              r: row
-            },
-            c: []
-          }
+          $: {
+            r: row
+          },
+          c: []
         };
-        if (!hideIndex) {
+        if (!isHeader) {
           el.c.push({
             $: {
               r: 'A' + row
             },
-            v: row
+            v: row - 1
           });
         }
+        col = isHeader ? 0 : 1;
         for (index = _i = 0, _len = data.length; _i < _len; index = ++_i) {
           item = data[index];
           c = {
             $: {
-              r: a[index + 1] + row
+              r: a[index + col] + row
             }
           };
           if (typeof item === 'string') {
@@ -73,7 +73,7 @@
           } else {
             c.v = item;
           }
-          el.row.c.push(c);
+          el.c.push(c);
         }
         return el;
       },
@@ -117,9 +117,12 @@
         return xml;
       },
       addToSheet: function(sheetName, data) {
-        var sheet;
+        var sheet, xml;
         sheet = this.getSheet(sheetName);
-        return sheet.xml.worksheet.sheetData;
+        sheet.xml.worksheet.sheetData[0].row = data;
+        xml = xmlBuilder.buildObject(sheet.xml);
+        this.xlsx.file(sheet.path, xml);
+        return this.generateXlsxFile();
       },
       log: function() {
         var _this = this;

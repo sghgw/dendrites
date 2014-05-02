@@ -113,7 +113,7 @@
           };
         },
         exportData: function() {
-          var body,
+          var body, data,
             _this = this;
           if (!this.loaded_data) {
             this.loadDendriteData();
@@ -122,8 +122,8 @@
           body = _.map(this.files, function(file) {
             return _this.prepareDendriteData(file);
           });
-          console.log(Xlsx.buildGrid(this.prepareTableHeader(), body, 1));
-          return console.log(Xlsx.getSheet("\u00dcbersicht"));
+          data = Xlsx.buildGrid(this.prepareTableHeader(), body, 1);
+          return console.log(Xlsx.addToSheet("\u00dcbersicht", data));
         },
         prepareDendriteData: function(file) {
           var data;
@@ -152,6 +152,7 @@
         prepareTableHeader: function() {
           var data;
           data = [];
+          data.push('#');
           data.push('Dendrit');
           if (this.data_options.dendrite.length) {
             data.push('L\u00e4nge');
