@@ -26,9 +26,10 @@ module.factory 'Xlsx', () ->
     buildRow: (row, data) ->
       el = xmlBuilder.create 'row', {headless: true}
       el.att 'r', row
+      el.ele('c').att('r', 'A' + row).ele 'v', row
       for item, index in data
         c = el.ele('c')
-        c.att 'r', a[index] + row
+        c.att 'r', a[index + 1] + row
         if typeof item is 'string'
           c.att 't', 'inlineStr'
           c.ele('is').ele 't', item

@@ -44,10 +44,11 @@
           headless: true
         });
         el.att('r', row);
+        el.ele('c').att('r', 'A' + row).ele('v', row);
         for (index = _i = 0, _len = data.length; _i < _len; index = ++_i) {
           item = data[index];
           c = el.ele('c');
-          c.att('r', a[index] + row);
+          c.att('r', a[index + 1] + row);
           if (typeof item === 'string') {
             c.att('t', 'inlineStr');
             c.ele('is').ele('t', item);
