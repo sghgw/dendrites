@@ -1,15 +1,17 @@
 (function() {
-  var fs, module, xml2js, xmlBuilder, xmlParser, zip;
+  var a, fs, module, xml2js, xmlBuilder, xmlParser, zip;
 
   xml2js = require('xml2js');
 
   xmlParser = new xml2js.Parser();
 
-  xmlBuilder = new xml2js.Builder();
+  xmlBuilder = new require('xmlbuilder');
 
   zip = require('jszip');
 
   fs = require('fs');
+
+  a = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
   module = angular.module('XlsxFactory', []);
 
@@ -18,8 +20,7 @@
       destination: '',
       xlsx: {},
       setDestination: function(destination) {
-        this.destination = destination;
-        return console.log(this.destination);
+        return this.destination = destination;
       },
       loadTemplate: function() {
         var file;
@@ -35,6 +36,29 @@
           if (err) {
             return false;
           }
+        });
+      },
+      buildRow: function(row, data) {
+        var c, el, index, item, _i, _len;
+        el = xmlBuilder.create('row', {
+          headless: true
+        });
+        el.att('r', row);
+        for (index = _i = 0, _len = data.length; _i < _len; index = ++_i) {
+          item = data[index];
+          c = el.ele('c');
+          c.att('r', a[index] + row);
+          if (typeof item === 'string') {
+            c.att('t', 'inlineStr');
+            c.ele('is').ele('t', item);
+          } else {
+            c.ele('v', item);
+          }
+        }
+        return el.end({
+          pretty: true,
+          indent: '  ',
+          newline: '\n'
         });
       },
       log: function() {
