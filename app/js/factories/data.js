@@ -122,9 +122,10 @@
           body = _.map(this.files, function(file) {
             return _this.prepareDendriteData(file);
           });
-          data = Xlsx.buildGrid(this.prepareTableHeader(), body, 1);
+          data = Xlsx.buildGridWithTitle('Dendriten', this.prepareTableHeader(), body, 1);
           return console.log(Xlsx.addToSheet("\u00dcbersicht", data));
         },
+        addTableFor: function(files) {},
         prepareDendriteData: function(file) {
           var data;
           data = [];
