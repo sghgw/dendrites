@@ -89,9 +89,6 @@
         return $scope.data.destination = newValue;
       });
       return $scope.exportData = function() {
-        if (!$scope.data.loaded_data) {
-          $scope.data.loadDendriteData();
-        }
         return $scope.data.exportData();
       };
     }

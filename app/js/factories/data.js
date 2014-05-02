@@ -114,12 +114,15 @@
         },
         exportData: function() {
           var data, file, index, _i, _len, _ref, _results;
+          if (!this.loaded_data) {
+            this.loadDendriteData();
+          }
           Xlsx.setDestination(this.destination);
+          console.log(Xlsx.buildRow(1, this.prepareTableHeader()));
           _ref = this.files;
           _results = [];
           for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
             file = _ref[index];
-            console.log(file);
             data = this.prepareDendriteData(file);
             _results.push(console.log(Xlsx.buildRow(index + 2, data)));
           }
@@ -146,6 +149,30 @@
           }
           if (this.data_options.dendrite.mean_spine_length) {
             data.push(file.dendrite.mean_spine_length);
+          }
+          return data;
+        },
+        prepareTableHeader: function() {
+          var data;
+          data = [];
+          data.push('Dendrit');
+          if (this.data_options.dendrite.length) {
+            data.push('Länge');
+          }
+          if (this.data_options.dendrite.surface) {
+            data.push('Oberfläche');
+          }
+          if (this.data_options.dendrite.volume) {
+            data.push('Volumen');
+          }
+          if (this.data_options.dendrite.total_spines) {
+            data.push('Spineanzahl');
+          }
+          if (this.data_options.dendrite.spine_density) {
+            data.push('Spinedichte');
+          }
+          if (this.data_options.dendrite.mean_spine_length) {
+            data.push('Mittlere Spinelänge');
           }
           return data;
         }

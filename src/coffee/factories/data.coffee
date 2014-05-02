@@ -88,9 +88,10 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
       }
 
     exportData: ->
+      @loadDendriteData() if !@loaded_data
       Xlsx.setDestination @destination
+      console.log Xlsx.buildRow 1, @prepareTableHeader()
       for file, index in @files
-        console.log file
         data = @prepareDendriteData(file)
         console.log Xlsx.buildRow(index + 2, data)
 
@@ -103,5 +104,16 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
       data.push file.dendrite.total_spines if @data_options.dendrite.total_spines
       data.push file.dendrite.spine_density if @data_options.dendrite.spine_density
       data.push file.dendrite.mean_spine_length if @data_options.dendrite.mean_spine_length
+      data
+
+    prepareTableHeader: ->
+      data = []
+      data.push 'Dendrit'
+      data.push 'Länge' if @data_options.dendrite.length
+      data.push 'Oberfläche' if @data_options.dendrite.surface
+      data.push 'Volumen' if @data_options.dendrite.volume
+      data.push 'Spineanzahl' if @data_options.dendrite.total_spines
+      data.push 'Spinedichte' if @data_options.dendrite.spine_density
+      data.push 'Mittlere Spinelänge' if @data_options.dendrite.mean_spine_length
       data
   }]

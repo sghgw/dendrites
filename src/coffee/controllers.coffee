@@ -84,6 +84,6 @@ ctrls.controller 'exportCtrl', ['$scope', 'Data', ($scope, Data) ->
     $scope.data.destination = newValue
 
   $scope.exportData = ->
-    $scope.data.loadDendriteData() if !$scope.data.loaded_data
+    # $scope.data.loadDendriteData() if !$scope.data.loaded_data
     $scope.data.exportData()
 ]
