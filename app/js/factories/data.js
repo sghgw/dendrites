@@ -113,20 +113,16 @@
           };
         },
         exportData: function() {
-          var data, file, index, _i, _len, _ref, _results;
+          var body,
+            _this = this;
           if (!this.loaded_data) {
             this.loadDendriteData();
           }
           Xlsx.setDestination(this.destination);
-          console.log(Xlsx.buildRow(1, this.prepareTableHeader()));
-          _ref = this.files;
-          _results = [];
-          for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
-            file = _ref[index];
-            data = this.prepareDendriteData(file);
-            _results.push(console.log(Xlsx.buildRow(index + 2, data)));
-          }
-          return _results;
+          body = _.map(this.files, function(file) {
+            return _this.prepareDendriteData(file);
+          });
+          return console.log(Xlsx.buildGrid(this.prepareTableHeader(), body, 1));
         },
         prepareDendriteData: function(file) {
           var data;

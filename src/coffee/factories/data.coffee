@@ -90,10 +90,13 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
     exportData: ->
       @loadDendriteData() if !@loaded_data
       Xlsx.setDestination @destination
-      console.log Xlsx.buildRow 1, @prepareTableHeader()
-      for file, index in @files
-        data = @prepareDendriteData(file)
-        console.log Xlsx.buildRow(index + 2, data)
+      # console.log Xlsx.buildRow @prepareTableHeader(), 1, true
+      body = _.map @files, (file) =>
+        @prepareDendriteData file
+      console.log Xlsx.buildGrid @prepareTableHeader(), body, 1
+      # for file, index in @files
+      #   data = @prepareDendriteData(file)
+      #   console.log Xlsx.buildRow(data, index + 2)
 
     prepareDendriteData: (file) ->
       data = []

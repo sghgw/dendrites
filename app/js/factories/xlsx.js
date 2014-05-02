@@ -38,8 +38,11 @@
           }
         });
       },
-      buildRow: function(row, data) {
-        var c, el, index, item, _i, _len;
+      buildRow: function(data, row, pretty) {
+        var c, el, index, item, opts, _i, _len;
+        if (!row) {
+          row = 1;
+        }
         el = xmlBuilder.create('row', {
           headless: true
         });
@@ -56,11 +59,25 @@
             c.ele('v', item);
           }
         }
-        return el.end({
-          pretty: true,
-          indent: '  ',
-          newline: '\n'
+        if (pretty) {
+          opts = {
+            pretty: true,
+            indent: '  ',
+            newline: '\n'
+          };
+        } else {
+          opts = {};
+        }
+        return el.end(opts);
+      },
+      buildGrid: function(headerData, bodyData, rowToStart) {
+        var body, header,
+          _this = this;
+        header = this.buildRow(headerData, rowToStart, true);
+        body = _.map(bodyData, function(data, index) {
+          return _this.buildRow(data, rowToStart + index + 1, true);
         });
+        return header + body.join('');
       },
       log: function() {
         var _this = this;

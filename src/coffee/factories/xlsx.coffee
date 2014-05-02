@@ -23,7 +23,8 @@ module.factory 'Xlsx', () ->
       fs.writeFile @destination, buffer, (err) ->
         return false if err
 
-    buildRow: (row, data) ->
+    buildRow: (data, row, pretty) ->
+      row = 1 if !row
       el = xmlBuilder.create 'row', {headless: true}
       el.att 'r', row
       el.ele('c').att('r', 'A' + row).ele 'v', row
@@ -35,7 +36,14 @@ module.factory 'Xlsx', () ->
           c.ele('is').ele 't', item
         else
           c.ele 'v', item
-      el.end({ pretty: true, indent: '  ', newline: '\n' })
+      if pretty then opts = { pretty: true, indent: '  ', newline: '\n' }else opts = {}
+      el.end(opts)
+
+    buildGrid: (headerData, bodyData, rowToStart) ->
+      header = @buildRow headerData, rowToStart, true
+      body = _.map bodyData, (data, index) =>
+        @buildRow data, rowToStart + index + 1, true
+      header + body.join('')
 
     log: () ->
       @loadTemplate()
