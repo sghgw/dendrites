@@ -93,7 +93,9 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
       if @grouping
         @addTablesForGroups()
       else
-        @addTableFor @files
+        @addTableFor @files, 'Alle Daten'
+      Xlsx.generateXlsxFile()
+
 
     addTableFor: (files, title, rowToStart) ->
       rowToStart = 1 if !rowToStart
@@ -102,10 +104,14 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
       Xlsx.addGridWithTitle title, @prepareTableHeader(), body, rowToStart, "\u00dcbersicht"
 
     addTablesForGroups: ->
-      for group in @groups
+      header = @prepareTableHeader()
+      row = 1
+      for group, index in @groups
         title = if group.title then group.title else group.id
         files = _.where @files, {group: group.id}
-        console.log files
+        @addTableFor files, title, row
+        row += files.length + 5
+
 
     prepareDendriteData: (file) ->
       data = []

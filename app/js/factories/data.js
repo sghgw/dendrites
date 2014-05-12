@@ -118,10 +118,11 @@
           }
           Xlsx.setDestination(this.destination);
           if (this.grouping) {
-            return this.addTablesForGroups();
+            this.addTablesForGroups();
           } else {
-            return this.addTableFor(this.files);
+            this.addTableFor(this.files, 'Alle Daten');
           }
+          return Xlsx.generateXlsxFile();
         },
         addTableFor: function(files, title, rowToStart) {
           var body,
@@ -135,16 +136,19 @@
           return Xlsx.addGridWithTitle(title, this.prepareTableHeader(), body, rowToStart, "\u00dcbersicht");
         },
         addTablesForGroups: function() {
-          var files, group, title, _i, _len, _ref, _results;
+          var files, group, header, index, row, title, _i, _len, _ref, _results;
+          header = this.prepareTableHeader();
+          row = 1;
           _ref = this.groups;
           _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            group = _ref[_i];
+          for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
+            group = _ref[index];
             title = group.title ? group.title : group.id;
             files = _.where(this.files, {
               group: group.id
             });
-            _results.push(console.log(files));
+            this.addTableFor(files, title, row);
+            _results.push(row += files.length + 5);
           }
           return _results;
         },
