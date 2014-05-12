@@ -125,7 +125,6 @@
       addToSheet: function(sheetName, data) {
         var sheet, xml;
         sheet = this.getSheet(sheetName);
-        console.log(sheet.xml);
         if (sheet.xml.worksheet.sheetData[0].row) {
           sheet.xml.worksheet.sheetData[0].row = sheet.xml.worksheet.sheetData[0].row.concat(data);
         } else {
