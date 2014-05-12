@@ -126,12 +126,20 @@
         var sheet, xml;
         sheet = this.getSheet(sheetName);
         console.log(sheet.xml);
-        sheet.xml.worksheet.sheetData[0] = {
-          row: data
-        };
+        if (sheet.xml.worksheet.sheetData[0].row) {
+          sheet.xml.worksheet.sheetData[0].row = sheet.xml.worksheet.sheetData[0].row.concat(data);
+        } else {
+          sheet.xml.worksheet.sheetData[0] = {
+            row: data
+          };
+        }
         xml = xmlBuilder.buildObject(sheet.xml);
-        this.xlsx.file(sheet.path, xml);
-        return this.generateXlsxFile();
+        return this.xlsx.file(sheet.path, xml);
+      },
+      addGridWithTitle: function(title, header, body, rowToStart, sheet) {
+        var data;
+        data = this.buildGridWithTitle(title, header, body, rowToStart);
+        return this.addToSheet(sheet, data);
       },
       log: function() {
         var _this = this;

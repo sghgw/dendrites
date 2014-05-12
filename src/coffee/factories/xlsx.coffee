@@ -18,7 +18,7 @@ module.factory 'Xlsx', () ->
     loadTemplate: () ->
       file = window.location.pathname.split("views")[0] + 'templates/template.xlsx'
       @xlsx = new zip(fs.readFileSync(file))
- 
+
     generateXlsxFile: () ->
       buffer = @xlsx.generate {type: 'nodebuffer'}
       fs.writeFile @destination, buffer, (err) ->
@@ -27,7 +27,7 @@ module.factory 'Xlsx', () ->
 
     buildRow: (data, row, isHeader) ->
       row = 1 if !row
-      el = {  
+      el = {
         $:
           r: row
         c: []
@@ -80,10 +80,16 @@ module.factory 'Xlsx', () ->
     addToSheet: (sheetName, data) ->
       sheet = @getSheet sheetName
       console.log sheet.xml
-      sheet.xml.worksheet.sheetData[0] = {row: data}
+      if sheet.xml.worksheet.sheetData[0].row
+        sheet.xml.worksheet.sheetData[0].row = sheet.xml.worksheet.sheetData[0].row.concat data
+      else
+        sheet.xml.worksheet.sheetData[0] = {row: data}
       xml = xmlBuilder.buildObject sheet.xml
       @xlsx.file(sheet.path, xml)
-      @generateXlsxFile()
+
+    addGridWithTitle: (title, header, body, rowToStart, sheet) ->
+      data = @buildGridWithTitle title, header, body, rowToStart
+      @addToSheet sheet, data
 
     log: () ->
       @loadTemplate()

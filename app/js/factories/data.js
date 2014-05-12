@@ -113,19 +113,41 @@
           };
         },
         exportData: function() {
-          var body, data,
-            _this = this;
           if (!this.loaded_data) {
             this.loadDendriteData();
           }
           Xlsx.setDestination(this.destination);
-          body = _.map(this.files, function(file) {
+          if (this.grouping) {
+            return this.addTablesForGroups();
+          } else {
+            return this.addTableFor(this.files);
+          }
+        },
+        addTableFor: function(files, title, rowToStart) {
+          var body,
+            _this = this;
+          if (!rowToStart) {
+            rowToStart = 1;
+          }
+          body = _.map(files, function(file) {
             return _this.prepareDendriteData(file);
           });
-          data = Xlsx.buildGridWithTitle('Dendriten', this.prepareTableHeader(), body, 1);
-          return console.log(Xlsx.addToSheet("\u00dcbersicht", data));
+          return Xlsx.addGridWithTitle(title, this.prepareTableHeader(), body, rowToStart, "\u00dcbersicht");
         },
-        addTableFor: function(files) {},
+        addTablesForGroups: function() {
+          var files, group, title, _i, _len, _ref, _results;
+          _ref = this.groups;
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            group = _ref[_i];
+            title = group.title ? group.title : group.id;
+            files = _.where(this.files, {
+              group: group.id
+            });
+            _results.push(console.log(files));
+          }
+          return _results;
+        },
         prepareDendriteData: function(file) {
           var data;
           data = [];

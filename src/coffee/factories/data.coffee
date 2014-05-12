@@ -90,21 +90,22 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
     exportData: ->
       @loadDendriteData() if !@loaded_data
       Xlsx.setDestination @destination
-      # if @groups.length 
-      #   @addTablesForGroups()
-      # else
-      #   @addTableFor @files
-      body = _.map @files, (file) =>
+      if @grouping
+        @addTablesForGroups()
+      else
+        @addTableFor @files
+
+    addTableFor: (files, title, rowToStart) ->
+      rowToStart = 1 if !rowToStart
+      body = _.map files, (file) =>
         @prepareDendriteData file
-      data = Xlsx.buildGridWithTitle 'Dendriten', @prepareTableHeader(), body, 1
-      # # console.log Xlsx.getSheet("\u00dcbersicht")
-      console.log Xlsx.addToSheet "\u00dcbersicht", data
-      # console.log Xlsx.getSheet('Gruppen')
-      # console.log Xlsx.getSheet("\u00dcbersicht")
-      # console.log Xlsx.getSheet("Einzelwerte")
+      Xlsx.addGridWithTitle title, @prepareTableHeader(), body, rowToStart, "\u00dcbersicht"
 
-    addTableFor: (files) ->
-
+    addTablesForGroups: ->
+      for group in @groups
+        title = if group.title then group.title else group.id
+        files = _.where @files, {group: group.id}
+        console.log files
 
     prepareDendriteData: (file) ->
       data = []
