@@ -90,27 +90,4 @@ module.factory 'Xlsx', () ->
     addGridWithTitle: (title, header, body, rowToStart, sheet) ->
       data = @buildGridWithTitle title, header, body, rowToStart
       @addToSheet sheet, data
-
-    log: () ->
-      @loadTemplate()
-      console.log @xlsx.file('xl/worksheets/sheet1.xml').asText()
-      @parser.parseString @xlsx.file('xl/worksheets/sheet2.xml').asText(), (err, result) =>
-        console.log result
-        result.worksheet.sheetData = {
-          row:
-            '$':
-              r: 1
-            c:
-              '$':
-                r: 'A1'
-                t: 'n'
-              v: 345
-        }
-        @builder.options.renderOpts.pretty = false
-        data = @builder.buildObject(result)
-        @xlsx.file('xl/worksheets/sheet1.xml', data)
-        buffer = @xlsx.generate {type: 'nodebuffer'}
-        @fs.writeFile window.location.pathname.split("views")[0] + 'templates/test.xlsx', buffer, (err) =>
-          console.log err
-      # console.log @fs.existsSync(file)
   }
