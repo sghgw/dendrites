@@ -1,5 +1,7 @@
 fs = require 'fs'
 path = require 'path'
+Datastore = require 'nedb'
+db = new Datastore()
 module = angular.module 'dataFactory', ['readXlsFactory', 'XlsxFactory']
 
 module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
@@ -40,6 +42,7 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
       for file in @files
         file.dendrite = readXls.start @source, file.name, @data_options
       @loaded_data = true
+      console.log @files
 
     groupFiles: ->
       p = @checkPattern()

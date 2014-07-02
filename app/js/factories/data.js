@@ -1,9 +1,13 @@
 (function() {
-  var fs, module, path;
+  var Datastore, db, fs, module, path;
 
   fs = require('fs');
 
   path = require('path');
+
+  Datastore = require('nedb');
+
+  db = new Datastore();
 
   module = angular.module('dataFactory', ['readXlsFactory', 'XlsxFactory']);
 
@@ -55,7 +59,8 @@
             file = _ref[_i];
             file.dendrite = readXls.start(this.source, file.name, this.data_options);
           }
-          return this.loaded_data = true;
+          this.loaded_data = true;
+          return console.log(this.files);
         },
         groupFiles: function() {
           var file, groupname, groups, p, title, _i, _len, _ref;
