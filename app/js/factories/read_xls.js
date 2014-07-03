@@ -30,6 +30,7 @@
         dendrite = {
           file: filename,
           group: '',
+          title: path.basename(filename, '.xls', '.xlsx'),
           length: file.Sheets['Each Tree-Dendrite']['D2'].v.toFixed(1) / 1,
           surface: file.Sheets['Each Tree-Dendrite']['G2'].v,
           volume: file.Sheets['Each Tree-Dendrite']['J2'].v,
