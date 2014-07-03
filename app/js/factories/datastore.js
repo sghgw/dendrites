@@ -7,7 +7,16 @@
 
   module.factory('dataStore', function() {
     return {
-      db: {}
+      db: {},
+      initDB: function() {
+        return this.db.dendrites = new Datastore();
+      },
+      getDB: function() {
+        if (!this.db) {
+          this.initDB();
+        }
+        return this.db;
+      }
     };
   });
 
