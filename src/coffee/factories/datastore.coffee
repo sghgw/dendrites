@@ -25,4 +25,7 @@ module.factory 'dataStore', ($q) ->
       @db.dendrites.find {}, (err, docs) =>
         d.resolve docs
       return d.promise
+
+    updateDendrite: (id, data) ->
+      @db.dendrites.update {_id: id}, {$set: data}
   }

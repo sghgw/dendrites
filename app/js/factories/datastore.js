@@ -29,6 +29,13 @@
           return d.resolve(docs);
         });
         return d.promise;
+      },
+      updateDendrite: function(id, data) {
+        return this.db.dendrites.update({
+          _id: id
+        }, {
+          $set: data
+        });
       }
     };
   });
