@@ -5,10 +5,10 @@
 
   path = require('path');
 
-  module = angular.module('dataFactory', ['readXlsFactory', 'XlsxFactory']);
+  module = angular.module('dataFactory', ['readXlsFactory', 'XlsxFactory', 'dataStoreFactory']);
 
   module.factory('Data', [
-    'readXls', 'Xlsx', function(readXls, Xlsx) {
+    'readXls', 'Xlsx', 'dataStore', function(readXls, Xlsx, dataStore) {
       return {
         files: [],
         groups: [],
@@ -54,9 +54,9 @@
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             file = _ref[_i];
             file.dendrite = readXls.start(this.source, file.name, this.data_options);
+            console.log(dataStore.addDendrite(file.dendrite));
           }
-          this.loaded_data = true;
-          return console.log(this.files);
+          return this.loaded_data = true;
         },
         groupFiles: function() {
           var file, groupname, groups, p, title, _i, _len, _ref;

@@ -8,10 +8,15 @@ module.factory 'dataStore', () ->
 
     # load databases
     initDB: () ->
-      @db.dendrites = new Datastore()
-      # @db.presets = new Datastore(filename: '', autoload: true)
+      if _.isEmpty(@db)
+        @db.dendrites = new Datastore()
+        # @db.presets = new Datastore(filename: '', autoload: true)
 
     getDB: () ->
-      @initDB() if !@db 
+      @initDB()
       return @db
+
+    addDendrite: (data) ->
+      @initDB()
+      @db.dendrites.insert {data}
   }

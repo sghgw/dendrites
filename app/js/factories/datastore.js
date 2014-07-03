@@ -9,13 +9,19 @@
     return {
       db: {},
       initDB: function() {
-        return this.db.dendrites = new Datastore();
+        if (_.isEmpty(this.db)) {
+          return this.db.dendrites = new Datastore();
+        }
       },
       getDB: function() {
-        if (!this.db) {
-          this.initDB();
-        }
+        this.initDB();
         return this.db;
+      },
+      addDendrite: function(data) {
+        this.initDB();
+        return this.db.dendrites.insert({
+          data: data
+        });
       }
     };
   });

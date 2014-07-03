@@ -1,8 +1,8 @@
 fs = require 'fs'
 path = require 'path'
-module = angular.module 'dataFactory', ['readXlsFactory', 'XlsxFactory']
+module = angular.module 'dataFactory', ['readXlsFactory', 'XlsxFactory', 'dataStoreFactory']
 
-module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
+module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStore) ->
   {
     files: []
     groups: []
@@ -39,8 +39,9 @@ module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->
     loadDendriteData: ->
       for file in @files
         file.dendrite = readXls.start @source, file.name, @data_options
+        console.log dataStore.addDendrite file.dendrite
       @loaded_data = true
-      console.log @files
+      # console.log @files
 
     groupFiles: ->
       p = @checkPattern()
