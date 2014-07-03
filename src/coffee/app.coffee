@@ -6,5 +6,5 @@
   'readXlsFactory',
   'XlsxFactory',
   'dataFactory',
-  'dendritesDBFactory'
+  'dataStoreFactory'
 ]
