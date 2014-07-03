@@ -1,7 +1,5 @@
 fs = require 'fs'
 path = require 'path'
-Datastore = require 'nedb'
-db = new Datastore()
 module = angular.module 'dataFactory', ['readXlsFactory', 'XlsxFactory']
 
 module.factory 'Data', ['readXls', 'Xlsx', (readXls, Xlsx) ->

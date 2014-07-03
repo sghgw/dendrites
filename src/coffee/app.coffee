@@ -5,5 +5,6 @@
   'dendritesDirectives',
   'readXlsFactory',
   'XlsxFactory',
-  'dataFactory'
+  'dataFactory',
+  'dendritesDBFactory'
 ]

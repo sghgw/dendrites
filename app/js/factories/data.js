@@ -1,13 +1,9 @@
 (function() {
-  var Datastore, db, fs, module, path;
+  var fs, module, path;
 
   fs = require('fs');
 
   path = require('path');
-
-  Datastore = require('nedb');
-
-  db = new Datastore();
 
   module = angular.module('dataFactory', ['readXlsFactory', 'XlsxFactory']);
 
