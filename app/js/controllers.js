@@ -15,10 +15,8 @@
       $scope.dir = '/Users/sascha/Desktop/excel/test data';
       return $scope.$watch('dir', function(newValue, oldValue) {
         if (newValue) {
-          Data.loadFileList(newValue);
+          return Data.loadFileList(newValue);
         }
-        $scope.data.groupFiles();
-        return $scope.data.loaded_data = false;
       });
     }
   ]);

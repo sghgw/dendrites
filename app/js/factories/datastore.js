@@ -3,9 +3,9 @@
 
   Datastore = require('nedb');
 
-  module = angular.module('dataStoreFactory', ['readXlsFactory', 'XlsxFactory']);
+  module = angular.module('dataStoreFactory', []);
 
-  module.factory('dataStore', function() {
+  module.factory('dataStore', function($q) {
     return {
       db: {},
       initDB: function() {
@@ -19,9 +19,16 @@
       },
       addDendrite: function(data) {
         this.initDB();
-        return this.db.dendrites.insert({
-          data: data
+        return this.db.dendrites.insert(data);
+      },
+      getDendrites: function() {
+        var d,
+          _this = this;
+        d = $q.defer();
+        this.db.dendrites.find({}, function(err, docs) {
+          return d.resolve(docs);
         });
+        return d.promise;
       }
     };
   });

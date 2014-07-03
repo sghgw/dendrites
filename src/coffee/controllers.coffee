@@ -29,10 +29,6 @@ ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.dir = '/Users/sascha/Desktop/excel/test data'
   $scope.$watch 'dir', (newValue, oldValue) ->
     Data.loadFileList(newValue) if newValue
-    # also update groups
-    $scope.data.groupFiles()
-    # set loaded_data to false
-    $scope.data.loaded_data = false
 ]
 
 ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->

@@ -1,8 +1,8 @@
 Datastore = require 'nedb'
 
-module = angular.module 'dataStoreFactory', ['readXlsFactory', 'XlsxFactory']
+module = angular.module 'dataStoreFactory', []
 
-module.factory 'dataStore', () ->
+module.factory 'dataStore', ($q) ->
   {
     db: {}
 
@@ -18,5 +18,11 @@ module.factory 'dataStore', () ->
 
     addDendrite: (data) ->
       @initDB()
-      @db.dendrites.insert {data}
+      @db.dendrites.insert data
+
+    getDendrites: ->
+      d = $q.defer()
+      @db.dendrites.find {}, (err, docs) =>
+        d.resolve docs
+      return d.promise
   }
