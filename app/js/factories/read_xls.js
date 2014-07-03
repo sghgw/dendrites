@@ -1,107 +1,65 @@
 (function() {
-  var module;
+  var module, path, stats, xls, xlsx;
+
+  xls = require('xlsjs');
+
+  xlsx = require('xlsx');
+
+  path = require('path');
+
+  stats = require('simple-statistics');
 
   module = angular.module('readXlsFactory', []);
 
   module.factory('readXls', function() {
     return {
-      xls: require('xlsjs'),
-      xlsx: require('xlsx'),
-      stats: require('simple-statistics'),
-      path: require('path'),
-      start: function(dir, file, options) {
-        file = this.open(dir, file);
-        return this.load(file, options);
+      start: function(dir, filename) {
+        var file;
+        file = this.open(dir, filename);
+        return this.load(file, filename);
       },
       open: function(dir, file) {
-        if (this.path.extname(file) === '.xls') {
-          return this.xls.readFile(dir + '/' + file);
+        if (path.extname(file) === '.xls') {
+          return xls.readFile(dir + '/' + file);
         } else {
-          return this.xlsx.readFile(dir + '/' + file);
+          return xlsx.readFile(dir + '/' + file);
         }
       },
-      load: function(file, options) {
-        var dendrite, i;
+      load: function(file, filename) {
+        var dendrite, i, spine, _i, _ref;
         dendrite = {
-          spines: {}
+          file: filename,
+          group: '',
+          length: file.Sheets['Each Tree-Dendrite']['D2'].v.toFixed(1) / 1,
+          surface: file.Sheets['Each Tree-Dendrite']['G2'].v,
+          volume: file.Sheets['Each Tree-Dendrite']['J2'].v,
+          total_spines: file.Sheets['Each Tree-Dendrite']['R2'].v,
+          spines: []
         };
-        if (options.dendrite.length) {
-          dendrite.length = file.Sheets['Each Tree-Dendrite']['D2'].v.toFixed(1) / 1;
+        dendrite.spine_density = (dendrite.total_spines / dendrite.length).toFixed(4) / 1;
+        for (i = _i = 2, _ref = dendrite.total_spines + 1; 2 <= _ref ? _i <= _ref : _i >= _ref; i = 2 <= _ref ? ++_i : --_i) {
+          spine = {
+            length: file.Sheets['Spine Details']['E' + i].v,
+            diameter: file.Sheets['Spine Details']['F' + i].v,
+            distance: file.Sheets['Spine Details']['G' + i].v,
+            length_to_center: file.Sheets['Spine Details']['D' + i].v
+          };
+          dendrite.spines.push(spine);
         }
-        if (options.dendrite.surface) {
-          dendrite.surface = file.Sheets['Each Tree-Dendrite']['G2'].v;
-        }
-        if (options.dendrite.volume) {
-          dendrite.volume = file.Sheets['Each Tree-Dendrite']['J2'].v;
-        }
-        if (options.dendrite.total_spines) {
-          dendrite.total_spines = file.Sheets['Each Tree-Dendrite']['R2'].v;
-        }
-        if (options.spines.length || options.dendrite.mean_spine_length || options.spines.grouped_length) {
-          dendrite.spines.length = (function() {
-            var _i, _ref, _results;
-            _results = [];
-            for (i = _i = 2, _ref = dendrite.total_spines + 1; 2 <= _ref ? _i <= _ref : _i >= _ref; i = 2 <= _ref ? ++_i : --_i) {
-              _results.push(file.Sheets['Spine Details']['E' + i].v);
-            }
-            return _results;
-          })();
-        }
-        if (options.spines.diameter) {
-          dendrite.spines.diameter = (function() {
-            var _i, _ref, _results;
-            _results = [];
-            for (i = _i = 2, _ref = dendrite.total_spines + 1; 2 <= _ref ? _i <= _ref : _i >= _ref; i = 2 <= _ref ? ++_i : --_i) {
-              _results.push(file.Sheets['Spine Details']['F' + i].v);
-            }
-            return _results;
-          })();
-        }
-        if (options.spines.distance) {
-          dendrite.spines.distance = (function() {
-            var _i, _ref, _results;
-            _results = [];
-            for (i = _i = 2, _ref = dendrite.total_spines + 1; 2 <= _ref ? _i <= _ref : _i >= _ref; i = 2 <= _ref ? ++_i : --_i) {
-              _results.push(file.Sheets['Spine Details']['G' + i].v);
-            }
-            return _results;
-          })();
-        }
-        if (options.spines.length_to_center) {
-          dendrite.spines.length_to_center = (function() {
-            var _i, _ref, _results;
-            _results = [];
-            for (i = _i = 2, _ref = dendrite.total_spines + 1; 2 <= _ref ? _i <= _ref : _i >= _ref; i = 2 <= _ref ? ++_i : --_i) {
-              _results.push(file.Sheets['Spine Details']['D' + i].v);
-            }
-            return _results;
-          })();
-        }
-        if (options.dendrite.mean_spine_length) {
-          dendrite.mean_spine_length = this.stats.mean(dendrite.spines.length).toFixed(4) / 1;
-        }
-        if (options.dendrite.spine_density) {
-          dendrite.spine_density = (dendrite.total_spines / dendrite.length).toFixed(4) / 1;
-        }
-        if (options.spines.grouped_length) {
-          dendrite.spines.grouped_length = _.countBy(dendrite.spines.length, function(spine) {
-            if (spine < 0.5) {
-              return '< 0,5';
-            }
-            if ((0.5 <= spine && spine < 1)) {
-              return '0,5 - 1';
-            }
-            if ((1 <= spine && spine < 1.5)) {
-              return '1 - 1,5';
-            }
-            if ((1.5 <= spine && spine < 2)) {
-              return '1,5 - 2';
-            }
-            if (spine > 2) {
-              return '> 2';
-            }
-          });
-        }
+        dendrite.spine_means = {
+          length: stats.mean(_.map(dendrite.spines, function(spine) {
+            return spine.length;
+          })),
+          diameter: stats.mean(_.map(dendrite.spines, function(spine) {
+            return spine.diameter;
+          })),
+          distance: stats.mean(_.map(dendrite.spines, function(spine) {
+            return spine.distance;
+          })),
+          length_to_center: stats.mean(_.map(dendrite.spines, function(spine) {
+            return spine.length_to_center;
+          }))
+        };
         return dendrite;
       }
     };
