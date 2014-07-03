@@ -41,9 +41,6 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       for file in files
         # read data from excel file
         data = readXls.start(@source, file)
-        group = @getGroup(file)
-        data.group = group.name
-        data.title = group.title
         # write data to temporary db
         dataStore.addDendrite data
       # get all dendrite data for app

@@ -44,14 +44,11 @@
           }
         },
         loadDendriteData: function(files) {
-          var data, file, group, _i, _len,
+          var data, file, _i, _len,
             _this = this;
           for (_i = 0, _len = files.length; _i < _len; _i++) {
             file = files[_i];
             data = readXls.start(this.source, file);
-            group = this.getGroup(file);
-            data.group = group.name;
-            data.title = group.title;
             dataStore.addDendrite(data);
           }
           return dataStore.getDendrites().then(function(dendrites) {
