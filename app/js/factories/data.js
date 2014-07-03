@@ -10,7 +10,7 @@
   module.factory('Data', [
     'readXls', 'Xlsx', 'dataStore', function(readXls, Xlsx, dataStore) {
       return {
-        files: [],
+        dendrites: [],
         groups: [],
         filename_pattern: '<Gruppe>_<Titel>',
         grouping: false,
@@ -39,53 +39,37 @@
             files = _.filter(fs.readdirSync(source), function(file) {
               return _.contains(['.xls', '.xlsx'], path.extname(file));
             });
-            this.files = _.map(files, function(filename) {
-              return {
-                name: filename,
-                title: ''
-              };
-            });
+            this.loadDendriteData(files);
             return this.destination = source + '/Auswertung.xlsx';
           }
         },
-        loadDendriteData: function() {
-          var file, _i, _len, _ref;
-          _ref = this.files;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            file = _ref[_i];
-            file.dendrite = readXls.start(this.source, file.name, this.data_options);
-            console.log(dataStore.addDendrite(file.dendrite));
+        loadDendriteData: function(files) {
+          var data, file, group, _i, _len,
+            _this = this;
+          for (_i = 0, _len = files.length; _i < _len; _i++) {
+            file = files[_i];
+            data = readXls.start(this.source, file);
+            group = this.getGroup(file);
+            data.group = group.name;
+            data.title = group.title;
+            dataStore.addDendrite(data);
           }
-          return this.loaded_data = true;
+          return dataStore.getDendrites().then(function(dendrites) {
+            return _this.dendrites = dendrites;
+          });
         },
-        groupFiles: function() {
-          var file, groupname, groups, p, title, _i, _len, _ref;
+        getGroup: function(file) {
+          var groupname, p, title;
           p = this.checkPattern();
-          groups = {};
           if (!p) {
-            this.groups = [];
             return false;
           }
-          _ref = this.files;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            file = _ref[_i];
-            groupname = p.first === 'group' ? file.name.split(p.pattern)[0] : file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0];
-            title = p.first === 'title' ? file.name.split(p.pattern)[0] : file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0];
-            file.title = title;
-            file.group = groupname;
-            if (groups[groupname]) {
-              groups[groupname] += 1;
-            } else {
-              groups[groupname] = 1;
-            }
-          }
-          this.groups = _.map(groups, function(number, id) {
-            return {
-              id: id,
-              files: number
-            };
-          });
-          return true;
+          groupname = p.first === 'group' ? file.split(p.pattern)[0] : file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file))[0];
+          title = p.first === 'title' ? file.split(p.pattern)[0] : file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file))[0];
+          return {
+            name: groupname,
+            title: title
+          };
         },
         checkPattern: function() {
           var first, pattern;

@@ -4,7 +4,7 @@ module = angular.module 'dataFactory', ['readXlsFactory', 'XlsxFactory', 'dataSt
 
 module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStore) ->
   {
-    files: []
+    dendrites: []
     groups: []
     filename_pattern: '<Gruppe>_<Titel>'
     grouping: false
@@ -31,40 +31,32 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
         @source = source
         files = _.filter fs.readdirSync(source), (file) ->
           _.contains ['.xls', '.xlsx'], path.extname(file)
-        @files = _.map files, (filename) ->
-          {name: filename, title: ''} 
+        # call method to load data from files
+        @loadDendriteData(files)
+        
         @destination = source + '/Auswertung.xlsx'
           
     # method to load dendrite data from excel file
-    loadDendriteData: ->
-      for file in @files
-        file.dendrite = readXls.start @source, file.name, @data_options
-        console.log dataStore.addDendrite file.dendrite
-      @loaded_data = true
-      # console.log @files
+    loadDendriteData: (files) ->
+      for file in files
+        # read data from excel file
+        data = readXls.start(@source, file)
+        group = @getGroup(file)
+        data.group = group.name
+        data.title = group.title
+        # write data to temporary db
+        dataStore.addDendrite data
+      # get all dendrite data for app
+      dataStore.getDendrites().then (dendrites) =>
+          @dendrites = dendrites
 
-    groupFiles: ->
+    getGroup: (file) ->
       p = @checkPattern()
-      groups = {} 
-      if !p
-        @groups = []
-        return false
+      return false if !p
 
-      for file in @files
-        # file = file.split(path.extname(file))[0]
-        groupname = if p.first is 'group' then file.name.split(p.pattern)[0] else file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0]
-        title = if p.first is 'title' then file.name.split(p.pattern)[0] else file.name.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file.name))[0]
-        file.title = title
-        file.group = groupname
-
-        if groups[groupname]
-          groups[groupname] += 1
-        else
-          groups[groupname] = 1
-
-      @groups = _.map groups, (number, id) ->
-        {id: id, files: number}
-      return true
+      groupname = if p.first is 'group' then file.split(p.pattern)[0] else file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file))[0]
+      title = if p.first is 'title' then file.split(p.pattern)[0] else file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file))[0]
+      return {name: groupname, title: title}
 
     checkPattern: ->
       pattern = @filename_pattern.split('<Gruppe>')[1]
