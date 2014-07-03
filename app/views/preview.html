@@ -2,9 +2,8 @@
   <h2>4. Datenvorschau</h2>
   <div ng-show="!data.loaded_data">
     <p>Hier kann eine kurze Vorschau in die Daten angezeigt werden, bevor sie im nächsten Schritt exportiert werden.</p>
-  <button class="btn btn-success" ng-click="loadDendriteData()">Vorschau laden</button>
   </div>
-  <div ng-show="data.loaded_data">
+  <div ng-show="data.dendrites.length">
     <div class="panel panel-default">
       <div class="panel-heading">Dendriten</div>
       <div class="panel-body">
@@ -23,15 +22,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="file in data.files">
+              <tr ng-repeat="dendrite in data.dendrites">
                 <td>{{$index + 1}}</td>
-                <td>{{file.title ? file.title : file.name}}</td>
-                <td ng-show="data.data_options.dendrite.length">{{file.dendrite.length}}</td>
-                <td ng-show="data.data_options.dendrite.surface">{{file.dendrite.surface}}</td>
-                <td ng-show="data.data_options.dendrite.volume">{{file.dendrite.volume}}</td>
-                <td ng-show="data.data_options.dendrite.total_spines">{{file.dendrite.total_spines}}</td>
-                <td ng-show="data.data_options.dendrite.spine_density">{{file.dendrite.spine_density}}</td>
-                <td ng-show="data.data_options.dendrite.mean_spine_length">{{file.dendrite.mean_spine_length}}</td>
+                <td>{{dendrite.title}}</td>
+                <td ng-show="data.data_options.dendrite.length">{{dendrite.length}}</td>
+                <td ng-show="data.data_options.dendrite.surface">{{dendrite.surface}}</td>
+                <td ng-show="data.data_options.dendrite.volume">{{dendrite.volume}}</td>
+                <td ng-show="data.data_options.dendrite.total_spines">{{dendrite.total_spines}}</td>
+                <td ng-show="data.data_options.dendrite.spine_density">{{dendrite.spine_density}}</td>
+                <td ng-show="data.data_options.dendrite.mean_spine_length">{{dendrite.spine_means.length}}</td>
               </tr>
             </tbody>
           </table>
