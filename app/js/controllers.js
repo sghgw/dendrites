@@ -48,7 +48,7 @@
       return checkGroups = function(val, show_success) {
         angular.element('#pattern_div').removeClass('has-error');
         if (val) {
-          val = $scope.data.groupFiles();
+          val = $scope.data.getGroups();
           if (!val) {
             return angular.element('#pattern_div').addClass('has-error');
           } else {

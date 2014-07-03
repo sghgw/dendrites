@@ -26,7 +26,7 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
 
     # method to load a list of files of given dir
     loadFileList: (source) ->
-      # filter filelist for file with extensions .xls or .xlsx
+      # filter filelist for files with extensions .xls or .xlsx
       if fs.existsSync source
         @source = source
         files = _.filter fs.readdirSync(source), (file) ->
@@ -44,16 +44,23 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
         # write data to temporary db
         dataStore.addDendrite data
       # get all dendrite data for app
-      dataStore.getDendrites().then (dendrites) =>
-          @dendrites = dendrites
+      @getDendriteData()
 
-    getGroup: (file) ->
+    getDendriteData: () ->
+      dataStore.getDendrites().then (dendrites) =>
+        @dendrites = dendrites
+
+    getGroups: ->
       p = @checkPattern()
       return false if !p
-
-      groupname = if p.first is 'group' then file.split(p.pattern)[0] else file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file))[0]
-      title = if p.first is 'title' then file.split(p.pattern)[0] else file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file))[0]
-      return {name: groupname, title: title}
+      groups = _.countBy @dendrites, (dendrite) ->
+        group = if p.first is 'group' then dendrite.file.split(p.pattern)[0] else dendrite.file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(dendrite.file))[0]
+        title = if p.first is 'title' then dendrite.file.split(p.pattern)[0] else dendrite.file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(dendrite.file))[0]
+        dataStore.updateDendrite dendrite._id, {title: title, group: group}
+        group
+      @getDendriteData()
+      @groups = _.map _.pairs(groups), (group) ->
+        {id: group[0], dendrites: group[1], title: ''}
 
     checkPattern: ->
       pattern = @filename_pattern.split('<Gruppe>')[1]

@@ -44,29 +44,44 @@
           }
         },
         loadDendriteData: function(files) {
-          var data, file, _i, _len,
-            _this = this;
+          var data, file, _i, _len;
           for (_i = 0, _len = files.length; _i < _len; _i++) {
             file = files[_i];
             data = readXls.start(this.source, file);
             dataStore.addDendrite(data);
           }
+          return this.getDendriteData();
+        },
+        getDendriteData: function() {
+          var _this = this;
           return dataStore.getDendrites().then(function(dendrites) {
             return _this.dendrites = dendrites;
           });
         },
-        getGroup: function(file) {
-          var groupname, p, title;
+        getGroups: function() {
+          var groups, p;
           p = this.checkPattern();
           if (!p) {
             return false;
           }
-          groupname = p.first === 'group' ? file.split(p.pattern)[0] : file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file))[0];
-          title = p.first === 'title' ? file.split(p.pattern)[0] : file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(file))[0];
-          return {
-            name: groupname,
-            title: title
-          };
+          groups = _.countBy(this.dendrites, function(dendrite) {
+            var group, title;
+            group = p.first === 'group' ? dendrite.file.split(p.pattern)[0] : dendrite.file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(dendrite.file))[0];
+            title = p.first === 'title' ? dendrite.file.split(p.pattern)[0] : dendrite.file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(dendrite.file))[0];
+            dataStore.updateDendrite(dendrite._id, {
+              title: title,
+              group: group
+            });
+            return group;
+          });
+          this.getDendriteData();
+          return this.groups = _.map(_.pairs(groups), function(group) {
+            return {
+              id: group[0],
+              dendrites: group[1],
+              title: ''
+            };
+          });
         },
         checkPattern: function() {
           var first, pattern;
