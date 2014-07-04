@@ -97,7 +97,8 @@
           tooltip = 'top';
         }
         return element.tooltip({
-          placement: tooltip
+          placement: tooltip,
+          container: 'body'
         });
       }
     };

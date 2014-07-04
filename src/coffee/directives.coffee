@@ -65,5 +65,5 @@ module.directive 'tooltip', () ->
       tooltip: '@'
     link: (scope, element, attrs) ->
       tooltip = 'top' if !tooltip
-      element.tooltip {placement: tooltip}
+      element.tooltip {placement: tooltip, container: 'body'}
   }
