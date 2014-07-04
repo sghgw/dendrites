@@ -48,18 +48,18 @@
           dendrite.spines.push(spine);
         }
         dendrite.spine_means = {
-          length: stats.mean(_.map(dendrite.spines, function(spine) {
+          length: (stats.mean(_.map(dendrite.spines, function(spine) {
             return spine.length;
-          })),
-          diameter: stats.mean(_.map(dendrite.spines, function(spine) {
+          }))).toFixed(4) / 1,
+          diameter: (stats.mean(_.map(dendrite.spines, function(spine) {
             return spine.diameter;
-          })),
-          distance: stats.mean(_.map(dendrite.spines, function(spine) {
+          }))).toFixed(4) / 1,
+          distance: (stats.mean(_.map(dendrite.spines, function(spine) {
             return spine.distance;
-          })),
-          length_to_center: stats.mean(_.map(dendrite.spines, function(spine) {
+          }))).toFixed(4) / 1,
+          length_to_center: (stats.mean(_.map(dendrite.spines, function(spine) {
             return spine.length_to_center;
-          }))
+          }))).toFixed(4) / 1
         };
         return dendrite;
       }
