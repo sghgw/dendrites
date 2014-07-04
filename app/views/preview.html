@@ -13,12 +13,12 @@
               <tr>
                 <th>#</th>
                 <th>Dendrit</th>
-                <th ng-show="data.data_options.dendrite.length">Länge</th>
-                <th ng-show="data.data_options.dendrite.surface">Oberfläche</th>
-                <th ng-show="data.data_options.dendrite.volume">Volumen</th>
+                <th ng-show="data.data_options.dendrite.length" tooltip="top" title="Einheit: &mu;m">Länge</th>
+                <th ng-show="data.data_options.dendrite.surface" tooltip="top" title="Einheit: &mu;m&sub2;">Oberfläche</th>
+                <th ng-show="data.data_options.dendrite.volume" tooltip="top" title="Einheit: &mu;m&sub3;">Volumen</th>
                 <th ng-show="data.data_options.dendrite.total_spines">Spines</th>
-                <th ng-show="data.data_options.dendrite.spine_density">Spinedichte</th>
-                <th ng-show="data.data_options.dendrite.mean_spine_length">Spinelänge</th>
+                <th ng-show="data.data_options.dendrite.spine_density" tooltip="top" title="Einheit: 1/&mu;m">Spinedichte</th>
+                <th ng-show="data.data_options.dendrite.mean_spine_length" tooltip="top" title="Einheit: &mu;m">&empty; Spinelänge</th>
               </tr>
             </thead>
             <tbody>
