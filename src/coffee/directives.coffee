@@ -57,3 +57,13 @@ module.directive 'switch', ['$window', ($window) ->
         $scope.switch = element[0].checked
         $scope.$apply()
   }]
+
+module.directive 'tooltip', () ->
+  {
+    restrict: 'A'
+    scope: 
+      tooltip: '@'
+    link: (scope, element, attrs) ->
+      tooltip = 'top' if !tooltip
+      element.tooltip {placement: tooltip}
+  }

@@ -85,4 +85,22 @@
     }
   ]);
 
+  module.directive('tooltip', function() {
+    return {
+      restrict: 'A',
+      scope: {
+        tooltip: '@'
+      },
+      link: function(scope, element, attrs) {
+        var tooltip;
+        if (!tooltip) {
+          tooltip = 'top';
+        }
+        return element.tooltip({
+          placement: tooltip
+        });
+      }
+    };
+  });
+
 }).call(this);
