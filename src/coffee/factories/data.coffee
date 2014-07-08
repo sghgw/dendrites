@@ -114,15 +114,18 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
         row += files.length + 5
 
 
-    prepareDendriteData: (file) ->
+    prepareDendriteData: (dendrite) ->
       data = []
-      data.push file.title
-      data.push file.dendrite.length if @data_options.dendrite.length
-      data.push file.dendrite.surface if @data_options.dendrite.surface
-      data.push file.dendrite.volume if @data_options.dendrite.volume
-      data.push file.dendrite.total_spines if @data_options.dendrite.total_spines
-      data.push file.dendrite.spine_density if @data_options.dendrite.spine_density
-      data.push file.dendrite.mean_spine_length if @data_options.dendrite.mean_spine_length
+      data.push dendrite.title
+      data.push dendrite.length if @data_options.dendrite.length
+      data.push dendrite.surface if @data_options.dendrite.surface
+      data.push dendrite.volume if @data_options.dendrite.volume
+      data.push dendrite.total_spines if @data_options.dendrite.total_spines
+      data.push dendrite.spine_density if @data_options.dendrite.spine_density
+      data.push dendrite.spine_means.length if @data_options.dendrite.spine_means.length
+      data.push dendrite.spine_means.diameter if @data_options.dendrite.spine_means.diameter
+      data.push dendrite.spine_means.distance if @data_options.dendrite.spine_means.distance
+      data.push dendrite.spine_means.length_to_center if @data_options.dendrite.spine_means.length_to_center
       data
 
     prepareTableHeader: ->

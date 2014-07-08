@@ -151,27 +151,36 @@
           }
           return _results;
         },
-        prepareDendriteData: function(file) {
+        prepareDendriteData: function(dendrite) {
           var data;
           data = [];
-          data.push(file.title);
+          data.push(dendrite.title);
           if (this.data_options.dendrite.length) {
-            data.push(file.dendrite.length);
+            data.push(dendrite.length);
           }
           if (this.data_options.dendrite.surface) {
-            data.push(file.dendrite.surface);
+            data.push(dendrite.surface);
           }
           if (this.data_options.dendrite.volume) {
-            data.push(file.dendrite.volume);
+            data.push(dendrite.volume);
           }
           if (this.data_options.dendrite.total_spines) {
-            data.push(file.dendrite.total_spines);
+            data.push(dendrite.total_spines);
           }
           if (this.data_options.dendrite.spine_density) {
-            data.push(file.dendrite.spine_density);
+            data.push(dendrite.spine_density);
           }
-          if (this.data_options.dendrite.mean_spine_length) {
-            data.push(file.dendrite.mean_spine_length);
+          if (this.data_options.dendrite.spine_means.length) {
+            data.push(dendrite.spine_means.length);
+          }
+          if (this.data_options.dendrite.spine_means.diameter) {
+            data.push(dendrite.spine_means.diameter);
+          }
+          if (this.data_options.dendrite.spine_means.distance) {
+            data.push(dendrite.spine_means.distance);
+          }
+          if (this.data_options.dendrite.spine_means.length_to_center) {
+            data.push(dendrite.spine_means.length_to_center);
           }
           return data;
         },
