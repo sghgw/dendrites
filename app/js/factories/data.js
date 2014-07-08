@@ -195,8 +195,17 @@
           if (this.data_options.dendrite.spine_density) {
             data.push('Spinedichte');
           }
-          if (this.data_options.dendrite.mean_spine_length) {
+          if (this.data_options.dendrite.spine_means.length) {
             data.push('Mittlere Spinel\u00e4nge');
+          }
+          if (this.data_options.dendrite.spine_means.diameter) {
+            data.push('Mittler Spinedurchmesser');
+          }
+          if (this.data_options.dendrite.spine_means.distance) {
+            data.push('Mittlere Spinedistanz');
+          }
+          if (this.data_options.dendrite.spine_means.length_to_center) {
+            data.push('Mittlere Spinel\u00e4nge zum Zentrum');
           }
           return data;
         }

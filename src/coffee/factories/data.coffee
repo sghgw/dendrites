@@ -134,6 +134,9 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       data.push 'Volumen' if @data_options.dendrite.volume
       data.push 'Spineanzahl' if @data_options.dendrite.total_spines
       data.push 'Spinedichte' if @data_options.dendrite.spine_density
-      data.push 'Mittlere Spinel\u00e4nge' if @data_options.dendrite.mean_spine_length
+      data.push 'Mittlere Spinel\u00e4nge' if @data_options.dendrite.spine_means.length
+      data.push 'Mittler Spinedurchmesser' if @data_options.dendrite.spine_means.diameter
+      data.push 'Mittlere Spinedistanz' if @data_options.dendrite.spine_means.distance
+      data.push 'Mittlere Spinel\u00e4nge zum Zentrum' if @data_options.dendrite.spine_means.length_to_center
       data
   }]
