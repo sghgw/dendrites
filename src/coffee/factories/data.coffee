@@ -16,7 +16,11 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
         volume: false
         total_spines: true
         spine_density: true
-        mean_spine_length: true
+        spine_means:
+          length: true
+          diameter: false
+          distance: false
+          length_to_center: false
       spines:
         length: false
         diameter: false
@@ -86,7 +90,6 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       }
 
     exportData: ->
-      @loadDendriteData() if !@loaded_data
       Xlsx.setDestination @destination
       if @grouping
         @addTablesForGroups()

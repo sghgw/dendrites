@@ -22,7 +22,12 @@
             volume: false,
             total_spines: true,
             spine_density: true,
-            mean_spine_length: true
+            spine_means: {
+              length: true,
+              diameter: false,
+              distance: false,
+              length_to_center: false
+            }
           },
           spines: {
             length: false,
@@ -110,9 +115,6 @@
           };
         },
         exportData: function() {
-          if (!this.loaded_data) {
-            this.loadDendriteData();
-          }
           Xlsx.setDestination(this.destination);
           if (this.grouping) {
             this.addTablesForGroups();
