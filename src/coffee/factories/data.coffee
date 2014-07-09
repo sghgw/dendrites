@@ -38,7 +38,7 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
         # call method to load data from files
         @loadDendriteData(files)
         
-        @destination = source + '/Auswertung.xlsx'
+        # @destination = source + '/Auswertung.xlsx'
           
     # method to load dendrite data from excel file
     loadDendriteData: (files) ->
@@ -94,14 +94,14 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       if @grouping
         @addTablesForGroups()
       else
-        @addTableFor @files, 'Alle Daten'
+        @addTableFor @dendrites, 'Alle Daten'
       Xlsx.generateXlsxFile()
 
 
-    addTableFor: (files, title, rowToStart) ->
+    addTableFor: (dendrites, title, rowToStart) ->
       rowToStart = 1 if !rowToStart
-      body = _.map files, (file) =>
-        @prepareDendriteData file
+      body = _.map dendrites, (d) =>
+        @prepareDendriteData d
       Xlsx.addGridWithTitle title, @prepareTableHeader(), body, rowToStart, "\u00dcbersicht"
 
     addTablesForGroups: ->
@@ -126,6 +126,7 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       data.push dendrite.spine_means.diameter if @data_options.dendrite.spine_means.diameter
       data.push dendrite.spine_means.distance if @data_options.dendrite.spine_means.distance
       data.push dendrite.spine_means.length_to_center if @data_options.dendrite.spine_means.length_to_center
+      console.log data
       data
 
     prepareTableHeader: ->

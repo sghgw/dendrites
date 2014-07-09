@@ -44,8 +44,7 @@
             files = _.filter(fs.readdirSync(source), function(file) {
               return _.contains(['.xls', '.xlsx'], path.extname(file));
             });
-            this.loadDendriteData(files);
-            return this.destination = source + '/Auswertung.xlsx';
+            return this.loadDendriteData(files);
           }
         },
         loadDendriteData: function(files) {
@@ -119,18 +118,18 @@
           if (this.grouping) {
             this.addTablesForGroups();
           } else {
-            this.addTableFor(this.files, 'Alle Daten');
+            this.addTableFor(this.dendrites, 'Alle Daten');
           }
           return Xlsx.generateXlsxFile();
         },
-        addTableFor: function(files, title, rowToStart) {
+        addTableFor: function(dendrites, title, rowToStart) {
           var body,
             _this = this;
           if (!rowToStart) {
             rowToStart = 1;
           }
-          body = _.map(files, function(file) {
-            return _this.prepareDendriteData(file);
+          body = _.map(dendrites, function(d) {
+            return _this.prepareDendriteData(d);
           });
           return Xlsx.addGridWithTitle(title, this.prepareTableHeader(), body, rowToStart, "\u00dcbersicht");
         },
@@ -182,6 +181,7 @@
           if (this.data_options.dendrite.spine_means.length_to_center) {
             data.push(dendrite.spine_means.length_to_center);
           }
+          console.log(data);
           return data;
         },
         prepareTableHeader: function() {
