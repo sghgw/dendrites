@@ -82,7 +82,7 @@
   ctrls.controller('exportCtrl', [
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
-      $scope.dir = '/Users/sascha/Desktop/test/Auswertung.xlsx';
+      $scope.dir = '/Users/sascha/Desktop/excel/Auswertung.xlsx';
       $scope.$watch('dir', function(newValue, oldValue) {
         return $scope.data.destination = newValue;
       });

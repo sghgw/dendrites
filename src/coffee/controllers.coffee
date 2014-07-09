@@ -25,7 +25,7 @@ ctrls = angular.module 'Controllers', []
 
 ctrls.controller 'sourceCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
-  # set dir to /Users/sascha/Desktop/test for testing while dev
+  # DEV: set dir to /Users/sascha/Desktop/test for testing
   $scope.dir = '/Users/sascha/Desktop/excel/test data'
   $scope.$watch 'dir', (newValue, oldValue) ->
     Data.loadFileList(newValue) if newValue
@@ -74,7 +74,8 @@ ctrls.controller 'previewCtrl', ['$scope', 'Data', ($scope, Data) ->
 
 ctrls.controller 'exportCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
-  $scope.dir = '/Users/sascha/Desktop/test/Auswertung.xlsx'
+  # DEV: set destination dir
+  $scope.dir = '/Users/sascha/Desktop/excel/Auswertung.xlsx'
   # update filelist if dir has changed
   $scope.$watch 'dir', (newValue, oldValue) ->
     $scope.data.destination = newValue
