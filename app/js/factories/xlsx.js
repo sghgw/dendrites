@@ -128,18 +128,18 @@
         return xml;
       },
       addToSheet: function(sheetName, data) {
-        var sheet, xml;
+        var row, sheet, xml;
         sheet = this.getSheet(sheetName);
-        if (sheet.xml.worksheet.sheetData[0].row) {
-          sheet.xml.worksheet.sheetData[0].row = sheet.xml.worksheet.sheetData[0].row.concat(data);
+        row = sheet.xml.worksheet.sheetData[0].row;
+        if (row) {
+          sheet.xml.worksheet.sheetData[0].row = row.concat(buildRows(data, rows));
         } else {
           sheet.xml.worksheet.sheetData[0] = {
-            row: data
+            row: buildRows(data)
           };
         }
         xml = xmlBuilder.buildObject(sheet.xml);
-        this.xlsx.file(sheet.path, xml);
-        return console.log(sheetName, sheet.xml.worksheet.sheetData[0].row.length);
+        return this.xlsx.file(sheet.path, xml);
       },
       addGridWithTitle: function(title, header, body, rowToStart, sheet) {
         var data;

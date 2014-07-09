@@ -13,6 +13,7 @@ module.factory 'Xlsx', () ->
     destination: ''
     xlsx: {}
 
+    # TODO
     # set output destination
     setDestination: (destination) ->
       @destination = destination
@@ -27,6 +28,7 @@ module.factory 'Xlsx', () ->
       else 
         return false
 
+    # TODO
     # write output to new Excel file
     generateXlsxFile: () ->
       buffer = @xlsx.generate {type: 'nodebuffer'}
@@ -61,6 +63,7 @@ module.factory 'Xlsx', () ->
         el.c.push c
       return el
 
+    # TODO
     buildGrid: (headerData, bodyData, rowToStart) ->
       header = @buildRow headerData, rowToStart, true
       body = _.map bodyData, (data, index) =>
@@ -68,6 +71,7 @@ module.factory 'Xlsx', () ->
       body.unshift header
       body
 
+    # TODO
     buildGridWithTitle: (title, header, body, rowToStart) ->
       title = @buildRow [title], rowToStart, true
       body = @buildGrid header, body, rowToStart + 2
@@ -86,17 +90,19 @@ module.factory 'Xlsx', () ->
               xml = {path: path, xml: result}
       xml
 
-    # write data as xml to sheet
+    # add data to sheetName
+    # if there are rows already data is appended
     addToSheet: (sheetName, data) ->
       sheet = @getSheet sheetName
-      if sheet.xml.worksheet.sheetData[0].row
-        sheet.xml.worksheet.sheetData[0].row = sheet.xml.worksheet.sheetData[0].row.concat data
+      row = sheet.xml.worksheet.sheetData[0].row
+      if row
+        sheet.xml.worksheet.sheetData[0].row = row.concat buildRows(data, rows)
       else
-        sheet.xml.worksheet.sheetData[0] = {row: data}
+        sheet.xml.worksheet.sheetData[0] = {row: buildRows(data)}
       xml = xmlBuilder.buildObject sheet.xml
       @xlsx.file(sheet.path, xml)
-      console.log sheetName, sheet.xml.worksheet.sheetData[0].row.length 
 
+    # TODO
     addGridWithTitle: (title, header, body, rowToStart, sheet) ->
       data = @buildGridWithTitle title, header, body, rowToStart
       @addToSheet sheet, data
