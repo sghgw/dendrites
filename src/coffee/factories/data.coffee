@@ -103,17 +103,13 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       body = _.map dendrites, (dendrite, index) =>
         @prepareDendriteData dendrite, index + 1
       data = data.concat body
-      # Xlsx.addGridWithTitle title, @prepareTableHeader(), body, rowToStart, "\u00dcbersicht"
       Xlsx.addToSheet 'Dendriten', data
 
     addTablesForGroups: ->
-      header = @prepareTableHeader()
-      row = 1
       for group, index in @groups
         title = if group.title then group.title else group.id
-        files = _.where @files, {group: group.id}
-        @addTableFor files, title, row
-        row += files.length + 5
+        dendrites = _.where @dendrites, {group: group.id}
+        @addTableFor dendrites, title
 
 
     prepareDendriteData: (dendrite, index) ->
