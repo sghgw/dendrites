@@ -30,9 +30,9 @@ module.factory 'Xlsx', () ->
 
     # TODO
     # write output to new Excel file
-    generateXlsxFile: () ->
+    generateXlsxFile: (destination) ->
       buffer = @xlsx.generate {type: 'nodebuffer'}
-      fs.writeFile @destination, buffer, (err) ->
+      fs.writeFile destination, buffer, (err) ->
         return false if err
       true
 
@@ -51,8 +51,10 @@ module.factory 'Xlsx', () ->
         if typeof item is 'string'
           c.$.t = 'inlineStr'
           c.is = {t: item}
+
         else
           c.v = item
+        c
       return el
 
     buildRows: (rowsData, row) ->
@@ -94,10 +96,11 @@ module.factory 'Xlsx', () ->
       sheet = @getSheet sheetName
       row = sheet.xml.worksheet.sheetData[0].row
       if row
-        sheet.xml.worksheet.sheetData[0].row = row.concat buildRows(data, rows + 2)
+        sheet.xml.worksheet.sheetData[0].row = row.concat @buildRows(data, rows + 2)
       else
-        sheet.xml.worksheet.sheetData[0] = {row: buildRows(data)}
+        sheet.xml.worksheet.sheetData[0] = {row: @buildRows(data)}
       xml = xmlBuilder.buildObject sheet.xml
+      console.log xml
       @xlsx.file(sheet.path, xml)
 
     # TODO

@@ -35,12 +35,12 @@
           return false;
         }
       },
-      generateXlsxFile: function() {
+      generateXlsxFile: function(destination) {
         var buffer;
         buffer = this.xlsx.generate({
           type: 'nodebuffer'
         });
-        fs.writeFile(this.destination, buffer, function(err) {
+        fs.writeFile(destination, buffer, function(err) {
           if (err) {
             return false;
           }
@@ -68,12 +68,13 @@
           };
           if (typeof item === 'string') {
             c.$.t = 'inlineStr';
-            return c.is = {
+            c.is = {
               t: item
             };
           } else {
-            return c.v = item;
+            c.v = item;
           }
+          return c;
         });
         return el;
       },
@@ -135,13 +136,14 @@
         sheet = this.getSheet(sheetName);
         row = sheet.xml.worksheet.sheetData[0].row;
         if (row) {
-          sheet.xml.worksheet.sheetData[0].row = row.concat(buildRows(data, rows + 2));
+          sheet.xml.worksheet.sheetData[0].row = row.concat(this.buildRows(data, rows + 2));
         } else {
           sheet.xml.worksheet.sheetData[0] = {
-            row: buildRows(data)
+            row: this.buildRows(data)
           };
         }
         xml = xmlBuilder.buildObject(sheet.xml);
+        console.log(xml);
         return this.xlsx.file(sheet.path, xml);
       },
       addGridWithTitle: function(title, header, body, rowToStart, sheet) {
