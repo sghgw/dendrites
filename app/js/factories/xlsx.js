@@ -47,8 +47,8 @@
         });
         return true;
       },
-      buildRow: function(data, row, isHeader) {
-        var c, col, el, index, item, _i, _len;
+      buildRow: function(data, row) {
+        var c, el, index, item, _i, _len;
         if (!row) {
           row = 1;
         }
@@ -58,26 +58,18 @@
           },
           c: []
         };
-        if (!isHeader) {
-          el.c.push({
-            $: {
-              r: 'A' + row
-            },
-            v: row - 1
-          });
-        }
-        col = isHeader ? 0 : 1;
         for (index = _i = 0, _len = data.length; _i < _len; index = ++_i) {
           item = data[index];
           c = {
             $: {
-              r: a[index + col] + row
+              r: a[index] + row
             }
           };
           if (typeof item === 'string') {
             c.$.t = 'inlineStr';
-            c.is = {};
-            c.is.t = item;
+            c.is = {
+              t: item
+            };
           } else {
             c.v = item;
           }
@@ -132,7 +124,7 @@
         sheet = this.getSheet(sheetName);
         row = sheet.xml.worksheet.sheetData[0].row;
         if (row) {
-          sheet.xml.worksheet.sheetData[0].row = row.concat(buildRows(data, rows));
+          sheet.xml.worksheet.sheetData[0].row = row.concat(buildRows(data, rows + 2));
         } else {
           sheet.xml.worksheet.sheetData[0] = {
             row: buildRows(data)

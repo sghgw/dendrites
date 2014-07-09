@@ -36,28 +36,21 @@ module.factory 'Xlsx', () ->
         return false if err
       true
 
-    buildRow: (data, row, isHeader) ->
+    buildRow: (data, row) ->
       row = 1 if !row
       el = {
         $:
           r: row
         c: []
       }
-      el.c.push {
-        $:
-          r: 'A' + row
-        v: row - 1
-      } if !isHeader
-      col = if isHeader then 0 else 1
       for item, index in data
         c = {
           $:
-            r: a[index + col] + row
+            r: a[index] + row
         }
         if typeof item is 'string'
           c.$.t = 'inlineStr'
-          c.is = {}
-          c.is.t = item
+          c.is = {t: item}
         else
           c.v = item
         el.c.push c
@@ -96,7 +89,7 @@ module.factory 'Xlsx', () ->
       sheet = @getSheet sheetName
       row = sheet.xml.worksheet.sheetData[0].row
       if row
-        sheet.xml.worksheet.sheetData[0].row = row.concat buildRows(data, rows)
+        sheet.xml.worksheet.sheetData[0].row = row.concat buildRows(data, rows + 2)
       else
         sheet.xml.worksheet.sheetData[0] = {row: buildRows(data)}
       xml = xmlBuilder.buildObject sheet.xml
