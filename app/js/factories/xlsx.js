@@ -48,7 +48,8 @@
         return true;
       },
       buildRow: function(data, row) {
-        var c, el, index, item, _i, _len;
+        var el,
+          _this = this;
         if (!row) {
           row = 1;
         }
@@ -58,8 +59,8 @@
           },
           c: []
         };
-        for (index = _i = 0, _len = data.length; _i < _len; index = ++_i) {
-          item = data[index];
+        el.c = _.map(data, function(item, index) {
+          var c;
           c = {
             $: {
               r: a[index] + row
@@ -67,15 +68,25 @@
           };
           if (typeof item === 'string') {
             c.$.t = 'inlineStr';
-            c.is = {
+            return c.is = {
               t: item
             };
           } else {
-            c.v = item;
+            return c.v = item;
           }
-          el.c.push(c);
-        }
+        });
         return el;
+      },
+      buildRows: function(rowsData, row) {
+        var rows,
+          _this = this;
+        if (!row) {
+          row = 1;
+        }
+        rows = _.map(rowsData, function(data, index) {
+          return _this.buildRow(data, row + index);
+        });
+        return rows;
       },
       buildGrid: function(headerData, bodyData, rowToStart) {
         var body, header,

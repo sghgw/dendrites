@@ -43,7 +43,7 @@ module.factory 'Xlsx', () ->
           r: row
         c: []
       }
-      for item, index in data
+      el.c = _.map data, (item, index) =>
         c = {
           $:
             r: a[index] + row
@@ -53,8 +53,13 @@ module.factory 'Xlsx', () ->
           c.is = {t: item}
         else
           c.v = item
-        el.c.push c
       return el
+
+    buildRows: (rowsData, row) ->
+      row = 1 if !row
+      rows = _.map rowsData, (data, index) =>
+        @buildRow data, row + index
+      rows
 
     # TODO
     buildGrid: (headerData, bodyData, rowToStart) ->
