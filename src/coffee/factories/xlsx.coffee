@@ -10,13 +10,7 @@ module = angular.module 'XlsxFactory', []
 
 module.factory 'Xlsx', () ->
   {
-    destination: ''
     xlsx: {}
-
-    # TODO
-    # set output destination
-    setDestination: (destination) ->
-      @destination = destination
 
     # set Excel template file
     setTemplate: (template) ->
@@ -63,21 +57,6 @@ module.factory 'Xlsx', () ->
         @buildRow data, row + index
       rows
 
-    # TODO
-    buildGrid: (headerData, bodyData, rowToStart) ->
-      header = @buildRow headerData, rowToStart, true
-      body = _.map bodyData, (data, index) =>
-        @buildRow data, rowToStart + index + 1
-      body.unshift header
-      body
-
-    # TODO
-    buildGridWithTitle: (title, header, body, rowToStart) ->
-      title = @buildRow [title], rowToStart, true
-      body = @buildGrid header, body, rowToStart + 2
-      body.unshift title
-      body
-
     # look up sheetName and return xml data for sheet
     getSheet: (sheetName) ->
       xml = {}
@@ -96,15 +75,9 @@ module.factory 'Xlsx', () ->
       sheet = @getSheet sheetName
       row = sheet.xml.worksheet.sheetData[0].row
       if row
-        sheet.xml.worksheet.sheetData[0].row = row.concat @buildRows(data, rows + 2)
+        sheet.xml.worksheet.sheetData[0].row = row.concat @buildRows(data, row.length + 2)
       else
         sheet.xml.worksheet.sheetData[0] = {row: @buildRows(data)}
       xml = xmlBuilder.buildObject sheet.xml
-      console.log xml
       @xlsx.file(sheet.path, xml)
-
-    # TODO
-    addGridWithTitle: (title, header, body, rowToStart, sheet) ->
-      data = @buildGridWithTitle title, header, body, rowToStart
-      @addToSheet sheet, data
   }

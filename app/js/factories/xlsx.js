@@ -17,11 +17,7 @@
 
   module.factory('Xlsx', function() {
     return {
-      destination: '',
       xlsx: {},
-      setDestination: function(destination) {
-        return this.destination = destination;
-      },
       setTemplate: function(template) {
         var file;
         if (!template) {
@@ -89,22 +85,6 @@
         });
         return rows;
       },
-      buildGrid: function(headerData, bodyData, rowToStart) {
-        var body, header,
-          _this = this;
-        header = this.buildRow(headerData, rowToStart, true);
-        body = _.map(bodyData, function(data, index) {
-          return _this.buildRow(data, rowToStart + index + 1);
-        });
-        body.unshift(header);
-        return body;
-      },
-      buildGridWithTitle: function(title, header, body, rowToStart) {
-        title = this.buildRow([title], rowToStart, true);
-        body = this.buildGrid(header, body, rowToStart + 2);
-        body.unshift(title);
-        return body;
-      },
       getSheet: function(sheetName) {
         var xml,
           _this = this;
@@ -136,20 +116,14 @@
         sheet = this.getSheet(sheetName);
         row = sheet.xml.worksheet.sheetData[0].row;
         if (row) {
-          sheet.xml.worksheet.sheetData[0].row = row.concat(this.buildRows(data, rows + 2));
+          sheet.xml.worksheet.sheetData[0].row = row.concat(this.buildRows(data, row.length + 2));
         } else {
           sheet.xml.worksheet.sheetData[0] = {
             row: this.buildRows(data)
           };
         }
         xml = xmlBuilder.buildObject(sheet.xml);
-        console.log(xml);
         return this.xlsx.file(sheet.path, xml);
-      },
-      addGridWithTitle: function(title, header, body, rowToStart, sheet) {
-        var data;
-        data = this.buildGridWithTitle(title, header, body, rowToStart);
-        return this.addToSheet(sheet, data);
       }
     };
   });
