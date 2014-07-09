@@ -22,10 +22,18 @@
       setDestination: function(destination) {
         return this.destination = destination;
       },
-      loadTemplate: function() {
+      setTemplate: function(template) {
         var file;
-        file = window.location.pathname.split("views")[0] + 'templates/template.xlsx';
-        return this.xlsx = new zip(fs.readFileSync(file));
+        if (!template) {
+          template = 'template';
+        }
+        file = window.location.pathname.split("views")[0] + 'templates/' + template + '.xlsx';
+        if (fs.existsSync(file)) {
+          this.xlsx = new zip(fs.readFileSync(file));
+          return true;
+        } else {
+          return false;
+        }
       },
       generateXlsxFile: function() {
         var buffer;
@@ -97,9 +105,6 @@
         var xml,
           _this = this;
         xml = {};
-        if (_.isEmpty(this.xlsx)) {
-          this.loadTemplate();
-        }
         xmlParser.parseString(this.xlsx.file('xl/workbook.xml').asText(), function(err, result) {
           var path, sheet, sheets, _i, _len, _results;
           sheets = result.workbook.sheets[0].sheet;

@@ -17,10 +17,15 @@ module.factory 'Xlsx', () ->
     setDestination: (destination) ->
       @destination = destination
 
-    # load Excel template file
-    loadTemplate: () ->
-      file = window.location.pathname.split("views")[0] + 'templates/template.xlsx'
-      @xlsx = new zip(fs.readFileSync(file))
+    # set Excel template file
+    setTemplate: (template) ->
+      template = 'template' if !template
+      file = window.location.pathname.split("views")[0] + 'templates/' + template + '.xlsx'
+      if fs.existsSync(file)
+        @xlsx = new zip(fs.readFileSync(file))
+        return true
+      else 
+        return false
 
     # write output to new Excel file
     generateXlsxFile: () ->
@@ -72,7 +77,6 @@ module.factory 'Xlsx', () ->
     # look up sheetName and return xml data for sheet
     getSheet: (sheetName) ->
       xml = {}
-      @loadTemplate() if _.isEmpty @xlsx
       xmlParser.parseString @xlsx.file('xl/workbook.xml').asText(), (err, result) =>
         sheets = result.workbook.sheets[0].sheet
         for sheet in sheets
