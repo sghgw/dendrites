@@ -114,24 +114,23 @@
           };
         },
         exportData: function() {
-          Xlsx.setDestination(this.destination);
+          Xlsx.setTemplate('template2');
           if (this.grouping) {
             this.addTablesForGroups();
           } else {
             this.addTableFor(this.dendrites, 'Alle Daten');
           }
-          return Xlsx.generateXlsxFile();
+          return Xlsx.generateXlsxFile(this.destination);
         },
-        addTableFor: function(dendrites, title, rowToStart) {
-          var body,
+        addTableFor: function(dendrites, title) {
+          var body, data,
             _this = this;
-          if (!rowToStart) {
-            rowToStart = 1;
-          }
-          body = _.map(dendrites, function(d) {
-            return _this.prepareDendriteData(d);
+          data = [[title], [], this.prepareTableHeader()];
+          body = _.map(dendrites, function(dendrite, index) {
+            return _this.prepareDendriteData(dendrite, index + 1);
           });
-          return Xlsx.addGridWithTitle(title, this.prepareTableHeader(), body, rowToStart, "\u00dcbersicht");
+          data = data.concat(body);
+          return Xlsx.addToSheet('Dendriten', data);
         },
         addTablesForGroups: function() {
           var files, group, header, index, row, title, _i, _len, _ref, _results;
@@ -150,9 +149,12 @@
           }
           return _results;
         },
-        prepareDendriteData: function(dendrite) {
+        prepareDendriteData: function(dendrite, index) {
           var data;
           data = [];
+          if (index) {
+            data.push(index);
+          }
           data.push(dendrite.title);
           if (this.data_options.dendrite.length) {
             data.push(dendrite.length);
@@ -181,7 +183,6 @@
           if (this.data_options.dendrite.spine_means.length_to_center) {
             data.push(dendrite.spine_means.length_to_center);
           }
-          console.log(data);
           return data;
         },
         prepareTableHeader: function() {

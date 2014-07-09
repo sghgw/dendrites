@@ -90,19 +90,21 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       }
 
     exportData: ->
-      Xlsx.setDestination @destination
+      Xlsx.setTemplate('template2')
       if @grouping
         @addTablesForGroups()
       else
         @addTableFor @dendrites, 'Alle Daten'
-      Xlsx.generateXlsxFile()
+      Xlsx.generateXlsxFile(@destination)
 
 
-    addTableFor: (dendrites, title, rowToStart) ->
-      rowToStart = 1 if !rowToStart
-      body = _.map dendrites, (d) =>
-        @prepareDendriteData d
-      Xlsx.addGridWithTitle title, @prepareTableHeader(), body, rowToStart, "\u00dcbersicht"
+    addTableFor: (dendrites, title) ->
+      data = [[title], [], @prepareTableHeader()]
+      body = _.map dendrites, (dendrite, index) =>
+        @prepareDendriteData dendrite, index + 1
+      data = data.concat body
+      # Xlsx.addGridWithTitle title, @prepareTableHeader(), body, rowToStart, "\u00dcbersicht"
+      Xlsx.addToSheet 'Dendriten', data
 
     addTablesForGroups: ->
       header = @prepareTableHeader()
@@ -114,8 +116,9 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
         row += files.length + 5
 
 
-    prepareDendriteData: (dendrite) ->
+    prepareDendriteData: (dendrite, index) ->
       data = []
+      data.push index if index
       data.push dendrite.title
       data.push dendrite.length if @data_options.dendrite.length
       data.push dendrite.surface if @data_options.dendrite.surface
@@ -126,7 +129,6 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       data.push dendrite.spine_means.diameter if @data_options.dendrite.spine_means.diameter
       data.push dendrite.spine_means.distance if @data_options.dendrite.spine_means.distance
       data.push dendrite.spine_means.length_to_center if @data_options.dendrite.spine_means.length_to_center
-      console.log data
       data
 
     prepareTableHeader: ->
