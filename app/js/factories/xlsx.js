@@ -133,7 +133,8 @@
           };
         }
         xml = xmlBuilder.buildObject(sheet.xml);
-        return this.xlsx.file(sheet.path, xml);
+        this.xlsx.file(sheet.path, xml);
+        return console.log(sheetName, sheet.xml.worksheet.sheetData[0].row.length);
       },
       addGridWithTitle: function(title, header, body, rowToStart, sheet) {
         var data;

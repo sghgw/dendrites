@@ -12,13 +12,17 @@ module.factory 'Xlsx', () ->
   {
     destination: ''
     xlsx: {}
+
+    # set output destination
     setDestination: (destination) ->
       @destination = destination
 
+    # load Excel template file
     loadTemplate: () ->
       file = window.location.pathname.split("views")[0] + 'templates/template.xlsx'
       @xlsx = new zip(fs.readFileSync(file))
 
+    # write output to new Excel file
     generateXlsxFile: () ->
       buffer = @xlsx.generate {type: 'nodebuffer'}
       fs.writeFile @destination, buffer, (err) ->
@@ -65,6 +69,7 @@ module.factory 'Xlsx', () ->
       body.unshift title
       body
 
+    # look up sheetName and return xml data for sheet
     getSheet: (sheetName) ->
       xml = {}
       @loadTemplate() if _.isEmpty @xlsx
@@ -77,6 +82,7 @@ module.factory 'Xlsx', () ->
               xml = {path: path, xml: result}
       xml
 
+    # write data as xml to sheet
     addToSheet: (sheetName, data) ->
       sheet = @getSheet sheetName
       if sheet.xml.worksheet.sheetData[0].row
@@ -85,6 +91,7 @@ module.factory 'Xlsx', () ->
         sheet.xml.worksheet.sheetData[0] = {row: data}
       xml = xmlBuilder.buildObject sheet.xml
       @xlsx.file(sheet.path, xml)
+      console.log sheetName, sheet.xml.worksheet.sheetData[0].row.length 
 
     addGridWithTitle: (title, header, body, rowToStart, sheet) ->
       data = @buildGridWithTitle title, header, body, rowToStart
