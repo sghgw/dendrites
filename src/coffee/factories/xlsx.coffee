@@ -66,7 +66,7 @@ module.factory 'Xlsx', () ->
           if sheet.$.name is sheetName
             path = 'xl/worksheets/sheet' + sheet.$.sheetId + '.xml'
             xmlParser.parseString @xlsx.file(path).asText(), (err, result) ->
-              xml = {path: path, xml: result}
+              xml = {path: path, xml: result, id: sheet.$.sheetId}
       xml
 
     # add data to sheetName
@@ -81,28 +81,50 @@ module.factory 'Xlsx', () ->
       else
         rows = @buildRows(data)
         sheet.xml.worksheet.sheetData[0] = {row: rows}
-      @createTable(sheet.xml, rows) if asTable
+      @createTable(sheet.id, sheet.xml, rows) if asTable
       xml = xmlBuilder.buildObject sheet.xml
       @xlsx.file(sheet.path, xml)
 
-    createTable: (sheet, rows) ->
+    createTable: (id, sheet, rows) ->
       # get tableParts object and add tablePart for new table
+      rId = ''
       tableParts = sheet.worksheet.tableParts
       if tableParts
         tableParts.$.count += 1
+        rId = tableParts.$.count
         tableParts.tablePart.push {
           $:
-            'r:id': 'rId' + tableParts.$.count
+            'r:id': 'rId' + rId
         }
       else
+        rId = 1
         tableParts = {
           $:
             count: 1
           tablePart: [{
             $:
-              'r:id': 'rId1'  
+              'r:id': 'rId' + rId
           }]
         }
-        sheet.worksheet.tableParts = tableParts
-        console.log xmlBuilder.buildObject sheet
+      sheet.worksheet.tableParts = tableParts
+
+      # add relationship tag
+      rels = {}
+      path = 'xl/worksheets/_rels/sheet' + id + '.xml.rels'
+      if @xlsx.file path
+        xmlParser.parseString @xlsx.file(path).asText(), (err, result) ->
+          rels = result
+      else
+        rels = {
+          Relationships:
+            $:
+              xmlns: "http://schemas.openxmlformats.org/package/2006/relationships"
+            Relationship: []
+        }
+      rels.Relationships.Relationship.push {
+        $:
+          Id:'rId' + rId
+          Type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table"
+          Target: '../tables/table' + tId + '.xml'
+      }
   }

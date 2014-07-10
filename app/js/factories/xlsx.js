@@ -100,7 +100,8 @@
               _results.push(xmlParser.parseString(_this.xlsx.file(path).asText(), function(err, result) {
                 return xml = {
                   path: path,
-                  xml: result
+                  xml: result,
+                  id: sheet.$.sheetId
                 };
               }));
             } else {
@@ -126,22 +127,25 @@
           };
         }
         if (asTable) {
-          this.createTable(sheet.xml, rows);
+          this.createTable(sheet.id, sheet.xml, rows);
         }
         xml = xmlBuilder.buildObject(sheet.xml);
         return this.xlsx.file(sheet.path, xml);
       },
-      createTable: function(sheet, rows) {
-        var tableParts;
+      createTable: function(id, sheet, rows) {
+        var path, rId, rels, tableParts;
+        rId = '';
         tableParts = sheet.worksheet.tableParts;
         if (tableParts) {
           tableParts.$.count += 1;
-          return tableParts.tablePart.push({
+          rId = tableParts.$.count;
+          tableParts.tablePart.push({
             $: {
-              'r:id': 'rId' + tableParts.$.count
+              'r:id': 'rId' + rId
             }
           });
         } else {
+          rId = 1;
           tableParts = {
             $: {
               count: 1
@@ -149,14 +153,36 @@
             tablePart: [
               {
                 $: {
-                  'r:id': 'rId1'
+                  'r:id': 'rId' + rId
                 }
               }
             ]
           };
-          sheet.worksheet.tableParts = tableParts;
-          return console.log(xmlBuilder.buildObject(sheet));
         }
+        sheet.worksheet.tableParts = tableParts;
+        rels = {};
+        path = 'xl/worksheets/_rels/sheet' + id + '.xml.rels';
+        if (this.xlsx.file(path)) {
+          xmlParser.parseString(this.xlsx.file(path).asText(), function(err, result) {
+            return rels = result;
+          });
+        } else {
+          rels = {
+            Relationships: {
+              $: {
+                xmlns: "http://schemas.openxmlformats.org/package/2006/relationships"
+              },
+              Relationship: []
+            }
+          };
+        }
+        return rels.Relationships.Relationship.push({
+          $: {
+            Id: 'rId' + rId,
+            Type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+            Target: '../tables/table' + tId + '.xml'
+          }
+        });
       }
     };
   });
