@@ -104,7 +104,6 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       data = _.map dendrites, (dendrite, index) =>
         @prepareDendriteData dendrite, index + 1
       data.unshift @prepareTableHeader()
-      console.log data
       Xlsx.addToSheet 'Dendriten', data, true
 
     addTablesForGroups: ->

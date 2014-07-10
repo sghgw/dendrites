@@ -131,7 +131,6 @@
             return _this.prepareDendriteData(dendrite, index + 1);
           });
           data.unshift(this.prepareTableHeader());
-          console.log(data);
           return Xlsx.addToSheet('Dendriten', data, true);
         },
         addTablesForGroups: function() {
