@@ -99,11 +99,13 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
 
 
     addTableFor: (dendrites, title) ->
-      data = [[title], [], @prepareTableHeader()]
-      body = _.map dendrites, (dendrite, index) =>
-        @prepareDendriteData dendrite, index + 1
-      data = data.concat body
+      data = [[title]]
       Xlsx.addToSheet 'Dendriten', data
+      data = _.map dendrites, (dendrite, index) =>
+        @prepareDendriteData dendrite, index + 1
+      data.unshift @prepareTableHeader()
+      console.log data
+      Xlsx.addToSheet 'Dendriten', data, true
 
     addTablesForGroups: ->
       for group, index in @groups
