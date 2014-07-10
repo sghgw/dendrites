@@ -111,19 +111,52 @@
         });
         return xml;
       },
-      addToSheet: function(sheetName, data) {
-        var row, sheet, xml;
+      addToSheet: function(sheetName, data, asTable) {
+        var row, rows, sheet, xml;
+        rows = [];
         sheet = this.getSheet(sheetName);
         row = sheet.xml.worksheet.sheetData[0].row;
         if (row) {
-          sheet.xml.worksheet.sheetData[0].row = row.concat(this.buildRows(data, row.length + 2));
+          rows = this.buildRows(data, row.length + 2);
+          sheet.xml.worksheet.sheetData[0].row = row.concat(rows);
         } else {
+          rows = this.buildRows(data);
           sheet.xml.worksheet.sheetData[0] = {
-            row: this.buildRows(data)
+            row: rows
           };
+        }
+        if (asTable) {
+          this.createTable(sheet.xml, rows);
         }
         xml = xmlBuilder.buildObject(sheet.xml);
         return this.xlsx.file(sheet.path, xml);
+      },
+      createTable: function(sheet, rows) {
+        var tableParts;
+        tableParts = sheet.worksheet.tableParts;
+        if (tableParts) {
+          tableParts.$.count += 1;
+          return tableParts.tablePart.push({
+            $: {
+              'r:id': 'rId' + tableParts.$.count
+            }
+          });
+        } else {
+          tableParts = {
+            $: {
+              count: 1
+            },
+            tablePart: [
+              {
+                $: {
+                  'r:id': 'rId1'
+                }
+              }
+            ]
+          };
+          sheet.worksheet.tableParts = tableParts;
+          return console.log(xmlBuilder.buildObject(sheet));
+        }
       }
     };
   });

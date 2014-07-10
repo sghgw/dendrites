@@ -71,13 +71,38 @@ module.factory 'Xlsx', () ->
 
     # add data to sheetName
     # if there are rows already data is appended
-    addToSheet: (sheetName, data) ->
+    addToSheet: (sheetName, data, asTable) ->
+      rows = []
       sheet = @getSheet sheetName
       row = sheet.xml.worksheet.sheetData[0].row
       if row
-        sheet.xml.worksheet.sheetData[0].row = row.concat @buildRows(data, row.length + 2)
+        rows = @buildRows(data, row.length + 2)
+        sheet.xml.worksheet.sheetData[0].row = row.concat rows
       else
-        sheet.xml.worksheet.sheetData[0] = {row: @buildRows(data)}
+        rows = @buildRows(data)
+        sheet.xml.worksheet.sheetData[0] = {row: rows}
+      @createTable(sheet.xml, rows) if asTable
       xml = xmlBuilder.buildObject sheet.xml
       @xlsx.file(sheet.path, xml)
+
+    createTable: (sheet, rows) ->
+      # get tableParts object and add tablePart for new table
+      tableParts = sheet.worksheet.tableParts
+      if tableParts
+        tableParts.$.count += 1
+        tableParts.tablePart.push {
+          $:
+            'r:id': 'rId' + tableParts.$.count
+        }
+      else
+        tableParts = {
+          $:
+            count: 1
+          tablePart: [{
+            $:
+              'r:id': 'rId1'  
+          }]
+        }
+        sheet.worksheet.tableParts = tableParts
+        console.log xmlBuilder.buildObject sheet
   }
