@@ -114,7 +114,7 @@
           };
         },
         exportData: function() {
-          Xlsx.setTemplate('template2');
+          Xlsx.setTemplate('template3');
           if (this.grouping) {
             this.addTablesForGroups();
           } else {

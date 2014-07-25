@@ -90,7 +90,7 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       }
 
     exportData: ->
-      Xlsx.setTemplate('template2')
+      Xlsx.setTemplate('template3')
       if @grouping
         @addTablesForGroups()
       else
