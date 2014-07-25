@@ -1,7 +1,7 @@
 xml2js = require 'xml2js'
 xmlParser = new xml2js.Parser()
 # xmlBuilder = new require('xmlbuilder')
-xmlBuilder = new xml2js.Builder()
+xmlBuilder = new xml2js.Builder(renderOpts: pretty: false)
 zip = require 'jszip'
 fs = require 'fs'
 a = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -81,7 +81,7 @@ module.factory 'Xlsx', () ->
       else
         rows = @buildRows(data)
         sheet.xml.worksheet.sheetData[0] = {row: rows}
-      @createTable(sheet.id, sheet.xml, rows) if asTable
+      sheet.xml = @createTable(sheet.id, sheet.xml, rows) if asTable
       xml = xmlBuilder.buildObject sheet.xml
       @xlsx.file(sheet.path, xml)
 
@@ -108,6 +108,45 @@ module.factory 'Xlsx', () ->
         }
       sheet.worksheet.tableParts = tableParts
 
+      # create table XML file
+      tId = if @xlsx.file('xl/tables') then @xlsx.file('xl/tables').length + 1 else 1
+      ref = rows[0].c[0].$.r + ':' + rows[rows.length - 1].c[rows[rows.length - 1].c.length - 1].$.r
+      console.log rows[0].c
+      table = {
+        table:
+          $:
+            xmlns: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'
+            id: tId
+            name: 'Tabelle' + tId
+            displayName: 'Tabelle' + tId
+            ref: ref
+            totalsRowShown: 0
+          autoFilter: {
+            $:
+              ref: ref
+          }
+          tableColumns: 
+            $:
+              count: rows[0].c.length
+            tableColumn: []
+          tableStyleInfo:
+            $:
+              name: "TableStyleLight1" 
+              showFirstColumn: 0 
+              showLastColumn: 0 
+              showRowStripes: 1 
+              showColumnStripes:0
+      }
+      table.table.tableColumns.tableColumn = _.map rows[0].c, (item, index) ->
+        {
+          $:
+            id: index + 1
+            name: item.is.t or item.v
+        }
+      xml = xmlBuilder.buildObject table
+      console.log xml
+      @xlsx.file 'xl/tables/table' + tId + '.xml', xml
+
       # add relationship tag
       rels = {}
       path = 'xl/worksheets/_rels/sheet' + id + '.xml.rels'
@@ -127,4 +166,6 @@ module.factory 'Xlsx', () ->
           Type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table"
           Target: '../tables/table' + tId + '.xml'
       }
+      @xlsx.file path, xmlBuilder.buildObject(rels)
+      sheet
   }

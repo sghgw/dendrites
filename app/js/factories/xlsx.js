@@ -5,7 +5,11 @@
 
   xmlParser = new xml2js.Parser();
 
-  xmlBuilder = new xml2js.Builder();
+  xmlBuilder = new xml2js.Builder({
+    renderOpts: {
+      pretty: false
+    }
+  });
 
   zip = require('jszip');
 
@@ -127,13 +131,13 @@
           };
         }
         if (asTable) {
-          this.createTable(sheet.id, sheet.xml, rows);
+          sheet.xml = this.createTable(sheet.id, sheet.xml, rows);
         }
         xml = xmlBuilder.buildObject(sheet.xml);
         return this.xlsx.file(sheet.path, xml);
       },
       createTable: function(id, sheet, rows) {
-        var path, rId, rels, tableParts;
+        var path, rId, ref, rels, tId, table, tableParts, xml;
         rId = '';
         tableParts = sheet.worksheet.tableParts;
         if (tableParts) {
@@ -160,6 +164,52 @@
           };
         }
         sheet.worksheet.tableParts = tableParts;
+        tId = this.xlsx.file('xl/tables') ? this.xlsx.file('xl/tables').length + 1 : 1;
+        ref = rows[0].c[0].$.r + ':' + rows[rows.length - 1].c[rows[rows.length - 1].c.length - 1].$.r;
+        console.log(rows[0].c);
+        table = {
+          table: {
+            $: {
+              xmlns: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main',
+              id: tId,
+              name: 'Tabelle' + tId,
+              displayName: 'Tabelle' + tId,
+              ref: ref,
+              totalsRowShown: 0
+            },
+            autoFilter: {
+              $: {
+                ref: ref
+              }
+            },
+            tableColumns: {
+              $: {
+                count: rows[0].c.length
+              },
+              tableColumn: []
+            },
+            tableStyleInfo: {
+              $: {
+                name: "TableStyleLight1",
+                showFirstColumn: 0,
+                showLastColumn: 0,
+                showRowStripes: 1,
+                showColumnStripes: 0
+              }
+            }
+          }
+        };
+        table.table.tableColumns.tableColumn = _.map(rows[0].c, function(item, index) {
+          return {
+            $: {
+              id: index + 1,
+              name: item.is.t || item.v
+            }
+          };
+        });
+        xml = xmlBuilder.buildObject(table);
+        console.log(xml);
+        this.xlsx.file('xl/tables/table' + tId + '.xml', xml);
         rels = {};
         path = 'xl/worksheets/_rels/sheet' + id + '.xml.rels';
         if (this.xlsx.file(path)) {
@@ -176,13 +226,15 @@
             }
           };
         }
-        return rels.Relationships.Relationship.push({
+        rels.Relationships.Relationship.push({
           $: {
             Id: 'rId' + rId,
             Type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
             Target: '../tables/table' + tId + '.xml'
           }
         });
+        this.xlsx.file(path, xmlBuilder.buildObject(rels));
+        return sheet;
       }
     };
   });
