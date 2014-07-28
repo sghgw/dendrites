@@ -92,4 +92,14 @@
     }
   ]);
 
+  ctrls.controller('spinesGroupsCtrl', [
+    '$scope', 'Data', function($scope, Data) {
+      $scope.data = Data;
+      $scope.groups = Data.data_options.spines.groups;
+      return $scope.save = function() {
+        return console.log(Data.data_options.spines.groups);
+      };
+    }
+  ]);
+
 }).call(this);

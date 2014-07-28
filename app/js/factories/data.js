@@ -34,7 +34,8 @@
             diameter: false,
             distance: false,
             length_to_center: false,
-            grouped_length: false
+            grouped_length: false,
+            groups: []
           }
         },
         loadFileList: function(source) {

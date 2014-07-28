@@ -84,3 +84,10 @@ ctrls.controller 'exportCtrl', ['$scope', 'Data', ($scope, Data) ->
     # $scope.data.loadDendriteData() if !$scope.data.loaded_data
     $scope.data.exportData()
 ]
+
+ctrls.controller 'spinesGroupsCtrl', ['$scope', 'Data', ($scope, Data) ->
+  $scope.data = Data
+  $scope.groups = Data.data_options.spines.groups
+  $scope.save = ->
+    console.log Data.data_options.spines.groups
+]
