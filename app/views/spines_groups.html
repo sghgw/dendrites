@@ -7,11 +7,41 @@
           <h4 class="modal-title">Spinelängen gruppieren</h4>
         </div>
         <div class="modal-body">
+          <div>
+            Für jede Gruppe kann ein Name und ein Intervall festgelegt werden. Die Spines werden dann automatisch den passenden Gruppen zugeteilt. Dabei werden Längen berücksichtigt, die größer der gleich der unteren und kleiner der oberen Grenze sind.
+          </div>
+          <br/><br/>
+          <div ng-show="!groups.length">
+            Es wurden noch keine Gruppen festgelegt.
+          </div>
+          <div ng-show="groups.length">
+            <table class="table table-condensed table-hover" id="group_table">
+              <thead>
+                <tr>
+                  <th class="col-xs-1">#</th>
+                  <th class="col-xs-3">Bezeichnung</th>
+                  <th class="col-xs-8">Intervall</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="group in groups">
+                  <td>{{$index + 1}}</td>
+                  <td><input class="form-control" type="text" placeholder="{{group.name}}" ng-model="group.name"></td>
+                  <td class="text-center">
+                    <span style="margin-right:8px">{{group.range[0]}}</span>
+                    <slider range="group.range" class="span6"></slider>
+                    <span style="margin-left:8px">{{group.range[1]}}</span>
+                    <button ng-click="delete($index)" type="button" class="close push-right"><span>&times;</span></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-          <button type="button" ng-click="save()" class="btn btn-primary">Gruppen speichern</button>
+          <button class="btn btn-default" ng-click="add()">Gruppen hinzufügen</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Schließen</button>
         </div>
       </div>
     </div>
