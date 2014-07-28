@@ -183,7 +183,7 @@
           }
           return data;
         },
-        prepareTableHeader: function() {
+        prepareDendriteHeader: function() {
           var data;
           data = [];
           data.push('#');

@@ -128,7 +128,7 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       data.push dendrite.spine_means.length_to_center if @data_options.dendrite.spine_means.length_to_center
       data
 
-    prepareTableHeader: ->
+    prepareDendriteHeader: ->
       data = []
       data.push '#'
       data.push 'Dendrit'
