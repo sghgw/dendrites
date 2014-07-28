@@ -123,15 +123,21 @@
           return Xlsx.generateXlsxFile(this.destination);
         },
         addTableFor: function(dendrites, title) {
-          var data,
-            _this = this;
-          data = [[title]];
-          Xlsx.addToSheet('Dendriten', data);
-          data = _.map(dendrites, function(dendrite, index) {
-            return _this.prepareDendriteData(dendrite, index + 1);
-          });
-          data.unshift(this.prepareTableHeader());
-          return Xlsx.addToSheet('Dendriten', data, true);
+          var dendrite, dendritesData, exportSpines, index, spinesData, _i, _len;
+          exportSpines = _.contains(_.values(this.data_options.spines), true);
+          Xlsx.addToSheet('Dendriten', [[title]]);
+          if (exportSpines) {
+            Xlsx.addToSheet('Spines', [[title]]);
+          }
+          dendritesData = [this.prepareDendriteHeader()];
+          if (exportSpines) {
+            spinesData = [];
+          }
+          for (index = _i = 0, _len = dendrites.length; _i < _len; index = ++_i) {
+            dendrite = dendrites[index];
+            dendritesData.push(this.prepareDendriteData(dendrite, index + 1));
+          }
+          return Xlsx.addToSheet('Dendriten', dendritesData, false);
         },
         addTablesForGroups: function() {
           var dendrites, group, index, title, _i, _len, _ref, _results;

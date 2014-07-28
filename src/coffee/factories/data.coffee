@@ -99,12 +99,21 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
 
 
     addTableFor: (dendrites, title) ->
-      data = [[title]]
-      Xlsx.addToSheet 'Dendriten', data
-      data = _.map dendrites, (dendrite, index) =>
-        @prepareDendriteData dendrite, index + 1
-      data.unshift @prepareTableHeader()
-      Xlsx.addToSheet 'Dendriten', data, true
+      # Should there be spine data exported?
+      exportSpines = _.contains(_.values(@data_options.spines), true)
+
+      # add title for dendrites table
+      Xlsx.addToSheet 'Dendriten', [[title]]
+      # add title for spines table
+      Xlsx.addToSheet 'Spines', [[title]] if exportSpines
+
+      # get dendrite data and add it to excel file
+      dendritesData = [@prepareDendriteHeader()]
+      spinesData = [] if exportSpines
+
+      for dendrite, index in dendrites
+        dendritesData.push @prepareDendriteData dendrite, index + 1
+      Xlsx.addToSheet 'Dendriten', dendritesData, false
 
     addTablesForGroups: ->
       for group, index in @groups
