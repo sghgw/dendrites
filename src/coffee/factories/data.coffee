@@ -109,7 +109,7 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
 
       # get dendrite data and add it to excel file
       dendritesData = [@prepareDendriteHeader()]
-      spinesData = [] if exportSpines
+      spinesData = [@prepareSpinesHeader()] if exportSpines
 
       for dendrite, index in dendrites
         dendritesData.push @prepareDendriteData dendrite, index + 1
@@ -151,4 +151,14 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       data.push 'Mittlere Spinedistanz' if @data_options.dendrite.spine_means.distance
       data.push 'Mittlere Spinel\u00e4nge zum Zentrum' if @data_options.dendrite.spine_means.length_to_center
       data
+
+    prepareSpinesHeader: ->
+      data = []
+      data.push '#'
+      data.push 'Dendrit'
+      data.push 'L\u00e4nge' if @data_options.spines.length
+      data.push 'Durchmesser' if @data_options.spines.diameter
+      data.push 'Distanz' if @data_options.spines.distance
+      data.push 'L\u00e4nge zur Mitte' if @data_options.spines.length_to_center
+
   }]

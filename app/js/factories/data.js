@@ -131,7 +131,7 @@
           }
           dendritesData = [this.prepareDendriteHeader()];
           if (exportSpines) {
-            spinesData = [];
+            spinesData = [this.prepareSpinesHeader()];
           }
           for (index = _i = 0, _len = dendrites.length; _i < _len; index = ++_i) {
             dendrite = dendrites[index];
@@ -222,6 +222,24 @@
             data.push('Mittlere Spinel\u00e4nge zum Zentrum');
           }
           return data;
+        },
+        prepareSpinesHeader: function() {
+          var data;
+          data = [];
+          data.push('#');
+          data.push('Dendrit');
+          if (this.data_options.spines.length) {
+            data.push('L\u00e4nge');
+          }
+          if (this.data_options.spines.diameter) {
+            data.push('Durchmesser');
+          }
+          if (this.data_options.spines.distance) {
+            data.push('Distanz');
+          }
+          if (this.data_options.spines.length_to_center) {
+            return data.push('L\u00e4nge zur Mitte');
+          }
         }
       };
     }
