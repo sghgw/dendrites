@@ -240,6 +240,30 @@
           if (this.data_options.spines.length_to_center) {
             return data.push('L\u00e4nge zur Mitte');
           }
+        },
+        prepareSpinesData: function(spines, dendrite, index) {
+          return _.map(spines, function(spine, n) {
+            var data;
+            data = [];
+            if (index) {
+              data.push(index + n + 1);
+            }
+            if (dendrite) {
+              data.push(dendrite);
+            }
+            if (this.data_options.spines.length) {
+              data.push(spine.length);
+            }
+            if (this.data_options.spines.diameter) {
+              data.push(spine.diameter);
+            }
+            if (this.data_options.spines.distance) {
+              data.push(spine.distance);
+            }
+            if (this.data_options.spines.length_to_center) {
+              return data.push(spine.length_to_center);
+            }
+          });
         }
       };
     }
