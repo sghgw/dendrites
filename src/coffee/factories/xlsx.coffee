@@ -71,13 +71,17 @@ module.factory 'Xlsx', () ->
 
     # add data to sheetName
     # if there are rows already data is appended
-    addToSheet: (sheetName, data, asTable) ->
+    addToSheet: (sheetName, data, asTable, rowToStart) ->
       rows = []
       sheet = @getSheet sheetName
       row = sheet.xml.worksheet.sheetData[0].row
       if row
-        rows = @buildRows(data, row.length + 2)
-        sheet.xml.worksheet.sheetData[0].row = row.concat rows
+        if rowToStart
+          rows = @buildRows(data, rowToStart)
+          sheet.xml.worksheet.sheetData[0].row = (row.slice(0,rowToStart - 1).concat(rows)).concat(row.slice(rowToStart + rows.length - 1))
+        else
+          rows = @buildRows(data, row.length + 2)
+          sheet.xml.worksheet.sheetData[0].row = row.concat rows
       else
         rows = @buildRows(data)
         sheet.xml.worksheet.sheetData[0] = {row: rows}

@@ -116,14 +116,19 @@
         });
         return xml;
       },
-      addToSheet: function(sheetName, data, asTable) {
+      addToSheet: function(sheetName, data, asTable, rowToStart) {
         var row, rows, sheet, xml;
         rows = [];
         sheet = this.getSheet(sheetName);
         row = sheet.xml.worksheet.sheetData[0].row;
         if (row) {
-          rows = this.buildRows(data, row.length + 2);
-          sheet.xml.worksheet.sheetData[0].row = row.concat(rows);
+          if (rowToStart) {
+            rows = this.buildRows(data, rowToStart);
+            sheet.xml.worksheet.sheetData[0].row = (row.slice(0, rowToStart - 1).concat(rows)).concat(row.slice(rowToStart + rows.length - 1));
+          } else {
+            rows = this.buildRows(data, row.length + 2);
+            sheet.xml.worksheet.sheetData[0].row = row.concat(rows);
+          }
         } else {
           rows = this.buildRows(data);
           sheet.xml.worksheet.sheetData[0] = {
