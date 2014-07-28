@@ -4,3 +4,4 @@ body{padding-top:50px}
 .option-list{margin-left:0px;padding-left:0px;padding-right:10px}.option-list label{font-weight:normal;width:100%}.option-list label input,.option-list label span.switchery{float:right}
 th a i{padding-left:8px}
 .table-responsive{border:0}
+.modal-dialog{margin:0;width:60%;position:absolute;top:20%;left:20%}
