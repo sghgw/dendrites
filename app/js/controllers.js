@@ -96,8 +96,14 @@
     '$scope', 'Data', function($scope, Data) {
       $scope.data = Data;
       $scope.groups = Data.data_options.spines.groups;
-      return $scope.save = function() {
+      $scope.save = function() {
         return console.log(Data.data_options.spines.groups);
+      };
+      return $scope.add = function() {
+        return $scope.groups.push({
+          name: 'Gruppe ' + ($scope.groups.length + 1),
+          range: [0, 10]
+        });
       };
     }
   ]);

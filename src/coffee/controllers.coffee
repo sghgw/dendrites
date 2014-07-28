@@ -90,4 +90,7 @@ ctrls.controller 'spinesGroupsCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.groups = Data.data_options.spines.groups
   $scope.save = ->
     console.log Data.data_options.spines.groups
+
+  $scope.add = ->
+    $scope.groups.push {name: 'Gruppe ' + ($scope.groups.length + 1), range: [0,10]}
 ]
