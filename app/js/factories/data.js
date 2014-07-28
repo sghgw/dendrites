@@ -30,7 +30,7 @@
             }
           },
           spines: {
-            length: false,
+            length: true,
             diameter: false,
             distance: false,
             length_to_center: false,
@@ -114,7 +114,7 @@
           };
         },
         exportData: function() {
-          Xlsx.setTemplate('template3');
+          Xlsx.setTemplate('template2');
           if (this.grouping) {
             this.addTablesForGroups();
           } else {
@@ -136,8 +136,12 @@
           for (index = _i = 0, _len = dendrites.length; _i < _len; index = ++_i) {
             dendrite = dendrites[index];
             dendritesData.push(this.prepareDendriteData(dendrite, index + 1));
+            if (exportSpines) {
+              spinesData = spinesData.concat(this.prepareSpinesData(dendrite.spines, dendrite.title, spinesData.length - 1));
+            }
           }
-          return Xlsx.addToSheet('Dendriten', dendritesData, false);
+          Xlsx.addToSheet('Dendriten', dendritesData, false);
+          return Xlsx.addToSheet('Spines', spinesData);
         },
         addTablesForGroups: function() {
           var dendrites, group, index, title, _i, _len, _ref, _results;
@@ -238,31 +242,32 @@
             data.push('Distanz');
           }
           if (this.data_options.spines.length_to_center) {
-            return data.push('L\u00e4nge zur Mitte');
+            data.push('L\u00e4nge zur Mitte');
           }
+          return data;
         },
         prepareSpinesData: function(spines, dendrite, index) {
+          var _this = this;
           return _.map(spines, function(spine, n) {
             var data;
             data = [];
-            if (index) {
-              data.push(index + n + 1);
-            }
+            data.push(index + n + 1);
             if (dendrite) {
               data.push(dendrite);
             }
-            if (this.data_options.spines.length) {
+            if (_this.data_options.spines.length) {
               data.push(spine.length);
             }
-            if (this.data_options.spines.diameter) {
+            if (_this.data_options.spines.diameter) {
               data.push(spine.diameter);
             }
-            if (this.data_options.spines.distance) {
+            if (_this.data_options.spines.distance) {
               data.push(spine.distance);
             }
-            if (this.data_options.spines.length_to_center) {
-              return data.push(spine.length_to_center);
+            if (_this.data_options.spines.length_to_center) {
+              data.push(spine.length_to_center);
             }
+            return data;
           });
         }
       };

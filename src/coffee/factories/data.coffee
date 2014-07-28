@@ -22,7 +22,7 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
           distance: false
           length_to_center: false
       spines:
-        length: false
+        length: true
         diameter: false
         distance: false
         length_to_center: false
@@ -90,7 +90,7 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       }
 
     exportData: ->
-      Xlsx.setTemplate('template3')
+      Xlsx.setTemplate('template2')
       if @grouping
         @addTablesForGroups()
       else
@@ -101,7 +101,6 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
     addTableFor: (dendrites, title) ->
       # Should there be spine data exported?
       exportSpines = _.contains(_.values(@data_options.spines), true)
-
       # add title for dendrites table
       Xlsx.addToSheet 'Dendriten', [[title]]
       # add title for spines table
@@ -113,7 +112,9 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
 
       for dendrite, index in dendrites
         dendritesData.push @prepareDendriteData dendrite, index + 1
+        spinesData = spinesData.concat @prepareSpinesData(dendrite.spines, dendrite.title, spinesData.length - 1) if exportSpines
       Xlsx.addToSheet 'Dendriten', dendritesData, false
+      Xlsx.addToSheet 'Spines', spinesData
 
     addTablesForGroups: ->
       for group, index in @groups
@@ -160,14 +161,16 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       data.push 'Durchmesser' if @data_options.spines.diameter
       data.push 'Distanz' if @data_options.spines.distance
       data.push 'L\u00e4nge zur Mitte' if @data_options.spines.length_to_center
+      data
 
     prepareSpinesData: (spines, dendrite, index) ->
-      _.map spines, (spine, n) ->
+      _.map spines, (spine, n) =>
         data = []
-        data.push index + n + 1 if index
+        data.push index + n + 1
         data.push dendrite if dendrite
         data.push spine.length if @data_options.spines.length
         data.push spine.diameter if @data_options.spines.diameter
         data.push spine.distance if @data_options.spines.distance
         data.push spine.length_to_center if @data_options.spines.length_to_center
+        data
   }]
