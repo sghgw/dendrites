@@ -93,4 +93,8 @@ ctrls.controller 'spinesGroupsCtrl', ['$scope', 'Data', ($scope, Data) ->
 
   $scope.add = ->
     $scope.groups.push {name: 'Gruppe ' + ($scope.groups.length + 1), range: [0,10]}
+
+  $scope.delete = (index) ->
+    console.log index
+    $scope.groups.splice index, 1
 ]

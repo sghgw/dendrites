@@ -122,7 +122,6 @@
           value: scope.range
         });
         return el.bind('slideStop', function() {
-          console.log(el.slider('getValue'));
           scope.range = el.slider('getValue');
           return scope.$apply();
         });

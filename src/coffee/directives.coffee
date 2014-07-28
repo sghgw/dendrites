@@ -87,7 +87,6 @@ module.directive 'slider', () ->
         value: scope.range
       }
       el.bind 'slideStop', () ->
-        console.log el.slider('getValue')
         scope.range = el.slider('getValue')
         scope.$apply()
   }

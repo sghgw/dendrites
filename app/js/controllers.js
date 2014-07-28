@@ -99,11 +99,15 @@
       $scope.save = function() {
         return console.log(Data.data_options.spines.groups);
       };
-      return $scope.add = function() {
+      $scope.add = function() {
         return $scope.groups.push({
           name: 'Gruppe ' + ($scope.groups.length + 1),
           range: [0, 10]
         });
+      };
+      return $scope["delete"] = function(index) {
+        console.log(index);
+        return $scope.groups.splice(index, 1);
       };
     }
   ]);
