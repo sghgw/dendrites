@@ -104,4 +104,30 @@
     };
   });
 
+  module.directive('slider', function() {
+    return {
+      restrict: 'EA',
+      replace: true,
+      template: '<input type="text" />',
+      scope: {
+        range: '=',
+        width: '='
+      },
+      link: function(scope, el, attrs) {
+        el.slider({
+          min: 0,
+          max: 10,
+          step: 0.1,
+          range: true,
+          value: scope.range
+        });
+        return el.bind('slideStop', function() {
+          console.log(el.slider('getValue'));
+          scope.range = el.slider('getValue');
+          return scope.$apply();
+        });
+      }
+    };
+  });
+
 }).call(this);
