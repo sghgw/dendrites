@@ -50,6 +50,7 @@
         },
         loadDendriteData: function(files) {
           var data, file, _i, _len;
+          dataStore.clearDendritesTable();
           for (_i = 0, _len = files.length; _i < _len; _i++) {
             file = files[_i];
             data = readXls.start(this.source, file);

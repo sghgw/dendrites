@@ -43,6 +43,8 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
           
     # method to load dendrite data from excel file
     loadDendriteData: (files) ->
+      # clear dendrites table
+      dataStore.clearDendritesTable()
       for file in files
         # read data from excel file
         data = readXls.start(@source, file)
