@@ -18,23 +18,36 @@
   </nav>
   <div class="content container">
     <div class="row">
-      <tab-list>
-        <tab-pane title="1. Quelle ausw&auml;hlen" icon="glyphicon-hdd">
-          <div ng-include src="'source.html'"></div>
-        </tab-pane>
-        <tab-pane title="2. Daten gruppieren" icon="glyphicon-th-large">
-          <div ng-include src="'groups.html'"></div>
-        </tab-pane>
-        <tab-pane title="3. Daten ausw&auml;hlen" icon="glyphicon-list">
-          <div ng-include src="'data.html'"></div>
-        </tab-pane>
-        <tab-pane title="4. Vorschau" icon="glyphicon-search">
-          <div ng-include src="'preview.html'"></div>
-        </tab-pane>
-        <tab-pane title="5. Auswertung speichern" icon="glyphicon-save">
-          <div ng-include src="'export.html'"></div>
-        </tab-pane>
-      </tab-list>
+      <div class="tab-container">
+        <div class="col-xs-3 tab-menu">
+          <div class="list-group">
+            <a ui-sref="source" ui-sref-active="active" class="list-group-item text-center" >
+              <h3 class="glyphicon glyphicon-hdd" ></h3><br/>1. Quelle ausw&auml;hlen
+            </a>
+          </div>
+          <div class="list-group">
+            <a ui-sref="groups" ui-sref-active="active" class="list-group-item text-center" >
+              <h3 class="glyphicon glyphicon-th-large" ></h3><br/>2. Daten gruppieren
+            </a>
+          </div>
+          <div class="list-group">
+            <a ui-sref="data" ui-sref-active="active" class="list-group-item text-center" >
+              <h3 class="glyphicon glyphicon-list" ></h3><br/>3. Daten ausw&auml;hlen
+            </a>
+          </div>
+          <div class="list-group">
+            <a ui-sref="preview" ui-sref-active="active" class="list-group-item text-center" >
+              <h3 class="glyphicon glyphicon-search" ></h3><br/>4. Vorschau
+            </a>
+          </div>
+          <div class="list-group">
+            <a ui-sref="export" ui-sref-active="active" class="list-group-item text-center" >
+              <h3 class="glyphicon glyphicon-save" ></h3><br/>5. Auswertung speichern
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-9 tab-content" ui-view></div>
+      </div>
     </div>
   </div>
 
@@ -43,6 +56,7 @@
   <script src="../js/libs/jquery.min.js"></script>
   <script src="../js/libs/bootstrap.min.js"></script>
   <script src="../js/libs/angular.js"></script>
+  <script src="../js/libs/ui-router.min.js"></script>
   <script src="../js/libs/underscore.js"></script>
   <script src="../js/libs/switchery.min.js"></script>
   <script src="../js/libs/bootstrap-slider.js"></script>
