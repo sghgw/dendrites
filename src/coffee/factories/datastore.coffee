@@ -28,4 +28,7 @@ module.factory 'dataStore', ($q) ->
 
     updateDendrite: (id, data) ->
       @db.dendrites.update {_id: id}, {$set: data}
+
+    clearDendritesTable: () ->
+      @db.dendrites = new Datastore()
   }

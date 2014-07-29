@@ -36,6 +36,9 @@
         }, {
           $set: data
         });
+      },
+      clearDendritesTable: function() {
+        return this.db.dendrites = new Datastore();
       }
     };
   });
