@@ -88,13 +88,10 @@ ctrls.controller 'exportCtrl', ['$scope', 'Data', ($scope, Data) ->
 ctrls.controller 'spinesGroupsCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
   $scope.groups = Data.data_options.spines.groups
-  $scope.save = ->
-    console.log Data.data_options.spines.groups
-
+  
   $scope.add = ->
     $scope.groups.push {name: 'Gruppe ' + ($scope.groups.length + 1), range: [0,10]}
 
   $scope.delete = (index) ->
-    console.log index
     $scope.groups.splice index, 1
 ]
