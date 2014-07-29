@@ -227,7 +227,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('dist-win', [
-    'jshint',
+    // 'jshint',
     'clean:dist',
     'copy:copyWinToTmp',
     'compress:appToTmp',
@@ -237,7 +237,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('dist-mac', [
-    'jshint',
+    // 'jshint',
     'clean:dist',
     'copy:webkit',
     'copy:appMacos',

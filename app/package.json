@@ -1,7 +1,7 @@
 {
   "name": "dendrites",
   "main": "views/index.html",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "single-instance": true,
   "window": {
     "title": "Dendrites",
@@ -9,7 +9,9 @@
     "height": 650,
     "min_width": 650,
     "min_height": 650,
-    "icon": "img/brain_blue.png"
+    "icon": "img/brain_blue.png",
+    "resizable": false,
+    "toolbar": false
   },
   "chromium-args": "--child-clean-exit"
 }
