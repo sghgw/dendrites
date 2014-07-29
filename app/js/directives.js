@@ -116,7 +116,7 @@
       link: function(scope, el, attrs) {
         el.slider({
           min: 0,
-          max: 10,
+          max: 5,
           step: 0.1,
           range: true,
           value: scope.range
