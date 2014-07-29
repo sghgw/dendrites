@@ -126,7 +126,7 @@
             rows = this.buildRows(data, rowToStart);
             sheet.xml.worksheet.sheetData[0].row = (row.slice(0, rowToStart - 1).concat(rows)).concat(row.slice(rowToStart + rows.length - 1));
           } else {
-            rows = this.buildRows(data, row.length + 2);
+            rows = this.buildRows([[]].concat(data), row.length + 1);
             sheet.xml.worksheet.sheetData[0].row = row.concat(rows);
           }
         } else {
