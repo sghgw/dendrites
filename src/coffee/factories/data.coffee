@@ -22,11 +22,12 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
           distance: false
           length_to_center: false
       spines:
-        length: false
+        length: true
         diameter: false
         distance: false
         length_to_center: false
         grouped_length: false
+        groups: []
 
     # method to load a list of files of given dir
     loadFileList: (source) ->
@@ -90,32 +91,46 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       }
 
     exportData: ->
-      Xlsx.setDestination @destination
+      Xlsx.setTemplate('template2')
       if @grouping
         @addTablesForGroups()
       else
         @addTableFor @dendrites, 'Alle Daten'
-      Xlsx.generateXlsxFile()
+      Xlsx.generateXlsxFile(@destination)
 
 
-    addTableFor: (dendrites, title, rowToStart) ->
-      rowToStart = 1 if !rowToStart
-      body = _.map dendrites, (d) =>
-        @prepareDendriteData d
-      Xlsx.addGridWithTitle title, @prepareTableHeader(), body, rowToStart, "\u00dcbersicht"
+    addTableFor: (dendrites, title) ->
+      # Should there be spine data exported?
+      exportSpines = _.contains(_.values(@data_options.spines), true)
+      groupSpines = if @data_options.spines.grouped_length and @data_options.spines.groups.length > 0 then true else false
+      spines = []
+      # add title for dendrites table
+      Xlsx.addToSheet 'Dendriten', [[title]]
+      # add title for spines table
+      Xlsx.addToSheet 'Spines', [[title]] if exportSpines
+
+      # get dendrite data and add it to excel file
+      dendritesData = [@prepareDendriteHeader()]
+      spinesData = [@prepareSpinesHeader()] if exportSpines
+
+      for dendrite, index in dendrites
+        dendritesData.push @prepareDendriteData dendrite, index + 1
+        spinesData = spinesData.concat @prepareSpinesData(dendrite.spines, dendrite.title, spinesData.length - 1) if exportSpines
+        spines = spines.concat dendrite.spines if groupSpines
+      spinesData = @prepareGroupedSpinesData(spinesData, spines) if groupSpines
+      Xlsx.addToSheet 'Dendriten', dendritesData, false
+      Xlsx.addToSheet 'Spines', spinesData
 
     addTablesForGroups: ->
-      header = @prepareTableHeader()
-      row = 1
       for group, index in @groups
         title = if group.title then group.title else group.id
-        files = _.where @files, {group: group.id}
-        @addTableFor files, title, row
-        row += files.length + 5
+        dendrites = _.where @dendrites, {group: group.id}
+        @addTableFor dendrites, title
 
 
-    prepareDendriteData: (dendrite) ->
+    prepareDendriteData: (dendrite, index) ->
       data = []
+      data.push index if index
       data.push dendrite.title
       data.push dendrite.length if @data_options.dendrite.length
       data.push dendrite.surface if @data_options.dendrite.surface
@@ -126,10 +141,9 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       data.push dendrite.spine_means.diameter if @data_options.dendrite.spine_means.diameter
       data.push dendrite.spine_means.distance if @data_options.dendrite.spine_means.distance
       data.push dendrite.spine_means.length_to_center if @data_options.dendrite.spine_means.length_to_center
-      console.log data
       data
 
-    prepareTableHeader: ->
+    prepareDendriteHeader: ->
       data = []
       data.push '#'
       data.push 'Dendrit'
@@ -143,4 +157,37 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       data.push 'Mittlere Spinedistanz' if @data_options.dendrite.spine_means.distance
       data.push 'Mittlere Spinel\u00e4nge zum Zentrum' if @data_options.dendrite.spine_means.length_to_center
       data
+
+    prepareSpinesHeader: ->
+      data = []
+      data.push '#'
+      data.push 'Dendrit'
+      data.push 'L\u00e4nge' if @data_options.spines.length
+      data.push 'Durchmesser' if @data_options.spines.diameter
+      data.push 'Distanz' if @data_options.spines.distance
+      data.push 'L\u00e4nge zur Mitte' if @data_options.spines.length_to_center
+      data
+
+    prepareSpinesData: (spines, dendrite, index) ->
+      _.map spines, (spine, n) =>
+        data = []
+        data.push index + n + 1
+        data.push dendrite if dendrite
+        data.push spine.length if @data_options.spines.length
+        data.push spine.diameter if @data_options.spines.diameter
+        data.push spine.distance if @data_options.spines.distance
+        data.push spine.length_to_center if @data_options.spines.length_to_center
+        data
+
+    prepareGroupedSpinesData: (table, spines) ->
+      groups = [['Gruppe', 'Untere Grenze', 'Obere Grenze', 'Spines, absolut', 'Spines, relativ']]
+      for group in @data_options.spines.groups
+        row = [group.name, group.range[0], group.range[1], 0]
+        for spine in spines
+          row[row.length - 1]++ if spine.length >= group.range[0] and spine.length < group.range[1]
+        row.push (row[row.length - 1] / spines.length)
+        groups.push row
+      for item, index in groups
+        table[index] = table[index].concat(['',''].concat(item))
+      table
   }]

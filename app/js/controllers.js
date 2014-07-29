@@ -92,4 +92,20 @@
     }
   ]);
 
+  ctrls.controller('spinesGroupsCtrl', [
+    '$scope', 'Data', function($scope, Data) {
+      $scope.data = Data;
+      $scope.groups = Data.data_options.spines.groups;
+      $scope.add = function() {
+        return $scope.groups.push({
+          name: 'Gruppe ' + ($scope.groups.length + 1),
+          range: [0, 10]
+        });
+      };
+      return $scope["delete"] = function(index) {
+        return $scope.groups.splice(index, 1);
+      };
+    }
+  ]);
+
 }).call(this);

@@ -67,3 +67,26 @@ module.directive 'tooltip', () ->
       tooltip = 'top' if !tooltip
       element.tooltip {placement: tooltip, container: 'body'}
   }
+
+module.directive 'slider', () ->
+  {
+    restrict: 'EA'
+    replace: true
+    template: '<input type="text" />'
+    scope:
+      range: '='
+      width: '='
+    link: (scope, el, attrs) ->
+      # console.log scope
+      # console.log element.slider()
+      el.slider {
+        min: 0
+        max: 5
+        step: 0.1
+        range: true
+        value: scope.range
+      }
+      el.bind 'slideStop', () ->
+        scope.range = el.slider('getValue')
+        scope.$apply()
+  }
