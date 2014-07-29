@@ -124,8 +124,10 @@
           return Xlsx.generateXlsxFile(this.destination);
         },
         addTableFor: function(dendrites, title) {
-          var dendrite, dendritesData, exportSpines, index, spinesData, _i, _len;
+          var dendrite, dendritesData, exportSpines, groupSpines, index, spines, spinesData, _i, _len;
           exportSpines = _.contains(_.values(this.data_options.spines), true);
+          groupSpines = this.data_options.spines.grouped_length && this.data_options.spines.groups.length > 0 ? true : false;
+          spines = [];
           Xlsx.addToSheet('Dendriten', [[title]]);
           if (exportSpines) {
             Xlsx.addToSheet('Spines', [[title]]);
@@ -140,6 +142,12 @@
             if (exportSpines) {
               spinesData = spinesData.concat(this.prepareSpinesData(dendrite.spines, dendrite.title, spinesData.length - 1));
             }
+            if (groupSpines) {
+              spines = spines.concat(dendrite.spines);
+            }
+          }
+          if (groupSpines) {
+            spinesData = this.prepareGroupedSpinesData(spinesData, spines);
           }
           Xlsx.addToSheet('Dendriten', dendritesData, false);
           return Xlsx.addToSheet('Spines', spinesData);
@@ -270,6 +278,28 @@
             }
             return data;
           });
+        },
+        prepareGroupedSpinesData: function(table, spines) {
+          var group, groups, index, item, row, spine, _i, _j, _k, _len, _len1, _len2, _ref;
+          groups = [['Gruppe', 'Untere Grenze', 'Obere Grenze', 'Spines, absolut', 'Spines, relativ']];
+          _ref = this.data_options.spines.groups;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            group = _ref[_i];
+            row = [group.name, group.range[0], group.range[1], 0];
+            for (_j = 0, _len1 = spines.length; _j < _len1; _j++) {
+              spine = spines[_j];
+              if (spine.length >= group.range[0] && spine.length < group.range[1]) {
+                row[row.length - 1]++;
+              }
+            }
+            row.push(row[row.length - 1] / spines.length);
+            groups.push(row);
+          }
+          for (index = _k = 0, _len2 = groups.length; _k < _len2; index = ++_k) {
+            item = groups[index];
+            table[index] = table[index].concat(['', ''].concat(item));
+          }
+          return table;
         }
       };
     }

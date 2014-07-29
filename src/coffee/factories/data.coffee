@@ -102,6 +102,8 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
     addTableFor: (dendrites, title) ->
       # Should there be spine data exported?
       exportSpines = _.contains(_.values(@data_options.spines), true)
+      groupSpines = if @data_options.spines.grouped_length and @data_options.spines.groups.length > 0 then true else false
+      spines = []
       # add title for dendrites table
       Xlsx.addToSheet 'Dendriten', [[title]]
       # add title for spines table
@@ -114,6 +116,8 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
       for dendrite, index in dendrites
         dendritesData.push @prepareDendriteData dendrite, index + 1
         spinesData = spinesData.concat @prepareSpinesData(dendrite.spines, dendrite.title, spinesData.length - 1) if exportSpines
+        spines = spines.concat dendrite.spines if groupSpines
+      spinesData = @prepareGroupedSpinesData(spinesData, spines) if groupSpines
       Xlsx.addToSheet 'Dendriten', dendritesData, false
       Xlsx.addToSheet 'Spines', spinesData
 
@@ -174,4 +178,16 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
         data.push spine.distance if @data_options.spines.distance
         data.push spine.length_to_center if @data_options.spines.length_to_center
         data
+
+    prepareGroupedSpinesData: (table, spines) ->
+      groups = [['Gruppe', 'Untere Grenze', 'Obere Grenze', 'Spines, absolut', 'Spines, relativ']]
+      for group in @data_options.spines.groups
+        row = [group.name, group.range[0], group.range[1], 0]
+        for spine in spines
+          row[row.length - 1]++ if spine.length >= group.range[0] and spine.length < group.range[1]
+        row.push (row[row.length - 1] / spines.length)
+        groups.push row
+      for item, index in groups
+        table[index] = table[index].concat(['',''].concat(item))
+      table
   }]
