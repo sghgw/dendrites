@@ -13,5 +13,8 @@
     "resizable": false,
     "toolbar": true
   },
+  "dependencies": {
+    "nedb": "^0.10.5"
+  },
   "chromium-args": "--child-clean-exit"
 }
