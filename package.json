@@ -15,10 +15,7 @@
     "url": "git://github.com/sghgw/dendrites.git"
   },
   "dependencies": {
-    "nedb": "^0.10.5","xlsjs": "^0.6.17",
-    "xlsx": "^0.6.0",
-    "simple-statistics": "^0.8.0",
-    "jszip": "^2.2.1"
+    "nedb": "^0.10.5"
   },
   "devDependencies": {
     "matchdep": "~0.1.2",
