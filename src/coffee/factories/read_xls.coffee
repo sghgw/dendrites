@@ -1,4 +1,3 @@
-xlsx = require 'xlsx'
 path = require 'path'
 fs = require 'fs'
 stats = require 'simple-statistics'
@@ -15,7 +14,7 @@ module.factory 'readXls', () ->
       if path.extname(file) is '.xls'
         return XLS.read data 
       else 
-        xlsx.readFile(dir + '/' + file)
+        return XLSX.read data
     load: (file, filename) ->
       dendrite = {
         file: filename

@@ -1,7 +1,5 @@
 (function() {
-  var fs, module, path, stats, xlsx;
-
-  xlsx = require('xlsx');
+  var fs, module, path, stats;
 
   path = require('path');
 
@@ -24,7 +22,7 @@
         if (path.extname(file) === '.xls') {
           return XLS.read(data);
         } else {
-          return xlsx.readFile(dir + '/' + file);
+          return XLSX.read(data);
         }
       },
       load: function(file, filename) {
