@@ -1,11 +1,9 @@
 (function() {
-  var fs, module, path, stats;
+  var fs, module, path;
 
   path = require('path');
 
   fs = require('fs');
-
-  stats = require('simple-statistics');
 
   module = angular.module('readXlsFactory', []);
 
@@ -48,16 +46,16 @@
           dendrite.spines.push(spine);
         }
         dendrite.spine_means = {
-          length: (stats.mean(_.map(dendrite.spines, function(spine) {
+          length: (ss.mean(_.map(dendrite.spines, function(spine) {
             return spine.length;
           }))).toFixed(4) / 1,
-          diameter: (stats.mean(_.map(dendrite.spines, function(spine) {
+          diameter: (ss.mean(_.map(dendrite.spines, function(spine) {
             return spine.diameter;
           }))).toFixed(4) / 1,
-          distance: (stats.mean(_.map(dendrite.spines, function(spine) {
+          distance: (ss.mean(_.map(dendrite.spines, function(spine) {
             return spine.distance;
           }))).toFixed(4) / 1,
-          length_to_center: (stats.mean(_.map(dendrite.spines, function(spine) {
+          length_to_center: (ss.mean(_.map(dendrite.spines, function(spine) {
             return spine.length_to_center;
           }))).toFixed(4) / 1
         };

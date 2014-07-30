@@ -1,6 +1,5 @@
 path = require 'path'
 fs = require 'fs'
-stats = require 'simple-statistics'
 
 module = angular.module 'readXlsFactory', []
 
@@ -39,10 +38,10 @@ module.factory 'readXls', () ->
 
       # calculate mean spine data...
       dendrite.spine_means = {
-        length: (stats.mean _.map(dendrite.spines, (spine) -> spine.length)).toFixed(4)/1
-        diameter: (stats.mean _.map(dendrite.spines, (spine) -> spine.diameter)).toFixed(4)/1
-        distance: (stats.mean _.map(dendrite.spines, (spine) -> spine.distance)).toFixed(4)/1
-        length_to_center: (stats.mean _.map(dendrite.spines, (spine) -> spine.length_to_center)).toFixed(4)/1
+        length: (ss.mean _.map(dendrite.spines, (spine) -> spine.length)).toFixed(4)/1
+        diameter: (ss.mean _.map(dendrite.spines, (spine) -> spine.diameter)).toFixed(4)/1
+        distance: (ss.mean _.map(dendrite.spines, (spine) -> spine.distance)).toFixed(4)/1
+        length_to_center: (ss.mean _.map(dendrite.spines, (spine) -> spine.length_to_center)).toFixed(4)/1
       }
 
       dendrite
