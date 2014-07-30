@@ -1,5 +1,4 @@
 xml2js = new X2JS({escapeMode:false});
-zip = require 'jszip'
 fs = require 'fs'
 a = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -14,7 +13,7 @@ module.factory 'Xlsx', () ->
       template = 'template' if !template
       file = window.location.pathname.split("views")[0] + 'templates/' + template + '.xlsx'
       if fs.existsSync(file)
-        @xlsx = new zip(fs.readFileSync(file))
+        @xlsx = new JSZip(fs.readFileSync(file))
         return true
       else 
         return false

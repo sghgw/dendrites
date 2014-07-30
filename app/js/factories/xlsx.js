@@ -1,11 +1,9 @@
 (function() {
-  var a, fs, module, xml2js, zip;
+  var a, fs, module, xml2js;
 
   xml2js = new X2JS({
     escapeMode: false
   });
-
-  zip = require('jszip');
 
   fs = require('fs');
 
@@ -23,7 +21,7 @@
         }
         file = window.location.pathname.split("views")[0] + 'templates/' + template + '.xlsx';
         if (fs.existsSync(file)) {
-          this.xlsx = new zip(fs.readFileSync(file));
+          this.xlsx = new JSZip(fs.readFileSync(file));
           return true;
         } else {
           return false;
