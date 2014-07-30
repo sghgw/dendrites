@@ -1,6 +1,6 @@
-xls = require 'xlsjs'
 xlsx = require 'xlsx'
 path = require 'path'
+fs = require 'fs'
 stats = require 'simple-statistics'
 
 module = angular.module 'readXlsFactory', []
@@ -11,7 +11,11 @@ module.factory 'readXls', () ->
       file = @open dir, filename
       @load(file, filename)
     open: (dir, file) ->
-      if path.extname(file) is '.xls' then xls.readFile(dir + '/' + file) else xlsx.readFile(dir + '/' + file)
+      data = fs.readFileSync dir + '/' + file
+      if path.extname(file) is '.xls'
+        return XLS.read data 
+      else 
+        xlsx.readFile(dir + '/' + file)
     load: (file, filename) ->
       dendrite = {
         file: filename

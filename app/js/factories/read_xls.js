@@ -1,11 +1,11 @@
 (function() {
-  var module, path, stats, xls, xlsx;
-
-  xls = require('xlsjs');
+  var fs, module, path, stats, xlsx;
 
   xlsx = require('xlsx');
 
   path = require('path');
+
+  fs = require('fs');
 
   stats = require('simple-statistics');
 
@@ -19,8 +19,10 @@
         return this.load(file, filename);
       },
       open: function(dir, file) {
+        var data;
+        data = fs.readFileSync(dir + '/' + file);
         if (path.extname(file) === '.xls') {
-          return xls.readFile(dir + '/' + file);
+          return XLS.read(data);
         } else {
           return xlsx.readFile(dir + '/' + file);
         }
