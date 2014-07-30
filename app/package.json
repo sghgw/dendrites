@@ -11,7 +11,7 @@
     "min_height": 650,
     "icon": "img/brain_blue.png",
     "resizable": false,
-    "toolbar": false
+    "toolbar": true
   },
   "chromium-args": "--child-clean-exit"
 }

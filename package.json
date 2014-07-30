@@ -15,7 +15,12 @@
     "url": "git://github.com/sghgw/dendrites.git"
   },
   "dependencies": {
-    "nedb": "^0.10.5"
+    "nedb": "^0.10.5","xlsjs": "^0.6.17",
+    "xlsx": "^0.6.0",
+    "simple-statistics": "^0.8.0",
+    "jszip": "^2.2.1",
+    "xml2js": "^0.4.2",
+    "xmlbuilder": "^2.2.1"
   },
   "devDependencies": {
     "matchdep": "~0.1.2",
@@ -29,13 +34,7 @@
     "grunt-contrib-less": "~0.7.0",
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-newer": "~0.7.0",
-    "xlsjs": "^0.6.17",
-    "xlsx": "^0.6.0",
-    "simple-statistics": "^0.8.0",
-    "jszip": "^2.2.1",
-    "xml2js": "^0.4.2",
-    "xmlbuilder": "^2.2.1"
+    "grunt-newer": "~0.7.0"
   },
   "engines": {
     "node": ">=0.8.0"
