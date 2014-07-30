@@ -1,11 +1,13 @@
 (function() {
-  var a, fs, module, xml2js;
+  var a, fs, module, os, xml2js;
 
   xml2js = new X2JS({
     escapeMode: false
   });
 
   fs = require('fs');
+
+  os = require('os');
 
   a = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
@@ -20,6 +22,9 @@
           template = 'template';
         }
         file = window.location.pathname.split("views")[0] + 'templates/' + template + '.xlsx';
+        if (os.platform().indexOf('win') > -1) {
+          file = file.slice(1);
+        }
         if (fs.existsSync(file)) {
           this.xlsx = new JSZip(fs.readFileSync(file));
           return true;
