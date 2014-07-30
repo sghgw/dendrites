@@ -18,9 +18,7 @@
     "nedb": "^0.10.5","xlsjs": "^0.6.17",
     "xlsx": "^0.6.0",
     "simple-statistics": "^0.8.0",
-    "jszip": "^2.2.1",
-    "xml2js": "^0.4.2",
-    "xmlbuilder": "^2.2.1"
+    "jszip": "^2.2.1"
   },
   "devDependencies": {
     "matchdep": "~0.1.2",
