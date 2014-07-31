@@ -53,13 +53,10 @@ ctrls.controller 'previewCtrl', ['$scope', 'Data', ($scope, Data) ->
 
 ctrls.controller 'exportCtrl', ['$scope', 'Data', ($scope, Data) ->
   $scope.data = Data
-  # DEV: set destination dir
-  $scope.dir = '/Users/sascha/Desktop/excel/Auswertung.xlsx'
   $scope.$watch 'dir', (newValue, oldValue) ->
     $scope.data.destination = newValue
 
   $scope.exportData = ->
-    # $scope.data.loadDendriteData() if !$scope.data.loaded_data
     $scope.data.exportData()
 ]
 
