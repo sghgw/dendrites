@@ -6,7 +6,8 @@
 body {
     width: 100%;
     height: 100%;
-    font-family: 'Ek Mukta', sans-serif;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    /*font-family: 'Ek Mukta', sans-serif;*/
 	font-weight: 300;
     color: #666;
     background-color: #fff;
@@ -46,7 +47,7 @@ h4,
 h5,
 h6 {
     margin: 0 0 30px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-weight: 400;
 	color: #111;
 }
@@ -180,6 +181,11 @@ Intro
   width: 6%;
   margin-bottom: 16px;
 }
+
+#intro .brand p button {
+  text-transform: none;
+}
+
 .intro-text h1 a {
   color:#fff;
   text-align:center;
@@ -229,7 +235,6 @@ Intro
 .navbar-brand {
     font-weight: 700;
 }
-
 
 .navbar-brand:focus {
     outline: 0;
