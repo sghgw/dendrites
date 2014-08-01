@@ -102,7 +102,7 @@ p.lead {
 }
 
 a {
-    color: #666;
+    color: #529abb;
     -webkit-transition: all .2s ease-in-out;
     -moz-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
@@ -150,7 +150,7 @@ blockquote strong {
 	color: #111;
 	text-transform: uppercase;
 	font-size: 32px;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Helvetica Neue', sans-serif;
 	font-weight: 900;
 	margin-top: 20px;
 }
@@ -326,6 +326,19 @@ Intro
     outline: 0;
 }
 
+/* ================================
+Footer
+================================= */
+footer {
+  background: #529abb;
+  color: #fff;
+  padding: 50px 0 30px;
+  font-size: 14px;
+}
+
+footer a {
+  color: #2a6496;
+}
 
 /* misc */
 hr {
@@ -378,7 +391,7 @@ hr.bold {
 ============================ */
 
 .home-section {
-    padding-top: 150px;
+    padding-top: 80px;
     padding-bottom: 110px;
 	display:block;
     position:relative;
@@ -401,6 +414,7 @@ hr.bold {
 	letter-spacing: -1px;
 	text-transform: uppercase;
 	margin-bottom: 10px;
+  color: #666;
 }
 
 .section-heading p {
