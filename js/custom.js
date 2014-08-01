@@ -5,15 +5,6 @@
 	$(window).load(function(){
       $("#navigation").sticky({ topSpacing: 0 });
     });
-	
-
-	wow = new WOW(
-      {
-        animateClass: 'animated',
-        offset:       0
-      }
-    );
-    wow.init();
 
 	$('ul.nav li.dropdown').hover(function() {
 	  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
