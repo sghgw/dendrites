@@ -7,13 +7,11 @@ body {
     width: 100%;
     height: 100%;
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    /*font-family: 'Ek Mukta', sans-serif;*/
 	font-weight: 300;
     color: #666;
     background-color: #fff;
 	font-size: 16px;
     line-height: 1.6em;
-	font-weight: 400;
 }
 
 html {
@@ -483,7 +481,7 @@ hr.bold {
 
 /* --- button --- */
 .btn {
-	border-radius: 2px;
+	border-radius: 4px;
 	position: relative;
 	display: inline-block;
 	outline: none;
@@ -491,7 +489,7 @@ hr.bold {
 	text-decoration: none;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	font-weight: 400;	
+	font-weight: 300;	
 	text-shadow: 0 0 1px rgba(255,255,255,0.3);
 	font-size: 14px;
 }
