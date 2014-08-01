@@ -161,15 +161,15 @@ Intro
 ================================= */
 
 #intro{
-    height:635px;
-    width:100%;
-    background-color: #529abb;
-    background-image: url(../img/bg-mac.png);
-    background-position:center;
-    background-repeat:no-repeat;
-    overflow-y:hidden;
-    text-align:center;
-    position:relative;
+  height:635px;
+  width:100%;
+  background-color: #529abb;
+  background-image: url(../img/bg-mac.png);
+  background-position:center;
+  background-repeat:no-repeat;
+  overflow-y:hidden;
+  text-align:center;
+  position:relative;
 }
 .intro-text {
   position:relative;
@@ -252,7 +252,7 @@ Intro
 .navbar-custom ul.nav li a {
 	font-size: 12px;
 	letter-spacing: 1px;
-    color: #444;
+  color: #444;
 	text-transform: uppercase;
 	font-weight: 700;
 }
@@ -307,14 +307,12 @@ Intro
 .navbar-custom .nav li a:hover,
 .navbar-custom .nav li a:focus,
 .navbar-custom .nav li.active {
-    outline: 0;
-    background-color: rgba(255,255,255,.2);
+  outline: 0;
+  background-color: rgba(255,255,255,.2);
 }
-.navbar-custom .nav li a:hover,
-.navbar-custom .nav li a:focus,
-.navbar-custom .nav li.active {
-    outline: 0;
-    background-color: rgba(255,255,255,.2);
+
+.navbar-custom .nav li a.active {
+  color: #529abb;
 }
 
 .navbar-toggle {
@@ -465,297 +463,9 @@ hr.bold {
 	color: #fff;
 }
 
-/* ===========================
---- About
-============================ */
-
-
-
-
-/* ===========================
---- Services
-============================ */
-.service-box {
-	background: #fff;
-	border: 1px solid #f7f7f7;
-	padding: 20px;
-}
-
 .service-icon {
 	margin-bottom: 20px;
 }	
-
-
-/* ===========================
---- Works
-============================ */
-
-#owl-works {
-
-}
-
-.item {
-    margin: 10px;
-}
-
-.item img {
-    display: block;
-    width: 100%;
-    height: auto;
-}	
-
-/* ===========================
---- Contact
-============================ */
-
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-form#contact-form .form-group label {
-	text-align: left !important;
-	display: block;
-	text-transform: uppercase;
-	font-size: 16px;
-}
-form#contact-form input,form#contact-form select,form#contact-form textarea {
-	font-size: 18px;
-	line-height: 1.6em;
-	border: 1px solid #eee;
-  -webkit-box-shadow: none;
-          box-shadow:  none;
-	border-radius: 2px;
-}
-
-.btn-lg,
-.btn-group-lg > .btn {
-  border-radius: 2px;
-}
-
-form#contact-form input:focus,form#contact-form select:focus,form#contact-form textarea:focus {
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-          box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-}
-.input-group-addon {
-  background-color: #fefefe;
-  border: 1px solid #eee;
-}
-
-.widget-contact {
-	text-align: left;
-}
-
-
-
-/* ===========================
---- Bottom
-============================ */
-
-.boxcol-25 {
-	width: 100%;
-}
-
-.box-social {
-	list-style: none;
-}
-
-.box-social li {
-	width: 25%;
-	float: left;
-}
-
-
-.box-social .social-facebook a { 
-	display: block;
-	background: #3873ae;
-}
-
-
-/* ==== Sidebar ==== */
-.sidebar .widget h5 {
-	font-size: 18px;
-	font-weight: 700;
-	margin-bottom: 20px;
-	text-transform: uppercase;
-}
-.sidebar .widget {
-	margin-bottom: 50px;
-}
-
-.widget ul {
-	list-style: none;
-	margin-left:0;
-	padding-left:0;
-}
-.sidebar .widget ul li {
-	margin-left:0;
-	padding-left:0;
-	margin-bottom: 10px;
-}
-.sidebar .widget ul li a {
-	color: #666;
-}
-
-
-.widget.widget_categories ul li:before {
-	display: inline-block;
-	font-family: 'Pe-icon-7-stroke';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	content: "\e684";
-	margin-right: 10px;
-}
-
-
-.widget.widget_recent_post ul li figure {
-	float: left;
-	margin: 0 20px 0 0;
-}
-
-.widget.widget_recent_post ul li {
-	margin-bottom: 25px;
-}
-
-.widget.widget_recent_post ul li:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-.widget.widget_recent_post ul li h6 {
-	margin-bottom: 10px;
-}
-.widget.widget_recent_post ul li span {
-	font-size: 14px;
-}
-
-.widget .tagcloud a {
-	padding: 4px 10px;
-	color: #fff;
-	display:inline-block;
-	margin: 0 10px 10px 0;
-	font-size: 14px;
-	border-radius: 2px;
-}
-
-.widget .tagcloud a:hover {
-	color: #fff;
-	background: #333;
-}
-
-/* --- widget --- */
-
-form.search-form input {
-	font-size: 18px;
-	line-height: 1.6em;
-	border: 1px solid #eee;
-  -webkit-box-shadow: none;
-          box-shadow:  none;
-	border-radius: 2px;
-}
-
-form.search-form input:focus {
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-          box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-}
-
-
-
-/* ===========================
---- Footer
-============================ */
-
-footer {
-    background-color: #404040;
-}
-
-footer {
-	text-align: center;
-	padding: 50px 0 ;
-	
-}
-
-footer p {
-	color: #f8f8f8;
-	font-size: 14px;
-}
-
-footer a.totop {
-	color: #fff;
-	margin-bottom: 30px;
-}
-footer a.totop:focus {
-	outline: 0;
-}
-
-
-
-/* menu */
-ul.footer-menu {
-	list-style: none;
-}
-
-ul.footer-menu li {
-	float: left;
-	margin: 0 0 0 10px;
-
-}
-
-ul.footer-menu li a {
-	color: #fff;
-	font-size: 16px;
-	border-left: 1px solid #999;
-	padding-left: 9px;
-	line-height: 1.1em;
-}
-
-ul.footer-menu li:first-child a {
-	border-left: none;
-	padding-left: 0;
-}
-
-.social-widget {
-	margin-top: 20px;
-	margin-bottom: 30px;
-}
-.social-widget ul li a:hover {
-	color: #fff;
-}
-
-footer .social-widget ul.team-social li a {
-	margin: 0 5px;
-}
-
-/* === testimonial slide === */
-.testimonialslide {
-	margin-top:0;
-	padding-top: 0;
-}
-
-.testimonialslide ul li blockquote {
-	color: #fff;
-	border-left: none;
-}
-
-.testimonialslide ul li h4 {
-	color: #fff;
-	font-weight: 900;
-}
-.testimonialslide ul li h4 span {
-	color: #fff;
-	font-weight: 400;
-}
-
 
 /* --- button --- */
 .btn {
