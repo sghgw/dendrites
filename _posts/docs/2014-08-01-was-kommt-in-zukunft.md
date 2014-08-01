@@ -1,5 +1,5 @@
 ---
-title: "Wie geht es jetzt weiter?"
+title: "Wie geht es weiter?"
 category: docs
 order: 2
 ---
