@@ -659,3 +659,36 @@ a.btn:focus{
 		margin-bottom: 30px;
 	}
 }
+
+.doc-text {
+  column-count: 2;
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-gap: 60px;
+  -webkit-column-gap: 60px;
+  -moz-column-gap: 60px;
+}
+
+.doc-content div p,
+.doc-content ul {
+  text-align: justify;
+}
+
+.doc-content h2 {
+  text-align: right;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.doc-content h2 a:hover,
+.doc-content h2 a:visited {
+  color: #529abb;
+}
+
+.doc-content {
+  margin-bottom: 80px;
+}
+
+.heading-works .section-heading {
+  margin-bottom: 120px;
+}
