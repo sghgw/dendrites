@@ -2,7 +2,7 @@
 
 Dendrites ist eine hilft beim Auswerten von Daten, die mit Neurolucida und dem Neurolucida Explorer erstellt und erhoben wurden.
 
-[Dendrites Screenshot](https://raw.githubusercontent.com/sghgw/dendrites/gh-pages/img/3_data_sm.png)
+![Dendrites Screenshot](https://raw.githubusercontent.com/sghgw/dendrites/gh-pages/img/3_data_sm.png)
 
 ## Wie funktioniert Dendrites?
 
