@@ -672,6 +672,7 @@ a.btn:focus{
 .doc-content div p,
 .doc-content ul {
   text-align: justify;
+  margin: 0 0 6px;
 }
 
 .doc-content h2 {
@@ -690,5 +691,5 @@ a.btn:focus{
 }
 
 .heading-works .section-heading {
-  margin-bottom: 120px;
+  margin-bottom: 80px;
 }
