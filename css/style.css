@@ -182,7 +182,7 @@ Intro
   margin-bottom: 16px;
 }
 
-#intro .brand p button {
+#intro .brand p a {
   text-transform: none;
 }
 
