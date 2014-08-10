@@ -13,7 +13,10 @@ active: home
   
         <div class="brand">
           <h1>
-            <img src="img/brain.png"><br/>
+            <div class="logo">
+              {% include logo.html %}
+            </div>
+            <!-- <img src="img/brain.png"><br/> -->
             <a href="index.html">Dendrites</a>
           </h1>
           <div class="line-spacer"></div>
@@ -29,3 +32,42 @@ active: home
 </section>
 
 {% include navbar.html %}
+
+{% assign docs = site.categories.docs | sort: 'order' %}
+
+<section id="spacer1" class="spacer"></section>
+
+<span class="anchor" id="docs"></span>
+<section id="docs-section" class="home-section text-center bg-gray">
+  <div class="heading-works marginbot-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+  
+          <div class="section-heading">
+            <h2>Dokumentation</h2>
+            <p>Hier ensteht die Dokumentation für Dendrites.</p>
+            <ul class="list-inline">
+              {% for post in docs%}
+                <li><a href="#{{post.id}}">{{ post.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    {% for post in docs %}
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1 doc-content">
+          <h2><a id="{{post.id}}">{{post.title}}</a></h2>
+          <div class="doc-text">{{post.content}}</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% include footer.html %}
