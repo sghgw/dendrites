@@ -4,6 +4,7 @@
 
 
 body {
+    position: relative;
     width: 100%;
     height: 100%;
     font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -175,9 +176,24 @@ Intro
   margin-top:200px;
   z-index:1000;
 }
-#intro .brand img {
-  width: 6%;
+#intro .brand h1 {
+  margin-bottom: 20px;
+}
+
+#intro .brand .logo {
   margin-bottom: 16px;
+}
+
+#intro .brand .logo svg {
+  height: 80px;
+}
+
+#intro .brand .logo path {
+  fill: rgba(10,171,221,1);
+}
+
+#intro .brand .logo rect {
+  fill: white;
 }
 
 #intro .brand p a {
@@ -212,7 +228,13 @@ Intro
   font-weight: 300;
 }
 
-
+#spacer1 {
+  background-image: url(../img/dendrites.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+}
 
 
 /* ------- Navigation ------------ */
@@ -309,7 +331,7 @@ Intro
   background-color: rgba(255,255,255,.2);
 }
 
-.navbar-custom .nav li a.active {
+.navbar-custom .nav li.active a {
   color: #529abb;
 }
 
@@ -690,4 +712,11 @@ a.btn:focus{
 
 .heading-works .section-heading {
   margin-bottom: 80px;
+}
+
+.anchor{
+   display:block;
+   height:92px; /* this is the height of your header */
+   margin-top:-92px; /* this is again negative value of the height of your header */
+   visibility:hidden;
 }
