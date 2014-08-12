@@ -238,7 +238,7 @@ Intro
 
 
 /* ------- Navigation ------------ */
-.navigation {
+#navigation {
 	background: #fff;
 	z-index: 9999;
 	width:100%;
