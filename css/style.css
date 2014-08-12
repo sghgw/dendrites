@@ -238,7 +238,7 @@ Intro
 
 
 /* ------- Navigation ------------ */
-#navigation {
+.navigation {
 	background: #fff;
 	z-index: 9999;
 	width:100%;
@@ -357,7 +357,7 @@ footer {
 }
 
 footer a {
-  color: #2a6496;
+  color: #ddd;
 }
 
 /* misc */
@@ -383,6 +383,49 @@ hr.bold {
 	height: 5px;
 	margin: 0 auto;
 	margin-bottom: 10px;
+}
+
+footer .logo svg {
+  width: 60px;
+  height: 60px;
+}
+
+.logo svg path {
+  fill: white;
+}
+
+footer .navigation {
+  background: #529abb;
+  color: #fff;
+  border-bottom: 0;
+  box-shadow: none;
+}
+
+.footer-nav {
+  background-color: #529abb;
+}
+
+.footer-nav ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.footer-nav ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.footer-nav ul li a {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.footer-nav ul li a:hover {
+  color: #ddd;
 }
 
 /* margins */
