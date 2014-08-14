@@ -1,4 +1,4 @@
-class Line
+class Segment
   constructor: (@startPoint, @endPoint) ->
     @startPoint.push 0 if @startPoint.length != 3
     @endPoint.push 0 if @endPoint.length != 3
@@ -28,5 +28,8 @@ class Line
         Math.pow(@direction[2], 2)
       )
     d1/d2
+
+
+    
 root = exports ? window
-root.Line = Line
+root.Segment = Segment

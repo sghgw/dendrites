@@ -1,8 +1,8 @@
 (function() {
-  var Line, root;
+  var Segment, root;
 
-  Line = (function() {
-    function Line(startPoint, endPoint) {
+  Segment = (function() {
+    function Segment(startPoint, endPoint) {
       this.startPoint = startPoint;
       this.endPoint = endPoint;
       if (this.startPoint.length !== 3) {
@@ -14,7 +14,7 @@
       this.direction = [this.endPoint[0] - this.startPoint[0], this.endPoint[1] - this.startPoint[1], this.endPoint[2] - this.startPoint[2]];
     }
 
-    Line.prototype.getLength = function() {
+    Segment.prototype.getLength = function() {
       var x, y, z;
       x = Math.pow(this.endPoint[0] - this.startPoint[0], 2);
       y = Math.pow(this.endPoint[1] - this.startPoint[1], 2);
@@ -22,7 +22,7 @@
       return Math.sqrt(x + y + z);
     };
 
-    Line.prototype.distanceToPoint = function(point) {
+    Segment.prototype.distanceToPoint = function(point) {
       var d1, d2, r;
       r = [point[0] - this.startPoint[0], point[1] - this.startPoint[1], point[2] - this.startPoint[2]];
       d1 = [this.direction[1] * r[2] - this.direction[2] * r[1], this.direction[2] * r[0] - this.direction[0] * r[2], this.direction[0] * r[1] - this.direction[1] * r[0]];
@@ -31,12 +31,12 @@
       return d1 / d2;
     };
 
-    return Line;
+    return Segment;
 
   })();
 
   root = typeof exports !== "undefined" && exports !== null ? exports : window;
 
-  root.Line = Line;
+  root.Segment = Segment;
 
 }).call(this);
