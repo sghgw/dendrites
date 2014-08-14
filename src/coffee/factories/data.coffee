@@ -7,6 +7,11 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
     dendrites: []
     groups: []
     filename_pattern: '<Gruppe>_<Titel>'
+    filename_delimiter_presets: [
+      {name: 'Unterstrich', delimiter: '_'}
+      {name: 'Bindestrich', delimiter: '-'}
+    ]
+    filename_delimiter: '_'
     grouping: false
     loaded_data: false
     data_options:
@@ -60,9 +65,15 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
     getGroups: ->
       p = @checkPattern()
       return false if !p
-      groups = _.countBy @dendrites, (dendrite) ->
-        group = if p.first is 'group' then dendrite.file.split(p.pattern)[0] else dendrite.file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(dendrite.file))[0]
-        title = if p.first is 'title' then dendrite.file.split(p.pattern)[0] else dendrite.file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(dendrite.file))[0]
+      groups = _.countBy @dendrites, (dendrite) =>
+        parts = dendrite.file.split('.xls')[0].split @filename_delimiter
+        title = _.map(p.title, (i) ->
+          parts[i]
+        ).join @filename_delimiter
+        group = _.map(p.group, (i) ->
+          parts[i]
+        ).join @filename_delimiter
+
         dataStore.updateDendrite dendrite._id, {title: title, group: group}
         group
       @getDendriteData()
@@ -70,26 +81,15 @@ module.factory 'Data', ['readXls', 'Xlsx', 'dataStore', (readXls, Xlsx, dataStor
         {id: group[0], dendrites: group[1], title: ''}
 
     checkPattern: ->
-      pattern = @filename_pattern.split('<Gruppe>')[1]
-      if pattern
-        if pattern is pattern.split('<Titel>')[0] or pattern.split('<Titel>')[0] is ''
-          return false
-        else
-          first = 'group'
-          pattern = pattern.split('<Titel>')[0]
-      else if @filename_pattern.split('<Titel>')[1]
-        pattern = @filename_pattern.split('<Titel>')[1]
-        if pattern is pattern.split('<Gruppe>')[0] or pattern.split('<Gruppe>')[0] is ''
-          return false
-        else
-          first = 'title'
-          pattern = @filename_pattern.split('<Titel>')[1].split('<Gruppe>')[0]
-      else
-        return false
-
+      parts = @filename_pattern.split @filename_delimiter
+      group = []
+      title = []
+      for p, i in parts
+        group.push(i) if p is '<Gruppe>'
+        title.push(i) if p is '<Titel>'
       {
-        pattern: pattern
-        first: first
+        group: group
+        title: title
       }
 
     exportData: ->

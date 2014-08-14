@@ -13,6 +13,16 @@
         dendrites: [],
         groups: [],
         filename_pattern: '<Gruppe>_<Titel>',
+        filename_delimiter_presets: [
+          {
+            name: 'Unterstrich',
+            delimiter: '_'
+          }, {
+            name: 'Bindestrich',
+            delimiter: '-'
+          }
+        ],
+        filename_delimiter: '_',
         grouping: false,
         loaded_data: false,
         data_options: {
@@ -65,15 +75,21 @@
           });
         },
         getGroups: function() {
-          var groups, p;
+          var groups, p,
+            _this = this;
           p = this.checkPattern();
           if (!p) {
             return false;
           }
           groups = _.countBy(this.dendrites, function(dendrite) {
-            var group, title;
-            group = p.first === 'group' ? dendrite.file.split(p.pattern)[0] : dendrite.file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(dendrite.file))[0];
-            title = p.first === 'title' ? dendrite.file.split(p.pattern)[0] : dendrite.file.split(p.pattern).slice(1).join(p.pattern).split(path.extname(dendrite.file))[0];
+            var group, parts, title;
+            parts = dendrite.file.split('.xls')[0].split(_this.filename_delimiter);
+            title = _.map(p.title, function(i) {
+              return parts[i];
+            }).join(_this.filename_delimiter);
+            group = _.map(p.group, function(i) {
+              return parts[i];
+            }).join(_this.filename_delimiter);
             dataStore.updateDendrite(dendrite._id, {
               title: title,
               group: group
@@ -90,29 +106,22 @@
           });
         },
         checkPattern: function() {
-          var first, pattern;
-          pattern = this.filename_pattern.split('<Gruppe>')[1];
-          if (pattern) {
-            if (pattern === pattern.split('<Titel>')[0] || pattern.split('<Titel>')[0] === '') {
-              return false;
-            } else {
-              first = 'group';
-              pattern = pattern.split('<Titel>')[0];
+          var group, i, p, parts, title, _i, _len;
+          parts = this.filename_pattern.split(this.filename_delimiter);
+          group = [];
+          title = [];
+          for (i = _i = 0, _len = parts.length; _i < _len; i = ++_i) {
+            p = parts[i];
+            if (p === '<Gruppe>') {
+              group.push(i);
             }
-          } else if (this.filename_pattern.split('<Titel>')[1]) {
-            pattern = this.filename_pattern.split('<Titel>')[1];
-            if (pattern === pattern.split('<Gruppe>')[0] || pattern.split('<Gruppe>')[0] === '') {
-              return false;
-            } else {
-              first = 'title';
-              pattern = this.filename_pattern.split('<Titel>')[1].split('<Gruppe>')[0];
+            if (p === '<Titel>') {
+              title.push(i);
             }
-          } else {
-            return false;
           }
           return {
-            pattern: pattern,
-            first: first
+            group: group,
+            title: title
           };
         },
         exportData: function() {
