@@ -44,6 +44,9 @@
       $scope.$watch('data.grouping', function(grouping, old) {
         return checkGroups(grouping, false);
       });
+      $scope.$watch('data.filename_delimiter', function(delimiter, old) {
+        return checkGroups($scope.data.grouping, true);
+      });
       return checkGroups = function(val, show_success) {
         angular.element('#pattern_div').removeClass('has-error');
         if (val) {

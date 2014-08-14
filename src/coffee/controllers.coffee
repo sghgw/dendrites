@@ -27,6 +27,8 @@ ctrls.controller 'groupsCtrl', ['$scope', 'Data', ($scope, Data) ->
     checkGroups $scope.data.grouping, true
   $scope.$watch 'data.grouping', (grouping, old) ->
     checkGroups grouping, false
+  $scope.$watch 'data.filename_delimiter', (delimiter, old) ->
+    checkGroups $scope.data.grouping, true
 
   checkGroups = (val, show_success) ->
     angular.element('#pattern_div').removeClass('has-error')
