@@ -9,8 +9,15 @@
   </div>
 
   <div ng-show="data.grouping">
-    <p>Der Dateiname sollte eine Bezeichnung für die Gruppe und einen Titel enthalten. Bitte gib an, wie der Dateiname aufgebaut ist:</p>
+    <p>Der Dateiname sollte eine Bezeichnung für die Gruppe und einen Titel enthalten. Wenn du eine Bezeichnung im Muster mehrfach verwendest werden sie mit dem gewählten Trennzeichen einander gefügt. <br>
+    Bitte gib an, wie der Dateiname aufgebaut ist und durch welches Zeichen die einzelnen Elemente getrennt sind:</p>
     <form class="form-horizontal">
+      <div class="form-group">
+        <label for="filename_delimiter" class="control-label col-xs-3">Trennzeichen</label>
+        <div class="col-xs-8 delimiter-select">
+          <select id="filename_delimiter" class="form-control" ng-model="data.filename_delimiter" ng-options="delimiter.delimiter as delimiter.name for delimiter in data.filename_delimiter_presets"></select>
+        </div>
+      </div>
       <div class="form-group" id="pattern_div">
         <label for="filename_pattern" class="control-label col-xs-3">Dateiname</label>
         <div class="input-group col-xs-8">

@@ -13,3 +13,4 @@ div.tab-menu div.list-group>a.active,div.tab-menu div.list-group>a.active .glyph
 div.tab-menu div.list-group>a.active:after{content:'';position:absolute;left:100%;top:50%;margin-top:-13px;border-left:0;border-bottom:13px solid transparent;border-top:13px solid transparent;border-left:10px solid #428bca}
 div.tab-content{background-color:#ffffff;padding-left:20px;padding-top:10px}
 .modal-dialog{margin:0;width:80%;position:absolute;top:10%;left:10%}
+.delimiter-select{padding-left:0px}
