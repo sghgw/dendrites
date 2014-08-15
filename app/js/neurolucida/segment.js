@@ -5,12 +5,6 @@
     function Segment(startPoint, endPoint) {
       this.startPoint = startPoint;
       this.endPoint = endPoint;
-      if (this.startPoint.length !== 3) {
-        this.startPoint.push(0);
-      }
-      if (this.endPoint.length !== 3) {
-        this.endPoint.push(0);
-      }
       this.direction = [this.endPoint[0] - this.startPoint[0], this.endPoint[1] - this.startPoint[1], this.endPoint[2] - this.startPoint[2]];
     }
 
