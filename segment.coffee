@@ -1,7 +1,7 @@
 class Segment
   constructor: (@startPoint, @endPoint) ->
-    @startPoint.push 0 if @startPoint.length != 3
-    @endPoint.push 0 if @endPoint.length != 3
+    # @startPoint.push 0 if @startPoint.length != 3
+    # @endPoint.push 0 if @endPoint.length != 3
     @direction = [@endPoint[0] - @startPoint[0], @endPoint[1] - @startPoint[1], @endPoint[2] - @startPoint[2]]
 
   getLength: ->
